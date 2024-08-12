@@ -1,7 +1,7 @@
 // src/_root/pages/MainPage.tsx
 
 import BlogGridList from '@/components/Blog/BlogGridList';
-import About from './About';
+import Footer from './Footer';
 import Home from './Home';
 
 
@@ -10,7 +10,7 @@ const MainPage = () => {
     <div>
       <Home />
       <BlogGridList/>
-      <About/>
+      <Footer/>
     </div>
   );
 };
