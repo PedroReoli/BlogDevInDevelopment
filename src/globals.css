@@ -14,6 +14,29 @@
     @apply bg-[#111111] text-white min-h-screen font-inter;
   }
 
+  /* Estilos Globais para Melhorar Legibilidade */
+  h1, h2, h3, h4, h5, h6 {
+    color: #f8f8f8; /* Cor dos cabeçalhos */
+  }
+
+  p, li {
+    color: #d3d3d3; /* Cor dos parágrafos e itens de lista */
+  }
+
+  a {
+    color: #1e90ff; /* Cor dos links */
+    text-decoration: underline; /* Sublinhado para links */
+  }
+
+  a:hover {
+    color: #00bfff; /* Cor dos links quando o mouse passa por cima */
+  }
+
+  strong {
+    color: #ffffff; /* Cor de textos em negrito */
+  }
+
+  /* Ajustes da Barra de Rolagem */
   ::-webkit-scrollbar {
     width: 12px;
   }
@@ -174,8 +197,6 @@
   .experience-period {
     @apply text-gray-400 mb-3;
   }
-
-
 
   .neon-hover {
     position: relative;

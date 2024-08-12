@@ -4,8 +4,8 @@ export interface BlogPost {
     title: string;
     description: string;
     date: string;
-    filename: string;
+    keywords: string[];
     imageUrl: string;
-    keywords: string[];  
+    filename: string; // Nome do arquivo HTML 
   }
   

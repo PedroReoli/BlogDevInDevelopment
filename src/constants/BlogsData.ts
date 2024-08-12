@@ -1,31 +1,29 @@
-// src/constants/BlogsData.ts
-import { BlogPost } from "./interfaces";
+import { BlogPost } from './interfaces';
 
 export const blogsData: BlogPost[] = [
   {
-    title: "Now in Baseline: como animar efeitos de entrada",
-    description: "Melhore a legibilidade do texto ao usar fontes substitutas.",
-    date: "8 de agosto de 2024",
-    filename: "post1.html",
-    imageUrl: "/images/animating-entry-effects.png",
-    keywords: ["Animação", "Baseline", "Efeitos"],  
+    title: "Primeiro Post",
+    description: "Descrição do primeiro post.",
+    date: "2024-01-01",
+    keywords: ["React", "JavaScript"],
+    imageUrl: "/imagens/primeiro-post.jpg",
+    filename: "post1" // Deve corresponder a "post1.html" em /content/
   },
   {
-    title: "Interop 2024: Chrome em 100% para a área de foco de acessibilidade",
-    description:
-      "O Chrome agora é aprovado em 100% dos testes da área de foco de acessibilidade.",
-    date: "31 de julho de 2024",
-    filename: "post2.html",
-    imageUrl: "/images/interop-2024.png",
-    keywords: ["Interop", "Acessibilidade", "Chrome"],  
+    title: "Segundo Post",
+    description: "Descrição do segundo post.",
+    date: "2024-01-02",
+    keywords: ["CSS", "Design"],
+    imageUrl: "/imagens/segundo-post.jpg",
+    filename: "post2" // Deve corresponder a "post2.html" em /content/
   },
   {
-    title: "A plataforma da Web começou a ser veiculada em julho",
-    description:
-      "Descubra alguns dos recursos interessantes que chegaram em navegadores da Web.",
-    date: "30 de julho de 2024",
-    filename: "post3.html",
-    imageUrl: "/images/web-platform-july.png",
-    keywords: ["Web", "Plataforma", "Recursos"],  
+    title: "Terceuri Post",
+    description: "Descrição do segundo post.",
+    date: "2024-01-02",
+    keywords: ["CSS", "Design"],
+    imageUrl: "/imagens/segundo-post.jpg",
+    filename: "post2" // Deve corresponder a "post2.html" em /content/
   },
+  // Adicione mais posts conforme necessário
 ];
