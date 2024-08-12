@@ -5,7 +5,7 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           {/* Seção DevEmDesenvolvimento */}
           <div className="flex flex-col justify-center md:justify-start">
-            <h3 className="text-3xl font-bold mb-4 md:mb-0">DevEmDesenvolvimento</h3>
+            <h3 className="text-3xl font-bold mb-4">DevEmDesenvolvimento</h3>
             <p className="text-base leading-7 tracking-wide text-justify">
               O <span className="text-blue-400">DevEmDesenvolvimento</span> é um espaço dedicado ao compartilhamento
               de aprendizados e insights sobre programação, focando em estudantes e desenvolvedores juniores. Vamos evoluir juntos, <span className="text-blue-400">um código de cada vez</span>.
@@ -13,8 +13,8 @@ const Footer = () => {
           </div>
 
           {/* Seções Contribua e Contato */}
-          <div className="flex flex-col sm:flex-row justify-between sm:space-x-10 mt-10 md:mt-0 md:col-span-1">
-            <div className="flex justify-center sm:justify-start mb-6 sm:mb-0 w-full sm:w-auto">
+          <div className="hidden md:flex flex-col md:flex-row justify-between md:space-x-10 mt-10 md:mt-0 md:col-span-2">
+            <div className="flex justify-center md:justify-start mb-6 md:mb-0 w-full md:w-auto">
               <div>
                 <h4 className="text-2xl font-semibold mb-5">Contribua</h4>
                 <ul className="text-base space-y-3">
@@ -24,7 +24,7 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
-            <div className="flex justify-center sm:justify-end w-full sm:w-auto">
+            <div className="flex justify-center md:justify-start mb-6 md:mb-0 w-full md:w-auto">
               <div>
                 <h4 className="text-2xl font-semibold mb-5">Contato</h4>
                 <ul className="text-base space-y-3">
@@ -35,12 +35,13 @@ const Footer = () => {
                 </ul>
               </div>
             </div>
+
             {/* Imagem Condicional */}
-            <div className="flex justify-center items-center sm:hidden md:block md:w-auto md:ml-20">
+            <div className="flex justify-center items-center">
               <img
-                src="/caminho-para-imagem.jpg" // Substitua pelo caminho real da imagem
+                src="/images/EuPIxar.png" // Substitua pelo caminho real da imagem
                 alt="Imagem Descritiva"
-                className="w-48 h-48 object-cover rounded-full"
+                className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full"
               />
             </div>
           </div>
