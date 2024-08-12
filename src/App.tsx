@@ -7,13 +7,17 @@ import RootLayout from "./_root/RootLayout";
 const App = () => {
   return (
     <Router>
-      <Routes>
+    <Routes>
+      {/* Rota raiz que utiliza o RootLayout */}
       <Route path="/" element={<RootLayout />}>
-        <Route path="/" element={<MainPage />} />
-        <Route path="/post/:id" element={<PostDetails />} />
+        {/* Rota que renderiza a MainPage */}
+        <Route index element={<MainPage />} />
+        {/* Rota que renderiza o PostDetail para posts específicos */}
+        <Route path="post/:id" element={<PostDetails />} />
       </Route>
-      </Routes>
-    </Router>
+      {/* Adicione outras rotas conforme necessário */}
+    </Routes>
+  </Router>
   );
 };
 
