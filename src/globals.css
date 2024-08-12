@@ -1,0 +1,196 @@
+/* globals.css */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    @apply box-border list-none p-0 m-0 scroll-smooth;
+  }
+
+  body {
+    @apply bg-[#111111] text-white min-h-screen font-inter;
+  }
+
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #111111;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #00bfff; /* Neon Blue */
+    border-radius: 10px;
+    border: 2px solid #111111; /* Match background color to create the neon effect */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #1e90ff; /* Lighter Neon Blue */
+  }
+}
+
+@layer utilities {
+  .typewriter-cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    background-color: #00bfff; /* Neon Blue */
+    animation: blink 1s steps(1) infinite;
+    margin-left: 0.1em; /* Adjust the margin to align properly */
+  }
+
+  @keyframes blink {
+    0% { opacity: 1; }
+    50% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  .h1-bold {
+    @apply text-[36px] font-bold leading-[140%] tracking-tighter text-blue-500;
+  }
+
+  .h1-semibold {
+    @apply text-[36px] font-semibold leading-[140%] tracking-tighter;
+  }
+
+  .h2-bold {
+    @apply text-[30px] font-bold leading-[140%] tracking-tighter text-blue-500;
+  }
+
+  .h3-bold {
+    @apply text-[24px] font-bold leading-[140%] tracking-tighter;
+  }
+
+  .base-semibold {
+    @apply text-[16px] font-semibold leading-[140%] tracking-tighter;
+  }
+
+  .base-medium {
+    @apply text-[16px] font-medium leading-[140%];
+  }
+
+  .base-regular {
+    @apply text-[16px] font-normal leading-[140%];
+  }
+
+  .body-bold {
+    @apply text-[18px] font-bold leading-[140%];
+  }
+
+  .body-medium {
+    @apply text-[18px] font-medium leading-[140%];
+  }
+
+  .small-semibold {
+    @apply text-[14px] font-semibold leading-[140%] tracking-tighter;
+  }
+
+  .small-medium {
+    @apply text-[14px] font-medium leading-[140%];
+  }
+
+  .small-regular {
+    @apply text-[14px] font-normal leading-[140%];
+  }
+
+  .subtle-semibold {
+    @apply text-[12px] font-semibold leading-[140%];
+  }
+
+  .tiny-medium {
+    @apply text-[10px] font-medium leading-[140%];
+  }
+
+  .btn {
+    @apply bg-blue-500 text-white px-4 py-2 rounded transition hover:bg-blue-700;
+  }
+
+  .btn-enhanced {
+    @apply bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-6 py-3 rounded-full shadow-lg transition transform hover:scale-105 hover:from-blue-600 hover:to-indigo-600;
+  }
+
+  .flex-center {
+    @apply flex justify-center items-center;
+  }
+
+  .flex-between {
+    @apply flex justify-between items-center;
+  }
+
+  .flex-start {
+    @apply flex justify-start items-center;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar {
+    width: 3px;
+    height: 3px;
+    border-radius: 2px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-track {
+    background: #09090a;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb {
+    background: #5c5c7b;
+    border-radius: 50px;
+  }
+
+  .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+    background: #7878a3;
+  }
+
+  .common-container {
+    @apply flex flex-col flex-1 items-center gap-10 overflow-scroll py-10 px-5 md:px-8 lg:p-14 custom-scrollbar;
+  }
+
+  .background-svg {
+    background-image: url('/assets/image/symbol.svg'); /* Adjusted to the actual path */
+    background-repeat: no-repeat;
+    background-position: right;
+    background-size: contain;
+  }
+
+  .experience-item {
+    @apply cursor-pointer p-3 border-l-4 border-gray-700 hover:border-blue-500 hover:text-blue-500 transition-colors duration-200;
+  }
+
+  .experience-item-active {
+    @apply border-blue-500 text-blue-500;
+  }
+
+  .experience-details {
+    @apply p-5 bg-gray-800 rounded-lg;
+  }
+
+  .experience-title {
+    @apply text-2xl font-semibold mb-3;
+  }
+
+  .experience-period {
+    @apply text-gray-400 mb-3;
+  }
+
+
+
+  .neon-hover {
+    position: relative;
+    transition: box-shadow 0.3s ease-in-out;
+  }
+
+  .neon-hover:hover {
+    box-shadow: 0 0 15px #00bfff, 0 0 30px #00bfff, 0 0 45px #00bfff;
+  }
+
+  .neon-hover img {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .neon-hover:hover img {
+    transform: scale(1.1);
+  }
+}
