@@ -14,25 +14,35 @@ const BlogList = () => {
         {blogsData.map((post: BlogPostInterface, index) => (
           <div
             key={index}
-            className="bg-[#1b1b1b] text-white rounded-lg shadow-lg overflow-hidden"
+            className="bg-[#1b1b1b] text-white rounded-lg shadow-lg border border-white p-6 transition-transform transform hover:scale-105"
           >
             <img
               src={post.imageUrl}
               alt={post.title}
-              className="w-full h-48 object-cover"
+              className="w-full h-72 object-cover mb-6 rounded"
             />
-            <div className="p-6">
-              <h3 className="text-xl font-bold mb-3">{post.title}</h3>
-              <p className="text-sm mb-5">{post.description}</p>
-              <div className="flex justify-between items-center text-sm mb-4">
-                <span className="text-gray-400">{post.author}</span>
-                <span className="text-gray-400">{post.date}</span>
-              </div>
+            <h3 className="text-xl font-bold mb-3">{post.title}</h3>
+            <p className="text-gray-400 text-sm mb-5">{post.description}</p>
+            <div className="flex flex-wrap gap-2 mb-5">
+              {post.keywords.map((keyword, idx) => (
+                <span
+                  key={idx}
+                  className="text-xs font-semibold text-blue-500 bg-blue-900 px-2 py-1 rounded"
+                >
+                  {keyword}
+                </span>
+              ))}
+            </div>
+            <hr className="border-gray-600 mb-5" />
+            <div className="flex justify-between items-center text-sm text-gray-500 mb-5">
+              <span>{post.date}</span>
+            </div>
+            <div className="flex justify-center">
               <button
                 onClick={() => setSelectedPost(post.filename)}
-                className="inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition"
+                className="bg-transparent text-blue-500 hover:text-blue-400 underline"
               >
-                Ler mais
+                Continuar lendo
               </button>
             </div>
           </div>
