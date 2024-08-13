@@ -5,7 +5,7 @@ const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
 
-  const handleOpen = (event: React.MouseEvent<HTMLAnchorElement>, contentType: string) => {
+  const handleOpen = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, contentType: string) => {
     event.preventDefault();
     setContent(contentType);
     setIsOpen(true);
@@ -16,14 +16,12 @@ const Footer = () => {
     setContent("");
   };
 
-  const handleCopyPix = (event: React.MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();  // Evita que a página suba
+  const handleCopyPix = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
+    event.preventDefault(); 
     navigator.clipboard.writeText('87ed50aa-9526-46a2-8aec-e1a1cce4a9e4');
     setIsOpen(true);
     setContent("Chave Pix copiada com sucesso");
 
-
-    // Fechar o popup após 2 segundos
     setTimeout(() => {
       setIsOpen(false);
     }, 800);
@@ -32,7 +30,7 @@ const Footer = () => {
   return (
     <>
       <footer className="bg-[#111111] text-white py-16 px-5">
-        <div className="container mx-auto">
+        <div className="container mx-auto footer-container">
           <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-20">
             {/* Seção DevEmDesenvolvimento */}
             <div className="flex-1 flex flex-col justify-center md:justify-start text-center md:text-left">
@@ -44,14 +42,14 @@ const Footer = () => {
             </div>
 
             {/* Seções Contribua e Contato */}
-            <div className="sm:hidden md:block flex-1">
-              <div className="flex flex-col md:flex-row justify-between md:space-x-24">
+            <div className="hidden md:flex flex-1">
+              <div className="flex flex-row justify-between w-full md:space-x-24">
                 <div className="flex flex-col text-center md:text-left mb-6 md:mb-0">
                   <h4 className="text-2xl font-semibold mb-5">Contribua</h4>
                   <ul className="text-base space-y-3">
                     <li><a href="mailto:pedrosousa2160@gmail.com" className="text-blue-400 hover:underline">Reportar um bug</a></li>
                     <li><a href="https://github.com/PedroReoli" className="text-blue-400 hover:underline">Github</a></li>
-                    <li><a href="#" onClick={handleCopyPix} className="text-blue-400 hover:underline">Copiar chave Pix</a></li>
+                    <li><button onClick={handleCopyPix} className="text-blue-400 hover:underline">Copiar chave Pix</button></li>
                     <li><a href="#" className="text-blue-400 hover:underline">Patreon</a></li>
                   </ul>
                 </div>
@@ -59,7 +57,7 @@ const Footer = () => {
                   <h4 className="text-2xl font-semibold mb-5">Contato</h4>
                   <ul className="text-base space-y-3">
                     <li><a href="https://x.com/opedroreoli" className="text-blue-400 hover:underline">Twitter</a></li>
-                    <li><a href="https://www.youtube.com/@DevDesenvolvimento"className="text-blue-400 hover:underline">YouTube</a></li>
+                    <li><a href="https://www.youtube.com/@DevDesenvolvimento" className="text-blue-400 hover:underline">YouTube</a></li>
                     <li><a href="https://www.instagram.com/01_dev_em_desenvolvimento" className="text-blue-400 hover:underline">Instagram</a></li>
                     <li><a href="mailto:pedrosousa2160@gmail.com" className="text-blue-400 hover:underline">Email</a></li>
                   </ul>
@@ -68,15 +66,21 @@ const Footer = () => {
             </div>
 
             {/* Imagem Condicional - Alinhada à Direita */}
-            <div className="flex justify-end flex-1">
+            <div className="hidden md:flex justify-end flex-1 text-center md:text-right">
               <img
-                src="/images/EuPIxar.png" // Substitua pelo caminho real da imagem
+                src="/images/EuPIxar.png"
                 alt="Imagem Descritiva"
-                className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full"
+                className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full mx-auto md:mx-0"
               />
             </div>
           </div>
         
+          {/* Botões em resoluções menores */}
+          <div className="flex justify-center mt-8 md:hidden">
+            <button onClick={(e) => handleOpen(e, 'Contribua')} className="btn-enhanced mx-2">Contribua</button>
+            <button onClick={(e) => handleOpen(e, 'Contato')} className="btn-enhanced mx-2">Contato</button>
+          </div>
+          
           {/* Linha de rodapé */}
           <div className="text-center text-base mt-16 border-t border-gray-700 pt-8">
             <div className="flex justify-center space-x-4">
