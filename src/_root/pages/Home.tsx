@@ -37,7 +37,7 @@ const Home = () => {
   
         </div>
         <div className="flex-1 mt-10 md:mt-0 flex justify-center items-center">
-          <img src="/assets/Logo.svg" alt="logo" className="w-1/2 h-auto max-w-xs"/>
+          <img src="/images/prog.svg" alt="logo" className="w-1/2 h-auto max-w-xs sm:hidden md:block"/>
         </div>
       </div>
     </section>

@@ -6,7 +6,7 @@ export const blogsData: BlogPost[] = [
     description: "Um mergulho na computação quântica, suas aplicações e como os programadores podem se preparar para essa revolução tecnológica.",
     date: "12/08/2024",
     keywords: ["Computação Quântica", "Qiskit", "Tecnologia", "Programação"],
-    imageUrl: "/imagens/computacao-quantica.jpg",
+    imageUrl: "/backgrounds/post1.png",
     filename: "post1" // Deve corresponder a "post1.html" em /content/
   },
   {
@@ -14,7 +14,7 @@ export const blogsData: BlogPost[] = [
     description: "A importância de desenvolver IA de maneira ética, garantindo transparência, justiça e respeito aos direitos humanos.",
     date: "12/08/2024",
     keywords: ["Programação Ética", "Inteligência Artificial", "IA", "Tecnologia"],
-    imageUrl: "/imagens/programacao-etica.jpg",
+    imageUrl: "/backgrounds/post2.png",
     filename: "post2" // Deve corresponder a "post2.html" em /content/
   },
   {
@@ -22,7 +22,7 @@ export const blogsData: BlogPost[] = [
     description: "Como WebAssembly está transformando o desenvolvimento web com alta performance e portabilidade.",
     date: "12/08/2024",
     keywords: ["WebAssembly", "Wasm", "Desenvolvimento Web", "Tecnologia"],
-    imageUrl: "/imagens/webassembly.jpg",
+    imageUrl: "/backgrounds/post3.png",
     filename: "post3" // Deve corresponder a "post2.html" em /content/
   },
   // Adicione mais posts conforme necessário

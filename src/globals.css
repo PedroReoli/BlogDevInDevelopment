@@ -25,7 +25,6 @@
 
   a {
     color: #1e90ff; /* Cor dos links */
-    text-decoration: underline; /* Sublinhado para links */
   }
 
   a:hover {
