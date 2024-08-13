@@ -13,7 +13,7 @@ const Topbar = () => {
       {/* Menu */}
       <div className="flex space-x-4">
         <Link to="/" className="hover:underline">Home</Link>
-        <Link to="/portfolio" className="hover:underline">Portfolio</Link>
+        <Link to="https://pedroreoliportfolio.netlify.app" className="hover:underline">Portfolio</Link>
         <Link to="https://x.com/opedroreoli" className="hover:underline">Twitter</Link>
         {/* <Link to="/cursos" className="hover:underline">Cursos</Link> */}
       </div>
