@@ -5,10 +5,6 @@ const Bottombar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
 
-  const handleOpen = (contentType: string) => {
-    setContent(contentType);
-    setIsOpen(true);
-  };
 
   const handleClose = () => {
     setIsOpen(false);
@@ -20,11 +16,14 @@ const Bottombar = () => {
   };
 
   return (
-    <footer className="bg-gradient-to-b from-black to-[#111111] p-4 md:hidden fixed bottom-0 w-full z-50 shadow-md">
-      <div className="container mx-auto flex justify-between items-center">
-        <a href="#" onClick={() => handleOpen("Contribua")} className="text-white hover:text-blue-500 transition">Contribua</a>
-        <a href="#" onClick={scrollToTop} className="text-white hover:text-blue-500 transition">Inicio</a>
-        <a href="#" onClick={() => handleOpen("Contato")} className="text-white hover:text-blue-500 transition">Contato</a>
+    <footer className="bg-gradient-to-b from-black to-[#111111] p-4 md:hidden fixed bottom-0 w-full z-50 shadow-lg">
+      <div className="container mx-auto flex justify-center items-center">
+        <button 
+          onClick={scrollToTop} 
+          className="btn-modern-alt"
+        >
+          Início
+        </button>
       </div>
 
       <Popup isOpen={isOpen} content={content} onClose={handleClose} />
