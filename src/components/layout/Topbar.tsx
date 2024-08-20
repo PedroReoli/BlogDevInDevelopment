@@ -1,23 +1,24 @@
 // src/components/Topbar.tsx
-
-import { Link } from 'react-router-dom';
+import '@/Responsive.css';
 
 const Topbar = () => {
   return (
-    <div className="bg-gradient-to-b from-black to-[#111111]  text-white p-4 flex justify-between items-center fixed top-0 left-0 right-0 z-50 border-b-2 border-gray-700">
-      {/* Nome Pedro Reoli */}
-      <div className="text-2xl font-bold">
-        &lt; PedroReoli /&gt;
-      </div>
+    <header className="topbar-container bg-gradient-to-b from-black to-[#111111] p-4 sticky top-0 z-50 shadow-md border-b-2 border-gray-700 w-full">
+      <div className="w-full flex justify-between items-center">
+        {/* Logo */}
+        <div className="topbar-logo text-2xl font-bold">
+          &lt; PedroReoli /&gt;
+        </div>
 
-      {/* Menu */}
-      <div className="flex space-x-4">
-        <Link to="/" className="hover:underline">Home</Link>
-        <Link to="https://pedroreoliportfolio.netlify.app" className="hover:underline">Portfolio</Link>
-        <Link to="https://x.com/opedroreoli" className="hover:underline">Twitter</Link>
-        {/* <Link to="/cursos" className="hover:underline">Cursos</Link> */}
+        {/* Menu */}
+        <nav className="topbar-nav hidden md:flex space-x-6">
+          <a href="https://devemdesenvolvimento.netlify.app" className="text-white hover:text-blue-500 transition">Blog</a>
+          <a href="https://www.youtube.com/@DevDesenvolvimento" className="text-white hover:text-blue-500 transition">Youtube</a>
+          <a href="https://www.instagram.com/01_dev_em_desenvolvimento" className="text-white hover:text-blue-500 transition">Instagram</a>
+          <a href="https://x.com/opedroreoli" className="text-white hover:text-blue-500 transition">Twitter</a>
+        </nav>
       </div>
-    </div>
+    </header>
   );
 };
 

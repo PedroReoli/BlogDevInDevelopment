@@ -1,0 +1,73 @@
+/* Responsive.css */
+
+/* Responsive.css */
+/* ////////////////////////////////////////// */
+/* TOPBAR - RESPONSIVIDADE  */
+/* ////////////////////////////////////////// */
+
+/* ////////////////////////////////////////// */
+/* TOPBAR - RESPONSIVIDADE */
+/* ////////////////////////////////////////// */
+
+/* Regras gerais para telas menores que 640px */
+@media (max-width: 640px) {
+    .topbar-container {
+      justify-content: center;
+      padding-left: 10px;
+      padding-right: 10px;
+      width: 100%;
+    }
+  
+    .topbar-logo {
+      text-align: center;
+      flex: 1;
+    }
+  
+    .topbar-nav {
+      display: none; /* Esconde o menu em telas pequenas */
+    }
+  }
+  
+  /* Regras específicas para telas menores que 325px */
+  @media (max-width: 325px) {
+    .topbar-container {
+      justify-content: center;
+      padding-left: 0;
+      padding-right: 0;
+      width: 100%;
+    }
+  
+    .topbar-logo {
+      text-align: center;
+      flex: 1;
+      width: 100%;
+    }
+  
+    /* Garante que a topbar ocupe 100% da largura da tela */
+    .topbar-container {
+      margin: 0;  /* Remove qualquer margem que possa estar causando o problema */
+      box-sizing: border-box; /* Garante que o padding e border sejam incluídos no tamanho */
+      width: 100vw; /* Garante que a Topbar ocupe toda a largura da viewport */
+    }
+  
+    .topbar-logo {
+      text-align: center;
+      flex: 1;
+      width: 100%;
+    }
+  }
+  
+
+
+
+
+/* ////////////////////////////////////////////////// */
+/* Footer - Responsividade*/
+/* ////////////////////////////////////////////////// */
+/* ////////////////////////////////////////////////// */
+/* Footer - Responsividade */
+/* ////////////////////////////////////////////////// */
+
+/* ////////////////////////////////////////////////// */
+/* Footer - Responsividade */
+/* ////////////////////////////////////////////////// */
