@@ -44,10 +44,10 @@ const Popup = ({ isOpen, content, onClose }: PopupProps) => {
         return (
           <>
             <ul className="text-center text-lg space-y-4">
-              <li><a href="mailto:pedrosousa2160@gmail.com" className="text-blue-400 hover:underline">Reportar um bug</a></li>
-              <li><a href="https://github.com/PedroReoli" className="text-blue-400 hover:underline">Github</a></li>
-              <li><a href="#" onClick={() => navigator.clipboard.writeText('87ed50aa-9526-46a2-8aec-e1a1cce4a9e4')} className="text-blue-400 hover:underline">Copiar chave Pix</a></li>
-              <li><a href="#" className="text-blue-400 hover:underline">Patreon</a></li>
+              <li><a href="mailto:pedrosousa2160@gmail.com" className="text-neon-blue hover:text-neon-blue-hover">Reportar um bug</a></li>
+              <li><a href="https://github.com/PedroReoli" className="text-neon-blue hover:text-neon-blue-hover">Github</a></li>
+              <li><a href="#" onClick={() => navigator.clipboard.writeText('87ed50aa-9526-46a2-8aec-e1a1cce4a9e4')} className="text-neon-blue hover:text-neon-blue-hover">Copiar chave Pix</a></li>
+              <li><a href="#" className="text-neon-blue hover:text-neon-blue-hover">Patreon</a></li>
             </ul>
           </>
         );
@@ -56,10 +56,10 @@ const Popup = ({ isOpen, content, onClose }: PopupProps) => {
         return (
           <>
             <ul className="text-center text-lg space-y-4">
-              <li><a href="https://x.com/opedroreoli" className="text-blue-400 hover:underline">Twitter</a></li>
-              <li><a href="https://www.youtube.com/@DevDesenvolvimento" className="text-blue-400 hover:underline">YouTube</a></li>
-              <li><a href="https://www.instagram.com/01_dev_em_desenvolvimento" className="text-blue-400 hover:underline">Instagram</a></li>
-              <li><a href="mailto:pedrosousa2160@gmail.com" className="text-blue-400 hover:underline">Email</a></li>
+              <li><a href="https://x.com/opedroreoli" className="text-neon-blue hover:text-neon-blue-hover">Twitter</a></li>
+              <li><a href="https://www.youtube.com/@DevDesenvolvimento" className="text-neon-blue hover:text-neon-blue-hover">YouTube</a></li>
+              <li><a href="https://www.instagram.com/01_dev_em_desenvolvimento" className="text-neon-blue hover:text-neon-blue-hover">Instagram</a></li>
+              <li><a href="mailto:pedrosousa2160@gmail.com" className="text-neon-blue hover:text-neon-blue-hover">Email</a></li>
             </ul>
           </>
         );
@@ -77,10 +77,10 @@ const Popup = ({ isOpen, content, onClose }: PopupProps) => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.8 }}
-            className="bg-[#1a1a1a] text-white p-10 md:p-12 rounded-2xl shadow-lg max-w-lg sm:max-w-xl mx-auto border border-blue-500 neon-border"
-            style={{ boxShadow: "0 4px 30px rgba(0, 0, 0, 0.1)" }}
+            className="bg-dark-gradient text-white p-10 md:p-12 rounded-2xl shadow-lg max-w-lg sm:max-w-xl mx-auto border border-neon-blue neon-border"
+            style={{ boxShadow: "0 4px 30px rgba(0, 0, 0, 0.3)" }}
           >
-            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-blue-400 mb-8">{content}</h2>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-center text-neon-blue mb-8">{content}</h2>
             <div className="text-gray-300 text-center">
               {getContent()}
             </div>
@@ -88,7 +88,7 @@ const Popup = ({ isOpen, content, onClose }: PopupProps) => {
               <div className="flex justify-center mt-8">
                 <button
                   onClick={onClose}
-                  className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-600 transition-colors shadow-md"
+                  className="btn-modern-close"
                 >
                   Fechar
                 </button>

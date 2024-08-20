@@ -17,7 +17,7 @@ const Footer = () => {
   };
 
   const handleCopyPix = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
-    event.preventDefault();  
+    event.preventDefault(); 
     navigator.clipboard.writeText('87ed50aa-9526-46a2-8aec-e1a1cce4a9e4');
     setIsOpen(true);
     setContent("Chave Pix copiada com sucesso");
@@ -31,9 +31,9 @@ const Footer = () => {
     <>
       <footer className="bg-[#111111] text-white py-16 px-5">
         <div className="container mx-auto footer-container">
-          <div className="flex flex-col md:flex-col items-center gap-10 md:gap-20">
+          <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-20">
             {/* Seção DevEmDesenvolvimento */}
-            <div className="flex-1 flex flex-col justify-center text-center md:text-center">
+            <div className="flex-1 flex flex-col justify-center md:justify-start text-center md:text-left">
               <h3 className="text-3xl font-bold mb-4">DevEmDesenvolvimento</h3>
               <p className="text-base leading-7 tracking-wide">
                 O <span className="text-blue-400">DevEmDesenvolvimento</span> é um espaço dedicado ao compartilhamento
@@ -41,16 +41,10 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Botões em 768px e abaixo */}
-            <div className="flex justify-center mt-8">
-              <button onClick={(e) => handleOpen(e, 'Contribua')} className="btn-enhanced mx-2">Contribua</button>
-              <button onClick={(e) => handleOpen(e, 'Contato')} className="btn-enhanced mx-2">Contato</button>
-            </div>
-
-            {/* Seções Contribua e Contato (Visíveis em telas acima de 768px) */}
-            <div className="hidden md:flex flex-1 justify-center">
+            {/* Seções Contribua e Contato */}
+            <div className="hidden md:flex flex-1">
               <div className="flex flex-row justify-between w-full md:space-x-24">
-                <div className="flex flex-col text-center mb-6">
+                <div className="flex flex-col text-center md:text-left mb-6 md:mb-0">
                   <h4 className="text-2xl font-semibold mb-5">Contribua</h4>
                   <ul className="text-base space-y-3">
                     <li><a href="mailto:pedrosousa2160@gmail.com" className="text-blue-400 hover:underline">Reportar um bug</a></li>
@@ -59,7 +53,7 @@ const Footer = () => {
                     <li><a href="#" className="text-blue-400 hover:underline">Patreon</a></li>
                   </ul>
                 </div>
-                <div className="flex flex-col text-center mb-6">
+                <div className="flex flex-col text-center md:text-left mb-6 md:mb-0">
                   <h4 className="text-2xl font-semibold mb-5">Contato</h4>
                   <ul className="text-base space-y-3">
                     <li><a href="https://x.com/opedroreoli" className="text-blue-400 hover:underline">Twitter</a></li>
@@ -70,6 +64,21 @@ const Footer = () => {
                 </div>
               </div>
             </div>
+
+            {/* Imagem Condicional - Alinhada à Direita */}
+            <div className="hidden md:flex justify-end flex-1 text-center md:text-right">
+              <img
+                src="/images/EuPIxar.png"
+                alt="Imagem Descritiva"
+                className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full mx-auto md:mx-0"
+              />
+            </div>
+          </div>
+        
+          {/* Botões em resoluções menores */}
+          <div className="flex justify-center mt-8 md:hidden">
+            <button onClick={(e) => handleOpen(e, 'Contribua')} className="btn-enhanced mx-2">Contribua</button>
+            <button onClick={(e) => handleOpen(e, 'Contato')} className="btn-enhanced mx-2">Contato</button>
           </div>
           
           {/* Linha de rodapé */}
