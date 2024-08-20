@@ -20,7 +20,20 @@
       display: none; /* Esconde o menu em telas pequenas */
     }
   }
+  @media (max-width: 438px) {
+    .topbar-container {
+      padding: 0 10px; /* Reduz o padding para telas muito pequenas */
+    }
   
+    .topbar-logo {
+      width: 100%;
+      text-align: center;
+    }
+  
+    .topbar-nav {
+      display: none; /* Esconder a navegação adicional se estiver empurrando o conteúdo para fora da tela */
+    }
+  }
   /* Regras específicas para telas menores que 325px */
   @media (max-width: 325px) {
     .topbar-container {
@@ -156,3 +169,19 @@
   }
   
 
+/* Container principal */
+@media (max-width: 438px) {
+    .container {
+      width: 100%;
+      padding: 0 10px;
+    }
+  
+    .content {
+      text-align: center; /* Centralizar o conteúdo para uma melhor aparência em telas pequenas */
+    }
+  
+    .img-responsive {
+      max-width: 100%; /* Garante que a imagem não saia da largura da tela */
+      height: auto;
+    }
+  }
