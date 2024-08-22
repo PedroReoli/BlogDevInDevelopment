@@ -21,7 +21,7 @@ const ResponsiveHome = () => {
     <section id="home" className="bg-[#111111] text-white py-20 px-5">
       <div className="container mx-auto flex flex-col items-center text-center">
         <div className="flex-1 max-w-2xl">
-          <h1 className="text-4xl md:text-5xl font-extrabold mb-5 leading-tight">
+          <h1 className="text-3xl md:text-5xl font-extrabold mb-5 leading-tight">
             DevEmDesenvolvimento <span className="text-blue-500">Blog</span>
           </h1>
           <div className="text-xl md:text-2xl mb-5 text-gray-300 flex justify-center items-center">
