@@ -1,0 +1,129 @@
+<article class="post-container">
+	<!-- Cabeçalho -->
+	<header class="post-header" data-aos="fade-up">
+	  <h1 class="post-title">
+		Por que algumas pessoas não gostam de usar PKs?
+	  </h1>
+	  <p class="post-subtitle">
+		Explorando os desafios, benefícios e alternativas para Primary Keys em bancos de dados modernos.
+	  </p>
+	  <img src="/images/pk-challenges.jpg" alt="Ilustração de Primary Keys" class="post-header-image" />
+	</header>
+  
+	<!-- Introdução -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Introdução</h2>
+	  <p class="post-paragraph">
+		Primary Keys (PKs) são pilares fundamentais no design de bancos de dados relacionais. No entanto, mesmo práticas amplamente aceitas podem ter limitações. Neste artigo, analisaremos os argumentos contra e a favor das PKs, explorando como elas se encaixam em diferentes arquiteturas e quais alternativas podem ser utilizadas em casos específicos.
+	  </p>
+	  <p class="post-paragraph">
+		Seja em sistemas legados, bancos NoSQL ou arquiteturas distribuídas, o papel das PKs pode variar bastante. A chave está em entender o contexto do sistema e suas necessidades específicas.
+	  </p>
+	</section>
+  
+	<!-- Argumentos Contra PKs -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Por que evitar PKs em alguns cenários?</h2>
+	  <div class="post-columns">
+		<div class="post-column">
+		  <h3 class="post-column-title">1. Restrição à Escalabilidade Funcional</h3>
+		  <p class="post-paragraph">
+			Quando a PK é baseada em identificadores de negócio, como CPF ou número de contrato, alterações nesses valores podem causar problemas de manutenção e consistência em todo o sistema.
+		  </p>
+		  <p class="post-paragraph">
+			Impacto: Relacionamentos `FOREIGN KEY` precisam ser atualizados manualmente, o que aumenta a complexidade e o risco de inconsistências em sistemas críticos.
+		  </p>
+		</div>
+		<div class="post-column">
+		  <h3 class="post-column-title">2. Dependência Excessiva do Banco de Dados</h3>
+		  <p class="post-paragraph">
+			Em arquiteturas modernas, como microsserviços, depender de uma PK centralizada pode gerar gargalos. Identificadores globais, como UUIDs, são preferidos em sistemas distribuídos devido à sua independência.
+		  </p>
+		</div>
+		<div class="post-column">
+		  <h3 class="post-column-title">3. PKs Baseadas em Negócio</h3>
+		  <p class="post-paragraph">
+			Dados de negócio, como CPF ou número de contrato, são suscetíveis a mudanças. Essa prática pode comprometer a consistência do banco, especialmente em ambientes dinâmicos.
+		  </p>
+		</div>
+	  </div>
+	  <img src="/images/scalability-issues.jpg" alt="Desafios de escalabilidade" class="post-image-full" />
+	</section>
+  
+	<!-- Benefícios das PKs -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Por que usar PKs ainda é uma boa prática?</h2>
+	  <ul class="post-list">
+		<li>
+		  <strong>Integridade Referencial:</strong> PKs garantem unicidade e consistência entre tabelas relacionadas, facilitando o controle de dados.
+		</li>
+		<li>
+		  <strong>Performance:</strong> Consultas baseadas em PKs aproveitam índices otimizados, resultando em tempos de resposta mais rápidos e maior eficiência.
+		</li>
+		<li>
+		  <strong>Facilidade de Debugging:</strong> PKs tornam o rastreamento de problemas mais direto e menos ambíguo.
+		</li>
+	  </ul>
+	  <img src="/images/pk-benefits.jpg" alt="Benefícios das PKs" class="post-image-half" />
+	</section>
+  
+	<!-- Alternativas às PKs -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Alternativas às PKs</h2>
+	  <table class="post-table">
+		<thead>
+		  <tr class="post-table-header">
+			<th class="post-table-cell">Alternativa</th>
+			<th class="post-table-cell">Descrição</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr class="post-table-row">
+			<td class="post-table-cell">UUIDs</td>
+			<td class="post-table-cell">Identificadores globais únicos, ideais para sistemas distribuídos e independência de banco.</td>
+		  </tr>
+		  <tr class="post-table-row">
+			<td class="post-table-cell">Desnormalização</td>
+			<td class="post-table-cell">Estratégia em bancos NoSQL que prioriza eficiência de leitura sobre integridade relacional.</td>
+		  </tr>
+		  <tr class="post-table-row">
+			<td class="post-table-cell">Event-Driven IDs</td>
+			<td class="post-table-cell">IDs gerados em arquiteturas orientadas a eventos, assegurando unicidade em contextos específicos.</td>
+		  </tr>
+		</tbody>
+	  </table>
+	</section>
+  
+	<!-- Exemplo Prático -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Exemplo com Surrogate Keys</h2>
+	  <p class="post-paragraph">
+		Surrogate Keys são identificadores técnicos gerados automaticamente, independentes de dados do negócio. Veja como implementá-las:
+	  </p>
+	  <pre class="post-code">
+  CREATE TABLE cliente (
+	  s_q_l_id BIGINT IDENTITY(1,1) PRIMARY KEY, -- Chave técnica
+	  nome NVARCHAR(255) NOT NULL,
+	  cpf NVARCHAR(14) NOT NULL UNIQUE,
+	  email NVARCHAR(255) NOT NULL
+  );
+	  </pre>
+	  <p class="post-paragraph">
+		Essa estrutura desacopla os dados de negócio das chaves do banco, proporcionando flexibilidade e robustez.
+	  </p>
+	</section>
+  
+	<!-- Conclusão -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Conclusão</h2>
+	  <p class="post-paragraph">
+		O uso de Primary Keys é uma ferramenta poderosa em bancos de dados relacionais, mas não é uma solução universal. Dependendo do contexto, abordagens alternativas, como UUIDs ou modelagem desnormalizada, podem ser mais adequadas.
+	  </p>
+	  <blockquote class="post-quote">
+		"Design inteligente de bancos de dados é a chave para a escalabilidade e eficiência."
+	  </blockquote>
+	  <p class="post-paragraph">
+		Avalie cuidadosamente os requisitos do seu sistema e escolha a abordagem que melhor atenda às suas necessidades.
+	  </p>
+	</section>
+  </article>

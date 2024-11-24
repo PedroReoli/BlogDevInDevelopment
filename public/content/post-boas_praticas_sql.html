@@ -1,0 +1,117 @@
+<article class="post-container">
+	<!-- Cabeçalho -->
+	<header class="post-header" data-aos="fade-up">
+	  <h1 class="post-title">
+		Por que usar BIGINT, IDENTITY e colunas de log em bancos de dados SQL?
+	  </h1>
+	  <p class="post-subtitle">
+		Explorando estratégias essenciais para projetar sistemas escaláveis e de alta performance.
+	  </p>
+	  <img src="/images/database-performance.jpg" alt="Banco de dados moderno" class="post-header-image" />
+	</header>
+  
+	<!-- Introdução -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Introdução</h2>
+	  <p class="post-paragraph">
+		Vamos ser sinceros: todo mundo gosta de sistemas rápidos, estáveis e que simplesmente <em>funcionam</em>. Mas a má notícia é que, sem boas práticas no design de bancos de dados, isso é quase impossível. Então, como evitamos o caos?
+	  </p>
+	  <p class="post-paragraph">
+		Práticas como usar <code>BIGINT</code> para chaves primárias, <code>IDENTITY</code> para incremento automático e colunas de log são os primeiros passos para um banco de dados organizado, rastreável e pronto para o futuro.
+	  </p>
+	</section>
+  
+	<!-- Layout em Colunas -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Por Que Boas Práticas Fazem Diferença?</h2>
+	  <div class="post-columns">
+		<div class="post-column">
+		  <h3 class="post-column-title">Escalabilidade</h3>
+		  <p class="post-paragraph">
+			Imagine que seu sistema tem 10 milhões de registros. Parece muito, certo? Agora, imagine 10 bilhões. Com <code>BIGINT</code>, você pode dormir tranquilo sabendo que seu banco de dados não vai travar amanhã.
+		  </p>
+		  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" class="svg-icon">
+			<circle cx="50" cy="50" r="40" stroke="#4a90e2" stroke-width="4" fill="lightblue" />
+		  </svg>
+		</div>
+		<div class="post-column">
+		  <h3 class="post-column-title">Performance</h3>
+		  <p class="post-paragraph">
+			Índices e consultas adoram chaves incrementais. Elas evitam a fragmentação e ajudam os mecanismos do banco de dados a fazerem seu trabalho com eficiência.
+		  </p>
+		</div>
+		<div class="post-column">
+		  <h3 class="post-column-title">Rastreabilidade</h3>
+		  <p class="post-paragraph">
+			Sem colunas de log, qualquer alteração nos dados é como um apagão. Ter datas de criação e modificação salva a sua vida na hora de auditar ou depurar o sistema.
+		  </p>
+		</div>
+	  </div>
+	</section>
+  
+	<!-- Exemplo de Colunas de Log -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Exemplo de Colunas de Log</h2>
+	  <p class="post-paragraph">
+		Colunas de log são como um "diário secreto" do seu banco de dados. Elas documentam todas as mudanças importantes. Vamos dar uma olhada em uma estrutura típica:
+	  </p>
+	  <table class="post-table">
+		<thead>
+		  <tr class="post-table-header">
+			<th class="post-table-cell">Coluna</th>
+			<th class="post-table-cell">Descrição</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr class="post-table-row">
+			<td class="post-table-cell">l_o_g_cre</td>
+			<td class="post-table-cell">Data e hora da criação do registro.</td>
+		  </tr>
+		  <tr class="post-table-row">
+			<td class="post-table-cell">l_o_g_alt</td>
+			<td class="post-table-cell">Última data de modificação.</td>
+		  </tr>
+		  <tr class="post-table-row">
+			<td class="post-table-cell">l_o_g_del</td>
+			<td class="post-table-cell">Marca se o registro foi logicamente excluído.</td>
+		  </tr>
+		</tbody>
+	  </table>
+	  <img src="/images/log-diagram.svg" alt="Diagrama de logs" class="post-image-full" />
+	</section>
+  
+	<!-- Implementação Prática -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Implementação Prática</h2>
+	  <p class="post-paragraph">
+		Você pode começar pequeno e aplicar essas boas práticas no design do seu banco de dados com o seguinte código:
+	  </p>
+	  <pre class="post-code">
+  CREATE TABLE exemplo (
+	  id BIGINT IDENTITY(1,1) PRIMARY KEY,
+	  nome NVARCHAR(255) NOT NULL,
+	  l_o_g_cre DATETIME DEFAULT GETDATE(),
+	  l_o_g_alt DATETIME NULL,
+	  l_o_g_del BIT DEFAULT 0
+  );
+	  </pre>
+	  <p class="post-paragraph">
+		Esse exemplo é simples, mas poderoso. Ele garante rastreabilidade e escalabilidade desde o início.
+	  </p>
+	</section>
+  
+	<!-- Conclusão -->
+	<section class="post-section" data-aos="fade-up">
+	  <h2 class="post-section-title">Conclusão</h2>
+	  <p class="post-paragraph">
+		Se você deseja que seus sistemas sejam confiáveis, adotar práticas como <code>BIGINT</code>, <code>IDENTITY</code> e colunas de log não é apenas recomendável — é essencial.
+	  </p>
+	  <blockquote class="post-quote">
+		"A mágica de um sistema robusto está em um banco de dados bem projetado."
+	  </blockquote>
+	  <p class="post-paragraph">
+		Agora é sua vez de implementar essas ideias e transformar seu banco de dados em uma máquina de alta performance.
+	  </p>
+	</section>
+  </article>
+  
