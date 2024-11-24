@@ -1,29 +1,56 @@
 import { BlogPost } from './interfaces';
 
 export const blogsData: BlogPost[] = [
+
+ 
+  // POSTS SQL E BD
   {
-    title: "Computação Quântica: Explorando o Futuro da Programação",
-    description: "Um mergulho na computação quântica, suas aplicações e como os programadores podem se preparar para essa revolução tecnológica.",
-    date: "12/08/2024",
-    keywords: ["Computação Quântica", "Qiskit", "Tecnologia", "Programação"],
-    imageUrl: "/backgrounds/post1.png",
-    filename: "post1" // Deve corresponder a "post1.html" em /content/
+    title: "Comandos Iniciais SQL",
+    description: "Aprenda e pratique os comandos SQL básicos para começar a manipular dados em bancos de dados relacionais com facilidade.",
+    date: "24/11/2024",   
+    keywords: ["SQL", "Banco de Dados", "Nível Inicial", "SQL Inicial", "Comandos", "SGBD"],
+    imageUrl: "/postpictures/bg/post-sql.svg",
+    filename: "post-sqltips1" // Deve corresponder a "post-poo.html" em /content/
   },
   {
-    title: "Programação Ética na Era da Inteligência Artificial",
-    description: "A importância de desenvolver IA de maneira ética, garantindo transparência, justiça e respeito aos direitos humanos.",
-    date: "12/08/2024",
-    keywords: ["Programação Ética", "Inteligência Artificial", "IA", "Tecnologia"],
-    imageUrl: "/backgrounds/post2.png",
-    filename: "post2" // Deve corresponder a "post2.html" em /content/
+    title: "Comandos Intermediários SQL",
+    description: "Explore exemplos de comandos SQL Intermediários para manipulação de dados, filtros e junções em consultas complexas.",
+    date: "24/11/2024",   
+    keywords: ["SQL", "Banco de Dados", "Nível Intermediário","Comandos", "SGBD"],
+    imageUrl: "/postpictures/bg/post-sql.svg",
+    filename: "post-sqltips2" // Deve corresponder a "post-poo.html" em /content/
   },
   {
-    title: "WebAssembly: Elevando a Performance no Desenvolvimento Web",
-    description: "Como WebAssembly está transformando o desenvolvimento web com alta performance e portabilidade.",
-    date: "12/08/2024",
-    keywords: ["WebAssembly", "Wasm", "Desenvolvimento Web", "Tecnologia"],
-    imageUrl: "/backgrounds/post3.png",
-    filename: "post3" // Deve corresponder a "post2.html" em /content/
-  },
-  // Adicione mais posts conforme necessário
+    title: "Boas Práticas em SQL",
+    description: "Descubra como boas práticas como BIGINT, IDENTITY e colunas de log podem transformar o design de bancos de dados SQL, garantindo eficiência e escalabilidade.",
+    date: "24/11/2024",
+    keywords: ["Boas Práticas SQL", "Design de Banco de Dados", "SQL Avançado", "Escalabilidade"],
+    imageUrl: "/postpictures/bg/post-sql.svg",
+    filename: "post-boas_praticas_sql" 
+  },  
+  {
+    title: "Desafios e Benefícios das Primary Keys",
+    description: "Explore os desafios e vantagens do uso de Primary Keys em bancos de dados, com exemplos e práticas modernas.",
+    date: "24/11/2024",
+    keywords: ["Primary Keys", "Bancos de Dados", "SQL", "Chave Primária", "Dicas", "Vantagens e Desvantagens"],
+    imageUrl: "/postpictures/bg/post-pk.svg",
+    filename: "post-porque_algumas_pessoas_nao_gostam_de_usar_pk" // Deve corresponder a "post3.html" em /content/
+  },  
+//  POO
+{
+  title: "Programação Orientada a Objetos: Estruturando Sistemas Reais",
+  description: "Aprenda como a Programação Orientada a Objetos (POO) revoluciona o desenvolvimento de software.Com exemplos práticos do mundo real.",
+  date: "24/11/2024",   
+  keywords: ["POO", "Programação Orientada a Objetos", "C#", "JavaScript"],
+  imageUrl: "/postpictures/bg/post-poo.svg",
+  filename: "post-poo" // Deve corresponder a "post-poo.html" em /content/
+},
+// JAVASCRIPT TYPESCRIPT
+
+// C# CSHARP
+
+// ASPNET
+
+// 
+
 ];

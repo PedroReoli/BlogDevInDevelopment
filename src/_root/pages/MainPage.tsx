@@ -3,8 +3,8 @@
 import BlogGridList from '@/components/Blog/BlogGridList';
 import Footer from './Footer';
 import Home from './Home';
-import ResponsiveHome from './ResponsiveHome';
-import ResponsiveFooter from './ResponsiveFooter';
+import ResponsiveHome from './ResponsiveLayouts/ResponsiveHome';
+import ResponsiveFooter from './ResponsiveLayouts/ResponsiveFooter';
 import { useEffect, useState } from 'react';
 
 const MainPage = () => {

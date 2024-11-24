@@ -5,7 +5,10 @@ const ResponsiveFooter = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [content, setContent] = useState("");
 
-  const handleOpen = (event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>, contentType: string) => {
+  const handleOpen = (
+    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+    contentType: string
+  ) => {
     event.preventDefault();
     setContent(contentType);
     setIsOpen(true);
@@ -29,18 +32,12 @@ const ResponsiveFooter = () => {
               </p>
             </div>
 
-            {/* Botões ultra modernos */}
+            {/* Botões */}
             <div className="flex justify-center mt-8">
-              <button 
-                onClick={(e) => handleOpen(e, 'Contribua')} 
-                className="btn-modern mx-2"
-              >
+              <button onClick={(e) => handleOpen(e, "Contribua")} className="btn-modern mx-2">
                 Contribua
               </button>
-              <button 
-                onClick={(e) => handleOpen(e, 'Contato')} 
-                className="btn-modern mx-2"
-              >
+              <button onClick={(e) => handleOpen(e, "Contato")} className="btn-modern mx-2">
                 Contato
               </button>
             </div>
@@ -49,9 +46,25 @@ const ResponsiveFooter = () => {
 
         <div className="text-center text-base mt-16 border-t border-gray-700 pt-8">
           <div className="flex justify-center space-x-4">
-            <a href="#" onClick={(e) => handleOpen(e, 'Termos de Serviço')} className="text-blue-400 hover:underline">Termos de Serviço</a> 
-            <span className="text-gray-500">|</span> 
-            <a href="#" onClick={(e) => handleOpen(e, 'Privacidade')} className="text-blue-400 hover:underline">Privacidade</a>
+            <a
+              href="#"
+              onClick={(e) => handleOpen(e, "Termos de Serviço")}
+              className="text-blue-400 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Termos de Serviço
+            </a>
+            <span className="text-gray-500">|</span>
+            <a
+              href="#"
+              onClick={(e) => handleOpen(e, "Privacidade")}
+              className="text-blue-400 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Privacidade
+            </a>
           </div>
         </div>
       </footer>

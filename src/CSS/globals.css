@@ -221,3 +221,64 @@
     @apply bg-gray-800 text-gray-300 px-5 py-2 rounded-lg border border-gray-700 shadow-md transition transform hover:scale-105 hover:bg-gray-700 hover:text-white;
   }
 }
+/* HAMBURGUER MENU */
+/* Botão Hamburger */
+.hamburger-button {
+  position: relative;
+  width: 40px; /* Aumenta o tamanho do botão */
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e1e2f; /* Fundo escuro */
+  border: 2px solid transparent;
+  transition: all 0.3s ease-in-out;
+}
+
+.hamburger-button:hover {
+  border-color: #4a90e2; /* Efeito de hover */
+}
+
+/* Linhas do botão */
+.hamburger-line {
+  height: 2px; /* Espessura da linha */
+  width: 24px; /* Largura da linha */
+  background-color: #fff; /* Cor branca */
+  border-radius: 4px;
+  margin: 4px 0; /* Espaçamento entre as linhas */
+  transition: all 0.3s ease-in-out;
+}
+
+/* Dropdown Menu */
+.dropdown-menu {
+  display: flex;
+  flex-direction: column;
+  background-color: #1e1e2f;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+.dropdown-menu a {
+  font-size: 1rem;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s ease-in-out;
+}
+
+.dropdown-menu a:hover {
+  color: #4a90e2;
+}
+
+/* Animação */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

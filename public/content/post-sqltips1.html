@@ -1,0 +1,259 @@
+<article class="post-container">
+  <!-- Cabeçalho -->
+  <header class="post-header" data-aos="fade-up">
+    <h1 class="post-title">
+      Comandos SQL Básicos: Introdução para Iniciantes
+    </h1>
+    <p class="post-subtitle">
+      Aprenda os fundamentos do SQL com exemplos simples para começar a manipular dados em um banco de dados.
+    </p>
+    <img src="/images/sql-commands.svg" alt="Comandos SQL Básicos" class="post-header-image" />
+  </header>
+
+  <!-- Introdução -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Introdução ao SQL</h2>
+    <p class="post-paragraph">
+      SQL (Structured Query Language) é a linguagem utilizada para interagir com bancos de dados relacionais. Neste artigo, vamos explorar os comandos SQL básicos para que você possa começar a trabalhar com dados em tabelas. Vamos abordar a criação de tabelas, manipulação de dados e a execução de consultas simples.
+    </p>
+  </section>
+
+  <!-- Exemplo 1: CREATE TABLE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Exemplo 1: CREATE TABLE</h2>
+    <p class="post-paragraph">
+      O comando <code>CREATE TABLE</code> é utilizado para criar novas tabelas no banco de dados. Ao criar uma tabela, você define os nomes das colunas e seus tipos de dados.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+CREATE TABLE clientes (
+  id_cliente INT PRIMARY KEY,
+  nome NVARCHAR(100),
+  idade INT,
+  cidade NVARCHAR(100)
+);
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+Tabela 'clientes' criada com sucesso.
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Exemplo 2: ALTER TABLE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Exemplo 2: ALTER TABLE</h2>
+    <p class="post-paragraph">
+      O comando <code>ALTER TABLE</code> é usado para modificar a estrutura de uma tabela existente. Com ele, é possível adicionar, remover ou modificar colunas em uma tabela já criada.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+ALTER TABLE clientes
+ADD telefone NVARCHAR(15);
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+Coluna 'telefone' adicionada à tabela 'clientes'.
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+ <!--  ALTER TABLE para renomear coluna -->
+ <section class="post-section" data-aos="fade-up">
+  <h2 class="post-section-title"> ALTER TABLE para renomear coluna</h2>
+  <p class="post-paragraph">
+    O comando <code>ALTER TABLE</code> pode ser usado para renomear colunas de uma tabela.
+  </p>
+  <table class="post-table">
+    <thead>
+      <tr class="post-table-header">
+        <th class="post-table-cell">Comando</th>
+        <th class="post-table-cell">Resultado Esperado</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr class="post-table-row">
+        <td class="post-table-cell">
+          <pre class="post-code">
+ALTER TABLE clientes
+RENAME COLUMN telefone TO celular;
+          </pre>
+        </td>
+        <td class="post-table-cell">
+          <pre class="post-code">
+| nome        | celular |
+|-------------|---------|
+| João Silva  | NULL    |
+| Ana Costa   | NULL    |
+          </pre>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+  <!-- Exemplo 3: SELECT -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Exemplo 3: SELECT</h2>
+    <p class="post-paragraph">
+      O comando <code>SELECT</code> é utilizado para consultar dados de uma ou mais tabelas. Ele é o comando principal para recuperar informações de um banco de dados.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+SELECT nome, idade FROM clientes;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+| nome       | idade |
+|------------|-------|
+| João Silva | 35    |
+| Maria Lima | 42    |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Exemplo 4: INSERT INTO -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Exemplo 4: INSERT INTO</h2>
+    <p class="post-paragraph">
+      O comando <code>INSERT INTO</code> é utilizado para adicionar novos registros em uma tabela.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+INSERT INTO clientes (nome, idade, cidade)
+VALUES ('Carlos Souza', 28, 'São Paulo');
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+| nome        | idade | cidade    |
+|-------------|-------|-----------|
+| Carlos Souza| 28    | São Paulo |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Exemplo 5: UPDATE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Exemplo 5: UPDATE</h2>
+    <p class="post-paragraph">
+      O comando <code>UPDATE</code> é utilizado para modificar registros existentes em uma tabela.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+UPDATE clientes
+SET cidade = 'Rio de Janeiro'
+WHERE id_cliente = 5;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+| nome        | idade | cidade          |
+|-------------|-------|-----------------|
+| João Silva  | 35    | Rio de Janeiro  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Exemplo 6: DELETE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Exemplo 6: DELETE</h2>
+    <p class="post-paragraph">
+      O comando <code>DELETE</code> é utilizado para remover registros de uma tabela.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+DELETE FROM clientes WHERE id_cliente = 5;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+| nome        | idade | cidade       |
+|-------------|-------|--------------|
+| João Silva  | 35    | São Paulo    |
+| Maria Lima  | 40    | Rio de Janeiro|
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- Conclusão -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title">Conclusão</h2>
+    <p class="post-paragraph">
+      Com esses comandos básicos de SQL, você agora pode começar a criar, consultar, atualizar e excluir dados em bancos de dados relacionais. Esses são os fundamentos para começar a trabalhar com SQL e bancos de dados. Pratique e continue explorando comandos mais avançados para aprofundar seus conhecimentos.
+    </p>
+  </section>
+</article>

@@ -1,0 +1,219 @@
+<article class="post-container">
+    <!-- Cabeçalho -->
+    <header class="post-header" data-aos="fade-up">
+        <h1 class="post-title">
+            Programação Orientada a Objetos (POO): Estruturando Código para Sistemas Reais
+        </h1>
+        <p class="post-subtitle">
+            Aprenda como usar POO para criar sistemas robustos, escaláveis e fáceis de manter, com exemplos práticos em C# e JavaScript.
+        </p>
+        <!-- IMAGEM -->
+        <img src="/images/oop-realworld.jpg" alt="Conceito de Programação Orientada a Objetos" class="post-header-image" />
+    </header>
+  
+    <!-- Introdução -->
+    <section class="post-section" data-aos="fade-up">
+        <h2 class="post-section-title">O que é Programação Orientada a Objetos?</h2>
+        <p class="post-paragraph">
+            Programação Orientada a Objetos (POO) é um paradigma que organiza o código em torno de "objetos" que representam entidades do mundo real ou conceitos abstratos. Esses objetos possuem atributos (dados) e comportamentos (métodos), permitindo que desenvolvedores modelem sistemas complexos de forma modular e intuitiva.
+        </p>
+        <blockquote class="post-quote">
+            "A POO é a espinha dorsal de muitos sistemas modernos, promovendo escalabilidade e manutenibilidade."
+        </blockquote>
+    </section>
+  
+    <!-- Capítulo 1: Abstração -->
+    <section class="post-section" data-aos="fade-up">
+        <h2 class="post-section-title">1. Abstração</h2>
+        <p class="post-paragraph">
+            A abstração foca nos aspectos essenciais de um objeto, ocultando detalhes irrelevantes. Isso permite que você trabalhe com conceitos de alto nível, sem precisar lidar com a implementação interna.
+        </p>
+        <p class="post-paragraph">
+            **Exemplo:** Em um sistema de e-commerce, um objeto **Produto** pode ser abstraído para conter apenas os atributos essenciais, como nome, preço e quantidade, sem precisar expor todos os detalhes sobre o seu funcionamento interno.
+        </p>
+        <h3 class="post-code-title">Exemplo de Abstração em C#</h3>
+        <pre class="post-code">
+public abstract class Produto {
+    public string Nome { get; set; }
+    public decimal Preco { get; set; }
+
+    public abstract decimal CalcularDesconto(); // Método abstrato
+}
+
+public class ProdutoFisico : Produto {
+    public override decimal CalcularDesconto() {
+        return Preco * 0.1m; // 10% de desconto
+    }
+}
+        </pre>
+        <h3 class="post-code-title">Exemplo de Abstração em JavaScript</h3>
+        <pre class="post-code">
+class Produto {
+    constructor(nome, preco) {
+        this.nome = nome;
+        this.preco = preco;
+    }
+
+    calcularDesconto() {
+        throw new Error("Método abstrato. Implemente na classe filha.");
+    }
+}
+
+class ProdutoFisico extends Produto {
+    calcularDesconto() {
+        return this.preco * 0.1; // 10% de desconto
+    }
+}
+        </pre>
+    </section>
+  
+    <!-- Capítulo 2: Encapsulamento -->
+    <section class="post-section" data-aos="fade-up">
+        <h2 class="post-section-title">2. Encapsulamento</h2>
+        <p class="post-paragraph">
+            O encapsulamento visa proteger os dados internos de um objeto, permitindo que esses dados sejam acessados ou alterados somente por métodos controlados.
+        </p>
+        <p class="post-paragraph">
+            **Exemplo:** Em um sistema de estoque, a quantidade de um produto não pode ser alterada diretamente, mas somente através de um método específico, que garante que o estoque não seja manipulado de forma inconsistente.
+        </p>
+        <h3 class="post-code-title">Exemplo de Encapsulamento em C#</h3>
+        <pre class="post-code">
+public class Produto {
+    private int quantidade;
+
+    public int Quantidade {
+        get { return quantidade; }
+        private set {
+            if (value >= 0) quantidade = value;
+        }
+    }
+
+    public void AtualizarEstoque(int quantidadeAdicionada) {
+        Quantidade += quantidadeAdicionada;
+    }
+}
+        </pre>
+        <h3 class="post-code-title">Exemplo de Encapsulamento em JavaScript</h3>
+        <pre class="post-code">
+class Produto {
+    #quantidade; // Atributo privado
+
+    constructor(nome, preco) {
+        this.nome = nome;
+        this.preco = preco;
+        this.#quantidade = 0;
+    }
+
+    get quantidade() {
+        return this.#quantidade;
+    }
+
+    atualizarEstoque(quantidadeAdicionada) {
+        if (quantidadeAdicionada < 0 && this.#quantidade + quantidadeAdicionada < 0) {
+            throw new Error("Estoque insuficiente!");
+        }
+        this.#quantidade += quantidadeAdicionada;
+    }
+}
+        </pre>
+    </section>
+  
+    <!-- Capítulo 3: Herança -->
+    <section class="post-section" data-aos="fade-up">
+        <h2 class="post-section-title">3. Herança</h2>
+        <p class="post-paragraph">
+            A herança permite que uma classe reutilize atributos e métodos de outra classe. Isso reduz a duplicação de código e promove a reutilização de comportamentos comuns.
+        </p>
+        <p class="post-paragraph">
+            **Exemplo:** Uma classe **Pedido** pode herdar comportamentos de uma classe **Transação**, como o processo de confirmação de um pagamento, sem precisar reescrever a lógica.
+        </p>
+        <h3 class="post-code-title">Exemplo de Herança em C#</h3>
+        <pre class="post-code">
+public class Transacao {
+    public int Id { get; set; }
+    public DateTime Data { get; set; }
+
+    public void Confirmar() {
+        Console.WriteLine("Transação confirmada.");
+    }
+}
+
+public class Pedido : Transacao {
+    public List<string> Itens { get; set; }
+}
+        </pre>
+        <h3 class="post-code-title">Exemplo de Herança em JavaScript</h3>
+        <pre class="post-code">
+class Transacao {
+    constructor(id, data) {
+        this.id = id;
+        this.data = data;
+    }
+
+    confirmar() {
+        console.log("Transação confirmada.");
+    }
+}
+
+class Pedido extends Transacao {
+    constructor(id, data, itens) {
+        super(id, data);
+        this.itens = itens;
+    }
+}
+        </pre>
+    </section>
+  
+    <!-- Capítulo 4: Polimorfismo -->
+    <section class="post-section" data-aos="fade-up">
+        <h2 class="post-section-title">4. Polimorfismo</h2>
+        <p class="post-paragraph">
+            O polimorfismo permite que métodos com o mesmo nome se comportem de maneira diferente, dependendo do tipo do objeto que os invoca.
+        </p>
+        <p class="post-paragraph">
+            **Exemplo:** O método **calcularDesconto** pode ser implementado de maneiras diferentes para um **Pedido Normal** e um **Pedido VIP**, adaptando-se ao tipo de pedido.
+        </p>
+        <h3 class="post-code-title">Exemplo de Polimorfismo em C#</h3>
+        <pre class="post-code">
+public class Pedido {
+    public virtual double CalcularDesconto() {
+        return 0; // Sem desconto
+    }
+}
+
+public class PedidoVip : Pedido {
+    public override double CalcularDesconto() {
+        return 50; // Desconto de 50 para VIP
+    }
+}
+        </pre>
+        <h3 class="post-code-title">Exemplo de Polimorfismo em JavaScript</h3>
+        <pre class="post-code">
+class Pedido {
+    calcularDesconto() {
+        return 0; // Sem desconto
+    }
+}
+
+class PedidoVip extends Pedido {
+    calcularDesconto() {
+        return 50; // Desconto fixo para VIP
+    }
+}
+        </pre>
+    </section>
+  
+    <!-- Conclusão -->
+    <section class="post-section" data-aos="fade-up">
+        <h2 class="post-section-title">Conclusão</h2>
+        <p class="post-paragraph">
+            A Programação Orientada a Objetos (POO) é um dos pilares da programação moderna. Seus conceitos fundamentais, como Abstração, Encapsulamento, Herança e Polimorfismo, são essenciais para criar sistemas robustos, escaláveis e de fácil manutenção.
+        </p>
+        <blockquote class="post-quote">
+            "A POO não é apenas uma técnica de programação, é uma filosofia de organização e manutenção do código."
+        </blockquote>
+        <p class="post-paragraph">
+            Aplicando esses pilares de forma eficaz, você criará sistemas de maior qualidade, com código mais limpo, reutilizável e fácil de evoluir. Comece a aplicar esses conceitos no seu código e veja a transformação!
+        </p>
+    </section>
+</article>

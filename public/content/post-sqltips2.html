@@ -1,0 +1,904 @@
+<article class="post-container">
+    <!-- Cabeçalho -->
+    <header class="post-header" data-aos="fade-up">
+      <h1 class="post-title">
+        Comandos SQL : Parte 2
+      </h1>
+      <p class="post-subtitle">
+        Explore comandos SQL intermediários  para manipulação de dados, filtros e junções em consultas complexas.
+      </p>
+      <img src="/images/sql-commands.svg" alt="Comandos SQL" class="post-header-image" />
+    </header>
+  
+    <!-- Introdução -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">Introdução</h2>
+      <p class="post-paragraph">
+        O SQL é uma ferramenta essencial para interagir com bancos de dados relacionais. Ao longo deste artigo, exploraremos 30 áticos de comandos SQL intermediários , que cobrem desde consultas simples até junções complexas. Esses o ajudá-lo a realizar consultas eficazes e a manipular dados com mais eficiência.
+      </p>
+    </section>
+
+    <!-- SELECT com WHERE -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">SELECT com WHERE</h2>
+      <p class="post-paragraph">
+        O comando <code>SELECT</code> é utilizado para recuperar dados de uma tabela. A cláusula <code>WHERE</code> permite filtrar os resultados conforme condições específicas.
+      </p>
+      <table class="post-table">
+        <thead>
+          <tr class="post-table-header">
+            <th class="post-table-cell">Comando</th>
+            <th class="post-table-cell">Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="post-table-row">
+            <td class="post-table-cell">
+              <pre class="post-code">
+  SELECT nome, idade FROM clientes WHERE idade > 30;
+              </pre>
+            </td>
+            <td class="post-table-cell">
+              <pre class="post-code">
+  | nome       | idade |
+  |------------|-------|
+  | João Silva | 35    |
+  | Maria Lima | 42    |
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+    <!-- SELECT com AND/OR -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">SELECT com AND/OR</h2>
+      <p class="post-paragraph">
+        A cláusula <code>AND</code> é usada para combinar múltiplas condições, e o <code>OR</code> é utilizado para selecionar resultados onde pelo menos uma condição seja atendida.
+      </p>
+      <table class="post-table">
+        <thead>
+          <tr class="post-table-header">
+            <th class="post-table-cell">Comando</th>
+            <th class="post-table-cell">Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="post-table-row">
+            <td class="post-table-cell">
+              <pre class="post-code">
+  SELECT nome, cidade FROM clientes 
+  WHERE cidade = 'São Paulo' AND idade > 30 
+  OR cidade = 'Rio de Janeiro' AND idade < 25;
+              </pre>
+            </td>
+            <td class="post-table-cell">
+              <pre class="post-code">
+  | nome        | cidade         |
+  |-------------|----------------|
+  | João Silva  | São Paulo      |
+  | Pedro Souza | Rio de Janeiro |
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+    <!-- SELECT com JOIN -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">SELECT com JOIN</h2>
+      <p class="post-paragraph">
+        O comando <code>JOIN</code> é utilizado para combinar dados de duas ou mais tabelas com base em uma coluna comum. Vamos combinar dados de clientes e seus pedidos.
+      </p>
+      <table class="post-table">
+        <thead>
+          <tr class="post-table-header">
+            <th class="post-table-cell">Comando</th>
+            <th class="post-table-cell">Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="post-table-row">
+            <td class="post-table-cell">
+              <pre class="post-code">
+  SELECT c.nome, p.data_pedido, p.total 
+  FROM clientes c
+  JOIN pedidos p ON c.id_cliente = p.id_cliente
+  WHERE p.total > 1000;
+              </pre>
+            </td>
+            <td class="post-table-cell">
+              <pre class="post-code">
+  | nome        | data_pedido | total |
+  |-------------|-------------|-------|
+  | João Silva  | 2024-10-01  | 1500  |
+  | Ana Costa   | 2024-11-05  | 2000  |
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+    <!-- SELECT com GROUP BY -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">SELECT com GROUP BY</h2>
+      <p class="post-paragraph">
+        A cláusula <code>GROUP BY</code> agrupa os resultados por uma ou mais colunas e é comumente utilizada com funções agregadas como <code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, etc.
+      </p>
+      <table class="post-table">
+        <thead>
+          <tr class="post-table-header">
+            <th class="post-table-cell">Comando</th>
+            <th class="post-table-cell">Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="post-table-row">
+            <td class="post-table-cell">
+              <pre class="post-code">
+  SELECT cidade, COUNT(id_cliente) AS total_clientes
+  FROM clientes
+  GROUP BY cidade;
+              </pre>
+            </td>
+            <td class="post-table-cell">
+              <pre class="post-code">
+  | cidade         | total_clientes |
+  |----------------|----------------|
+  | São Paulo      | 100            |
+  | Rio de Janeiro | 50             |
+  | Belo Horizonte | 20             |
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+    <!-- SELECT com HAVING -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">SELECT com HAVING</h2>
+      <p class="post-paragraph">
+        A cláusula <code>HAVING</code> é usada para filtrar os resultados de uma consulta agregada, após o agrupamento com <code>GROUP BY</code>.
+      </p>
+      <table class="post-table">
+        <thead>
+          <tr class="post-table-header">
+            <th class="post-table-cell">Comando</th>
+            <th class="post-table-cell">Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="post-table-row">
+            <td class="post-table-cell">
+              <pre class="post-code">
+  SELECT cidade, COUNT(id_cliente) AS total_clientes
+  FROM clientes
+  GROUP BY cidade
+  HAVING COUNT(id_cliente) > 50;
+              </pre>
+            </td>
+            <td class="post-table-cell">
+              <pre class="post-code">
+  | cidade         | total_clientes |
+  |----------------|----------------|
+  | São Paulo      | 100            |
+  | Rio de Janeiro | 75             |
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+    <!-- SELECT com ORDER BY -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">SELECT com ORDER BY</h2>
+      <p class="post-paragraph">
+        A cláusula <code>ORDER BY</code> é usada para ordenar os resultados de uma consulta, seja em ordem crescente (ASC) ou decrescente (DESC).
+      </p>
+      <table class="post-table">
+        <thead>
+          <tr class="post-table-header">
+            <th class="post-table-cell">Comando</th>
+            <th class="post-table-cell">Resultado Esperado</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="post-table-row">
+            <td class="post-table-cell">
+              <pre class="post-code">
+  SELECT nome, idade
+  FROM clientes
+  ORDER BY idade DESC;
+              </pre>
+            </td>
+            <td class="post-table-cell">
+              <pre class="post-code">
+  | nome        | idade |
+  |-------------|-------|
+  | Maria Lima  | 50    |
+  | João Silva  | 42    |
+  | Pedro Souza | 30    |
+              </pre>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  
+      <!--  SELECT com DISTINCT -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com DISTINCT</h2>
+    <p class="post-paragraph">
+      O comando <code>SELECT DISTINCT</code> é utilizado para retornar resultados únicos, removendo duplicatas dos resultados da consulta.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT DISTINCT cidade FROM clientes;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | cidade         |
+  |----------------|
+  | São Paulo      |
+  | Rio de Janeiro |
+  | Belo Horizonte |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com LIMIT -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com LIMIT</h2>
+    <p class="post-paragraph">
+      A cláusula <code>LIMIT</code> é utilizada para limitar o número de registros retornados pela consulta.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome, cidade FROM clientes LIMIT 5;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | cidade         |
+  |-------------|----------------|
+  | João Silva  | São Paulo      |
+  | Maria Lima  | Rio de Janeiro |
+  | Pedro Souza | Belo Horizonte |
+  | Ana Costa   | São Paulo      |
+  | Bruno Silva | Rio de Janeiro |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com Subconsulta -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com Subconsulta</h2>
+    <p class="post-paragraph">
+      As subconsultas permitem usar uma consulta dentro de outra. A consulta interna pode retornar valores utilizados pela consulta externa.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome FROM clientes WHERE id_cliente IN 
+  (SELECT id_cliente FROM pedidos WHERE total > 1000);
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        |
+  |-------------|
+  | João Silva  |
+  | Ana Costa   |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com BETWEEN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com BETWEEN</h2>
+    <p class="post-paragraph">
+      A cláusula <code>BETWEEN</code> permite selecionar valores dentro de um intervalo específico, incluindo os limites.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome, idade FROM clientes WHERE idade BETWEEN 25 AND 40;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | idade |
+  |-------------|-------|
+  | João Silva  | 35    |
+  | Pedro Souza | 30    |
+  | Maria Lima  | 40    |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com IN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com IN</h2>
+    <p class="post-paragraph">
+      A cláusula <code>IN</code> é usada para filtrar valores que correspondem a uma lista de opções.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome, cidade FROM clientes WHERE cidade IN ('SP', 'RJ');
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | cidade         |
+  |-------------|----------------|
+  | João Silva  |      SP        |
+  | Pedro Souza |      RJ        |
+  | Ana Costa   |      SP        |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com LIKE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com LIKE</h2>
+    <p class="post-paragraph">
+      A cláusula <code>LIKE</code> é usada para buscar padrões de texto em colunas de tipo string.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome FROM clientes WHERE nome LIKE 'João%';
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        |
+  |-------------|
+  | João Silva  |
+  | João Costa  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com DISTINCT e COUNT -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com DISTINCT e COUNT</h2>
+    <p class="post-paragraph">
+      O comando <code>DISTINCT</code> pode ser combinado com funções agregadas, como <code>COUNT</code>, para contar valores únicos.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT COUNT(DISTINCT cidade) FROM clientes;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | COUNT(DISTINCT cidade) |
+  |------------------------|
+  | 3                      |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com JOIN e WHERE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com JOIN e WHERE</h2>
+    <p class="post-paragraph">
+      Um consulta utilizando <code>JOIN</code> com condição <code>WHERE</code> para combinar tabelas e filtrar resultados.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT c.nome, p.total 
+  FROM clientes c
+  JOIN pedidos p ON c.id_cliente = p.id_cliente
+  WHERE p.total > 500;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        |  total |
+  |-------------|--------|
+  | João Silva  |  1000  |
+  | Ana Costa   |  2000  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+
+  <!--  SELECT com JOIN e WHERE -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com JOIN e WHERE</h2>
+    <p class="post-paragraph">
+      Uma consulta usando <code>JOIN</code> para combinar duas tabelas e o <code>WHERE</code> para filtrar os resultados com base em uma condição específica.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT c.nome, p.total 
+  FROM clientes c
+  JOIN pedidos p ON c.id_cliente = p.id_cliente
+  WHERE p.total > 500;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | total |
+  |-------------|-------|
+  | João Silva  | 1000  |
+  | Ana Costa   | 2000  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+  <!--  SELECT com LEFT JOIN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com LEFT JOIN</h2>
+    <p class="post-paragraph">
+      O <code>LEFT JOIN</code> é utilizado para combinar tabelas, retornando todos os registros da tabela à esquerda e os registros correspondentes da tabela à direita, mesmo quando não há correspondência.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT c.nome, p.data_pedido
+  FROM clientes c
+  LEFT JOIN pedidos p ON c.id_cliente = p.id_cliente;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | data_pedido |
+  |-------------|-------------|
+  | João Silva  | 2024-10-01  |
+  | Maria Lima  | NULL        |
+  | Ana Costa   | 2024-11-05  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+  <!--  SELECT com UNION -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com UNION</h2>
+    <p class="post-paragraph">
+      O <code>UNION</code> é usado para combinar os resultados de duas ou mais consultas. As consultas devem ter o mesmo número de colunas e tipos de dados compatíveis.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome, cidade FROM clientes WHERE idade < 30
+  UNION
+  SELECT nome, cidade FROM clientes WHERE idade > 40;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | cidade         |
+  |-------------|----------------|
+  | Pedro Souza | São Paulo      |
+  | João Silva  | Rio de Janeiro |
+  | Maria Lima  | Belo Horizonte |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+  <!--  SELECT com DISTINCT e JOIN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com DISTINCT e JOIN</h2>
+    <p class="post-paragraph">
+      O <code>DISTINCT</code> pode ser usado junto com o <code>JOIN</code> para retornar registros únicos de múltiplas tabelas.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT DISTINCT c.nome, p.data_pedido
+  FROM clientes c
+  JOIN pedidos p ON c.id_cliente = p.id_cliente;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | data_pedido |
+  |-------------|-------------|
+  | João Silva  | 2024-10-01  |
+  | Ana Costa   | 2024-11-05  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  UPDATE com JOIN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> UPDATE com JOIN</h2>
+    <p class="post-paragraph">
+      O comando <code>UPDATE</code> com <code>JOIN</code> pode ser usado para atualizar dados em uma tabela com base em dados de outra tabela.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  UPDATE clientes c
+  JOIN pedidos p ON c.id_cliente = p.id_cliente
+  SET c.cidade = 'Rio de Janeiro'
+  WHERE p.total > 1000;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | cidade         |
+  |-------------|----------------|
+  | João Silva  | Rio de Janeiro |
+  | Ana Costa   | Rio de Janeiro |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+  
+  <!--  DELETE com JOIN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> DELETE com JOIN</h2>
+    <p class="post-paragraph">
+      O comando <code>DELETE</code> com <code>JOIN</code> é utilizado para excluir registros de uma tabela com base em condições de outra tabela.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  DELETE c
+  FROM clientes c
+  JOIN pedidos p ON c.id_cliente = p.id_cliente
+  WHERE p.total < 100;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        | cidade         |
+  |-------------|----------------|
+  | João Silva  | São Paulo      |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+ 
+
+ 
+  <!--  SELECT com DISTINCT em múltiplas colunas -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com DISTINCT em múltiplas colunas</h2>
+    <p class="post-paragraph">
+      O comando <code>DISTINCT</code> pode ser usado para garantir que apenas valores únicos sejam retornados, mesmo em múltiplas colunas.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT DISTINCT cidade, idade
+  FROM clientes;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | cidade         | idade |
+  |----------------|-------|
+  | São Paulo      | 35    |
+  | Rio de Janeiro | 28    |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  Subconsulta com SELECT -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> Subconsulta com SELECT</h2>
+    <p class="post-paragraph">
+      A subconsulta é uma consulta dentro de outra consulta. Aqui, vamos usar uma subconsulta no <code>WHERE</code>.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome 
+  FROM clientes 
+  WHERE idade = (SELECT MAX(idade) FROM clientes);
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        |
+  |-------------|
+  | Maria Lima  |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  Subconsulta com IN -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> Subconsulta com IN</h2>
+    <p class="post-paragraph">
+      Usando a subconsulta com <code>IN</code>, podemos verificar se um valor está presente em um conjunto de resultados de outra consulta.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome 
+  FROM clientes 
+  WHERE id_cliente IN (SELECT id_cliente FROM pedidos WHERE total > 1000);
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        |
+  |-------------|
+  | João Silva  |
+  | Ana Costa   |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com EXISTS -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com EXISTS</h2>
+    <p class="post-paragraph">
+      A cláusula <code>EXISTS</code> é usada para verificar a existência de resultados de uma subconsulta.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT nome 
+  FROM clientes 
+  WHERE EXISTS (SELECT 1 FROM pedidos WHERE id_cliente = clientes.id_cliente);
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | nome        |
+  |-------------|
+  | João Silva  |
+  | Ana Costa   |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!--  SELECT com DISTINCT e COUNT -->
+  <section class="post-section" data-aos="fade-up">
+    <h2 class="post-section-title"> SELECT com DISTINCT e COUNT</h2>
+    <p class="post-paragraph">
+      Usamos o <code>COUNT</code> para contar o número de registros distintos em uma consulta.
+    </p>
+    <table class="post-table">
+      <thead>
+        <tr class="post-table-header">
+          <th class="post-table-cell">Comando</th>
+          <th class="post-table-cell">Resultado Esperado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="post-table-row">
+          <td class="post-table-cell">
+            <pre class="post-code">
+  SELECT COUNT(DISTINCT cidade) 
+  FROM clientes;
+            </pre>
+          </td>
+          <td class="post-table-cell">
+            <pre class="post-code">
+  | COUNT(DISTINCT cidade) |
+  |------------------------|
+  | 3                      |
+            </pre>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  
+    <!-- Conclusão -->
+    <section class="post-section" data-aos="fade-up">
+      <h2 class="post-section-title">Conclusão</h2>
+      <p class="post-paragraph">
+        Com esses comandos SQL, você agora tem uma boa compreensão de como realizar consultas, inserir, atualizar e excluir dados, além de aprender a combinar múltiplas tabelas e realizar análises agregadas. Esses são fundamentos essenciais para trabalhar eficientemente com bancos de dados.
+      </p>
+    </section>
+  </article>
+  
