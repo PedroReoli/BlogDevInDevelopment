@@ -30,7 +30,7 @@ const Home = () => {
           </div>
         </div>
         <div className="flex-1 mt-10 md:mt-0 flex justify-center items-center">
-          <img src="/images/prog.svg" alt="logo" className="w-full max-w-xs md:max-w-sm" />
+          <img src="/images/owl.svg" alt="logo" className="w-full max-w-xs md:max-w-sm" />
         </div>
       </div>
     </section>
