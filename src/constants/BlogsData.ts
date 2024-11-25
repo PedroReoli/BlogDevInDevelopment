@@ -6,7 +6,7 @@ export const blogsData: BlogPost[] = [
     description: "Descubra como boas práticas como BIGINT, IDENTITY e colunas de log podem transformar o design de bancos de dados SQL, garantindo eficiência e escalabilidade.",
     date: "24/11/2024",
     keywords: ["Boas Práticas SQL", "Design de Banco de Dados", "SQL Avançado", "Escalabilidade"],
-    imageUrl: "/postpictures/post-sql.svg",
+    imageUrl: "/postpictures/bg/post-sql.svg",
     filename: "post-boas_praticas_sql" 
   },  
   {
@@ -14,7 +14,7 @@ export const blogsData: BlogPost[] = [
     description: "Explore os desafios e vantagens do uso de Primary Keys em bancos de dados, com exemplos e práticas modernas.",
     date: "24/11/2024",
     keywords: ["Primary Keys", "Bancos de Dados", "SQL", "Boas Práticas"],
-    imageUrl: "/postpictures/post3.svg",
+    imageUrl: "/postpictures/bg/post-pk.svg",
     filename: "post-porque_algumas_pessoas_nao_gostam_de_usar_pk" // Deve corresponder a "post3.html" em /content/
   },  
   {
@@ -22,7 +22,7 @@ export const blogsData: BlogPost[] = [
     description: "Aprenda como a Programação Orientada a Objetos (POO) revoluciona o desenvolvimento de software.Com exemplos práticos do mundo real.",
     date: "24/11/2024",   
     keywords: ["POO", "Programação Orientada a Objetos", "C#", "JavaScript"],
-    imageUrl: "/postpictures/post-poo.png",
+    imageUrl: "/postpictures/bg/post-poo.svg",
     filename: "post-poo" // Deve corresponder a "post-poo.html" em /content/
   },
   // Adicione mais posts conforme necessário
