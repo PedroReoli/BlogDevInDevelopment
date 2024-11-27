@@ -36,7 +36,7 @@ const BlogGridList = () => {
 
       {/* Barra de Pesquisa */}
       <div className="mb-6 flex justify-center">
-        <div className="relative w-1/2">
+        <div className="relative w-full lg:w-1/3 mx-auto">
           <input
             type="text"
             value={searchQuery}

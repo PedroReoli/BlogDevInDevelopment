@@ -6,10 +6,10 @@ const ResponsiveHome = () => {
     <section id="home" className="bg-[#111111] text-white py-20 px-5">
       <div className="container mx-auto flex flex-col items-center">
         <div className="flex-1 max-w-2xl text-center">
-          <h1 className="text-4xl font-extrabold mb-5 leading-tight">
+          <h1 className="text-3xl font-extrabold mb-5 leading-tight">
             DevEmDesenvolvimento <span className="text-blue-500">Blog</span>
           </h1>
-          <div className="text-xl mb-5 text-gray-300 flex justify-center items-center">
+          <div className="text-lg mb-5 text-gray-300 flex justify-center items-center">
             <Typewriter
               options={{
                 autoStart: true,
