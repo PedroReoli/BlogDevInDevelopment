@@ -7,7 +7,7 @@ const Home = () => {
       <div className="container mx-auto flex flex-col md:flex-row items-center md:justify-between">
         <div className="flex-1 max-w-2xl text-center md:text-left">
           <h1 className="text-4xl md:text-5xl font-extrabold mb-5 leading-tight">
-            DevEmDesenvolvimento <span className="text-blue-500">Blog</span>
+            DevEmDesenvolvimento <span className="text-blue-500">Blog, Aulas e Projetos</span>
           </h1>
           <div className="text-xl md:text-2xl mb-5 text-gray-300 flex justify-center md:justify-start items-center">
             <Typewriter
@@ -19,7 +19,7 @@ const Home = () => {
               onInit={(typewriter) => {
                 typewriter
                   .typeString(
-                    "Explorando o que há de novo em Programação, Tecnologia e Inovação."
+                    "Programação, Tecnologia e Inovação."
                   )
                   .callFunction(() => {
                     console.log("Texto finalizado e permanece na tela.");
