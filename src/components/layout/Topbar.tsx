@@ -1,4 +1,5 @@
 // src\components\layout\Topbar.tsx
+import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
 
 const Topbar = () => {
@@ -30,14 +31,12 @@ const Topbar = () => {
 
         {/* Menu */}
         <nav className="topbar-nav flex space-x-6">
-          <a
-            href="https://devemdesenvolvimento.netlify.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
+          <Link
+          to="/"
+          className="text-white hover:text-blue-500 transition"
           >
             Blog
-          </a>
+          </Link>
           <a
             href="https://www.youtube.com/@DevDesenvolvimento"
             target="_blank"
