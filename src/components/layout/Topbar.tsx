@@ -1,4 +1,8 @@
 // src\components\layout\Topbar.tsx
+<<<<<<< HEAD
+=======
+import { Link } from "react-router-dom";
+>>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
 import Typewriter from "typewriter-effect";
 
 const Topbar = () => {
@@ -22,7 +26,11 @@ const Topbar = () => {
                 .typeString("Blog feito por Pedro Lucas Reis")
                 .pauseFor(1000)
                 .deleteAll()
+<<<<<<< HEAD
                 .typeString("DevEmDesenvolvimento") // Reescreve o texto final
+=======
+                .typeString("DevEmDesenvolvimento") 
+>>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
                 .start();
             }}
           />
@@ -30,6 +38,7 @@ const Topbar = () => {
 
         {/* Menu */}
         <nav className="topbar-nav flex space-x-6">
+<<<<<<< HEAD
           <a
             href="https://devemdesenvolvimento.netlify.app"
             target="_blank"
@@ -38,6 +47,14 @@ const Topbar = () => {
           >
             Blog
           </a>
+=======
+          <Link
+          to="/"
+          className="text-white hover:text-blue-500 transition"
+          >
+            Blog
+          </Link>
+>>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
           <a
             href="https://www.youtube.com/@DevDesenvolvimento"
             target="_blank"
