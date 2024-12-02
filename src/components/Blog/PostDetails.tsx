@@ -9,7 +9,7 @@ const PostDetails = () => {
     const loadPost = async () => {
       try {
         // Carrega o arquivo HTML da pasta public/content
-        const response = await fetch(`/content/${id}.html`);
+        const response = await fetch(`/content/blog/${id}.html`);
         const text = await response.text();
         setPostContent(text);
       } catch (error) {
