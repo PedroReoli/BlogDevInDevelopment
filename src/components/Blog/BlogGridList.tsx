@@ -2,19 +2,18 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { blogsData } from "@/constants/BlogsData";
 import { BlogPost as BlogPostInterface } from "@/constants/interfaces";
-import SearchBar from "@/components/layout/SearchBar/SearchBar"; 
+import SearchBar from "@/components/layout/SearchBar/SearchBar";
 
 const BlogGridList = () => {
-  const [searchQuery, setSearchQuery] = useState(""); // Estado para a pesquisa
-  const [filteredPosts, setFilteredPosts] = useState(blogsData); // Estado para os posts filtrados
+  const [searchQuery, setSearchQuery] = useState("");
+  const [filteredPosts, setFilteredPosts] = useState(blogsData);
 
-  // Função de pesquisa
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
     if (query === "") {
-      setFilteredPosts(blogsData); // Mostra todos os posts se a barra estiver vazia
+      setFilteredPosts(blogsData);
     } else {
       const filtered = blogsData.filter((post) => {
         const titleMatch = post.title.toLowerCase().includes(query);
@@ -30,8 +29,6 @@ const BlogGridList = () => {
 
   return (
     <div className="container mx-auto py-8">
-      {/* Título */}
-      <h2 className="text-3xl font-bold text-center mb-10">Blog Posts</h2>
 
       {/* Componente de Pesquisa */}
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
@@ -69,7 +66,7 @@ const BlogGridList = () => {
               </div>
               <div className="flex justify-center">
                 <Link
-                  to={`/post/${post.filename}`}
+                  to={`/post/${post.title.toLowerCase().replace(/\s/g, "-")}`}
                   className="bg-transparent text-blue-500 hover:text-blue-400 underline"
                 >
                   Continuar lendo

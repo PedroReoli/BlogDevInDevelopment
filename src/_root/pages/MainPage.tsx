@@ -1,10 +1,8 @@
-// src/_root/pages/MainPage.tsx
-
-import BlogGridList from '@/components/Blog/BlogGridList';
 import Footer from './Footer';
 import Home from './Home';
 import ResponsiveHome from './ResponsiveLayouts/ResponsiveHome';
 import ResponsiveFooter from './ResponsiveLayouts/ResponsiveFooter';
+import Sessions from '@/components/Transition/Sessions';
 import { useEffect, useState } from 'react';
 
 const MainPage = () => {
@@ -25,8 +23,13 @@ const MainPage = () => {
 
   return (
     <div>
+      {/* Header */}
       {isSmallScreen ? <ResponsiveHome /> : <Home />}
-      <BlogGridList />
+
+     
+      <Sessions />
+
+      {/* Footer */}
       {isSmallScreen ? <ResponsiveFooter /> : <Footer />}
     </div>
   );
