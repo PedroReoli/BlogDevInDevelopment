@@ -25,15 +25,9 @@ const ResponsiveFooter = () => {
         <div className="container mx-auto footer-container">
           <div className="flex flex-col justify-center text-center">
             <div className="flex-1 flex flex-col justify-center">
-<<<<<<< HEAD
-              <h3 className="text-3xl font-bold mb-4">DevEmDesenvolvimento</h3>
-              <p className="text-base leading-7 tracking-wide mx-auto max-w-[90%]">
-                O <span className="text-blue-400">DevEmDesenvolvimento</span> é um espaço dedicado ao compartilhamento
-=======
               <h3 className="text-2xl font-bold mb-4">DevEmDesenvolvimento</h3>
               <p className="text-base leading-7 tracking-wide mx-auto max-w-[90%]">
                 O <span className="text-blue-400 align-left">DevEmDesenvolvimento</span> é um espaço dedicado ao compartilhamento
->>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
                 de aprendizados e insights sobre programação, focando em estudantes e desenvolvedores juniores. Vamos evoluir juntos, <span className="text-blue-400">um código de cada vez</span>.
               </p>
             </div>
