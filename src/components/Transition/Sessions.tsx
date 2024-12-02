@@ -28,7 +28,7 @@ const Sessions = () => {
         {currentSection !== "blog" && (
           <motion.div
             className="cursor-pointer text-blue-500 hover:text-blue-400"
-            whileHover={{ scale: 1.2, rotate: -15, color: "#00A1FF" }}
+            whileHover={{ scale: 1.2 }} // Removido rotate
             whileTap={{ scale: 1 }}
             onClick={() => {
               if (currentSection === "lessons") setCurrentSection("blog");
@@ -40,8 +40,8 @@ const Sessions = () => {
         )}
 
         {/* Título da Seção */}
-        <h2 className="text-3xl font-bold text-white text-center">
-          {currentSection === "blog" && "Blog Posts"}
+        <h2 className="text-3xl font-bold text-white text-center flex-1">
+          {currentSection === "blog" && "Blog"}
           {currentSection === "lessons" && "Aulas"}
           {currentSection === "projects" && "Projetos"}
         </h2>
@@ -50,7 +50,7 @@ const Sessions = () => {
         {currentSection !== "projects" && (
           <motion.div
             className="cursor-pointer text-blue-500 hover:text-blue-400"
-            whileHover={{ scale: 1.2, rotate: 15, color: "#00A1FF" }}
+            whileHover={{ scale: 1.2 }} // Removido rotate
             whileTap={{ scale: 1 }}
             onClick={() => {
               if (currentSection === "blog") setCurrentSection("lessons");
@@ -63,7 +63,7 @@ const Sessions = () => {
       </div>
 
       {/* Renderiza a seção atual */}
-      {renderSection()}
+      <div className="text-center">{renderSection()}</div>
     </div>
   );
 };
