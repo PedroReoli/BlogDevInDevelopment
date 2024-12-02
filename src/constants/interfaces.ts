@@ -13,8 +13,8 @@ export interface BlogPost {
     description: string;
     date: string;
     keywords: string[];
-    videoUrl: string; // URL do vídeo da aula
-    duration: string; // Duração da aula, e.g., "15 min"
+    imageUrl: string;
+    filename: string; // Nome do arquivo HTML 
   }
   
   export interface Project {
@@ -23,6 +23,5 @@ export interface BlogPost {
     date: string;
     keywords: string[];
     imageUrl: string;
-    repositoryUrl: string; // URL do repositório do projeto no GitHub
-    liveDemoUrl?: string; // URL do demo ao vivo (opcional)
+    filename: string; // Nome do arquivo HTML 
   }

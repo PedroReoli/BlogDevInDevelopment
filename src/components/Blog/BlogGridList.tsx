@@ -36,7 +36,7 @@ const BlogGridList = () => {
       {/* Grid de Posts */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredPosts.length === 0 ? (
-          <p className="text-center text-gray-400">Nenhum resultado encontrado.</p>
+          <p className="text-center text-gray-400">Nenhum post encontrado.</p>
         ) : (
           filteredPosts.map((post: BlogPostInterface, index) => (
             <div
@@ -66,7 +66,7 @@ const BlogGridList = () => {
               </div>
               <div className="flex justify-center">
                 <Link
-                  to={`/post/${post.title.toLowerCase().replace(/\s/g, "-")}`}
+                  to={`/post/${post.filename}`}
                   className="bg-transparent text-blue-500 hover:text-blue-400 underline"
                 >
                   Continuar lendo

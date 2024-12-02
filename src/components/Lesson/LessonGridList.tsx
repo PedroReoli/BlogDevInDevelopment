@@ -8,7 +8,6 @@ const LessonGridList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredLessons, setFilteredLessons] = useState(lessonsData);
 
-  // Função de pesquisa
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
@@ -30,8 +29,6 @@ const LessonGridList = () => {
 
   return (
     <div className="container mx-auto py-8">
-    
-
       {/* Componente de Pesquisa */}
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
 
@@ -45,6 +42,11 @@ const LessonGridList = () => {
               key={index}
               className="bg-[#1e1e2d] text-white p-5 rounded-xl shadow-md hover:shadow-lg border border-gray-600 transition-transform transform hover:scale-105"
             >
+              <img
+                src={lesson.imageUrl}
+                alt={lesson.title}
+                className="w-full h-48 object-cover mb-4 rounded-md"
+              />
               <h3 className="text-lg font-bold mb-2 text-blue-400">{lesson.title}</h3>
               <p className="text-gray-300 text-sm mb-4">{lesson.description}</p>
               <div className="flex flex-wrap gap-2 mb-4">

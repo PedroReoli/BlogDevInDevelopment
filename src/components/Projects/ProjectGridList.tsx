@@ -8,7 +8,6 @@ const ProjectGridList = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredProjects, setFilteredProjects] = useState(projectsData);
 
-  // Função de pesquisa
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
@@ -30,7 +29,6 @@ const ProjectGridList = () => {
 
   return (
     <div className="container mx-auto py-8">
-
       {/* Componente de Pesquisa */}
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
 

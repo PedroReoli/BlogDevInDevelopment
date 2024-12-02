@@ -2,108 +2,18 @@
 	<!-- Cabeçalho -->
 	<header class="post-header" data-aos="fade-up">
 	  <h1 class="post-title">
-<<<<<<< HEAD
-		Por que algumas pessoas não gostam de usar PKs?
-	  </h1>
-	  <p class="post-subtitle">
-		Explorando os desafios, benefícios e alternativas para Primary Keys em bancos de dados modernos.
-	  </p>
-	  <!-- IMAGEM -->
-	  <img src="/images/pk-challenges.jpg" alt="Ilustração de Primary Keys" class="post-header-image" />
-=======
 		Vantagens e Desvantagens do Uso de Chaves Primárias em Bancos de Dados Relacionais
 	  </h1>
 	  <p class="post-subtitle">
 		Explorando os desafios, benefícios e alternativas para o uso de Chaves Primárias (PKs) em bancos de dados modernos e sistemas escaláveis.
 	  </p>
 	  <img src="/images/pk-challenges.svg" alt="Ilustração de Primary Keys" class="post-header-image" />
->>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
 	</header>
   
 	<!-- Introdução -->
 	<section class="post-section" data-aos="fade-up">
 	  <h2 class="post-section-title">Introdução</h2>
 	  <p class="post-paragraph">
-<<<<<<< HEAD
-		Primary Keys (PKs) são pilares fundamentais no design de bancos de dados relacionais. No entanto, mesmo práticas amplamente aceitas podem ter limitações. Neste artigo, analisaremos os argumentos contra e a favor das PKs, explorando como elas se encaixam em diferentes arquiteturas e quais alternativas podem ser utilizadas em casos específicos.
-	  </p>
-	  <p class="post-paragraph">
-		Seja em sistemas legados, bancos NoSQL ou arquiteturas distribuídas, o papel das PKs pode variar bastante. A chave está em entender o contexto do sistema e suas necessidades específicas.
-	  </p>
-	</section>
-  
-	<!-- Argumentos Contra PKs -->
-	<section class="post-section" data-aos="fade-up">
-	  <h2 class="post-section-title">Por que evitar PKs em alguns cenários?</h2>
-	  <div class="post-columns">
-		<div class="post-column">
-		  <h3 class="post-column-title">1. Restrição à Escalabilidade Funcional</h3>
-		  <p class="post-paragraph">
-			Quando a PK é baseada em identificadores de negócio, como CPF ou número de contrato, alterações nesses valores podem causar problemas de manutenção e consistência em todo o sistema.
-		  </p>
-		  <p class="post-paragraph">
-			Impacto: Relacionamentos `FOREIGN KEY` precisam ser atualizados manualmente, o que aumenta a complexidade e o risco de inconsistências em sistemas críticos.
-		  </p>
-		</div>
-		<div class="post-column">
-		  <h3 class="post-column-title">2. Dependência Excessiva do Banco de Dados</h3>
-		  <p class="post-paragraph">
-			Em arquiteturas modernas, como microsserviços, depender de uma PK centralizada pode gerar gargalos. Identificadores globais, como UUIDs, são preferidos em sistemas distribuídos devido à sua independência.
-		  </p>
-		</div>
-		<div class="post-column">
-		  <h3 class="post-column-title">3. PKs Baseadas em Negócio</h3>
-		  <!-- <p class="post-paragraph"> -->
-			Dados de negócio, como CPF ou número de contrato, são suscetíveis a mudanças. Essa prática pode comprometer a consistência do banco, especialmente em ambientes dinâmicos.
-		  </p>
-		</div>
-	  </div>
-	  <!-- IMAGEM -->
-	  <img src="/images/scalability-issues.jpg" alt="Desafios de escalabilidade" class="post-image-full" />
-	</section>
-  
-	<!-- Benefícios das PKs -->
-	<section class="post-section" data-aos="fade-up">
-	  <h2 class="post-section-title">Por que usar PKs ainda é uma boa prática?</h2>
-	  <ul class="post-list">
-		<li>
-		  <strong>Integridade Referencial:</strong> PKs garantem unicidade e consistência entre tabelas relacionadas, facilitando o controle de dados.
-		</li>
-		<li>
-		  <strong>Performance:</strong> Consultas baseadas em PKs aproveitam índices otimizados, resultando em tempos de resposta mais rápidos e maior eficiência.
-		</li>
-		<li>
-		  <strong>Facilidade de Debugging:</strong> PKs tornam o rastreamento de problemas mais direto e menos ambíguo.
-		</li>
-	  </ul>
-	  <!-- IMAGEM -->
-	  <img src="/images/pk-benefits.jpg" alt="Benefícios das PKs" class="post-image-half" />
-	</section>
-  
-	<!-- Alternativas às PKs -->
-	<section class="post-section" data-aos="fade-up">
-	  <h2 class="post-section-title">Alternativas às PKs</h2>
-	  <table class="post-table">
-		<thead>
-		  <tr class="post-table-header">
-			<th class="post-table-cell">Alternativa</th>
-			<th class="post-table-cell">Descrição</th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <tr class="post-table-row">
-			<td class="post-table-cell">UUIDs</td>
-			<td class="post-table-cell">Identificadores globais únicos, ideais para sistemas distribuídos e independência de banco.</td>
-		  </tr>
-		  <tr class="post-table-row">
-			<td class="post-table-cell">Desnormalização</td>
-			<td class="post-table-cell">Estratégia em bancos NoSQL que prioriza eficiência de leitura sobre integridade relacional.</td>
-		  </tr>
-		  <tr class="post-table-row">
-			<td class="post-table-cell">Event-Driven IDs</td>
-			<td class="post-table-cell">IDs gerados em arquiteturas orientadas a eventos, assegurando unicidade em contextos específicos.</td>
-		  </tr>
-=======
 		As chaves primárias (PKs) são um dos conceitos mais fundamentais no design de bancos de dados relacionais. Elas garantem a unicidade dos dados e ajudam a estabelecer a integridade referencial entre as tabelas. No entanto, embora amplamente utilizadas, as PKs também têm suas limitações, especialmente quando falamos de sistemas distribuídos, arquitetura de microsserviços ou em bancos de dados não relacionais.
 	  </p>
 	  <p class="post-paragraph">
@@ -143,18 +53,10 @@
 			</tr>	
 
 
->>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
 		</tbody>
 	  </table>
 	</section>
   
-<<<<<<< HEAD
-	<!-- Exemplo Prático -->
-	<section class="post-section" data-aos="fade-up">
-	  <h2 class="post-section-title">Exemplo com Surrogate Keys</h2>
-	  <p class="post-paragraph">
-		Surrogate Keys são identificadores técnicos gerados automaticamente, independentes de dados do negócio. Veja como implementá-las:
-=======
 	<!-- Vantagens do Uso de Chaves Primárias -->
 	<section class="post-section" data-aos="fade-up">
 	  <h2 class="post-section-title">Vantagens de Usar Chaves Primárias</h2>
@@ -249,7 +151,6 @@
 	  <h2 class="post-section-title">Exemplo Prático com Surrogate Keys</h2>
 	  <p class="post-paragraph">
 		Um exemplo prático do uso de surrogate keys pode ser visto na implementação de uma tabela de clientes, onde uma chave técnica é usada para evitar a dependência de dados de negócio:
->>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
 	  </p>
 	  <pre class="post-code">
   CREATE TABLE cliente (
@@ -260,11 +161,7 @@
   );
 	  </pre>
 	  <p class="post-paragraph">
-<<<<<<< HEAD
-		Essa estrutura desacopla os dados de negócio das chaves do banco, proporcionando flexibilidade e robustez.
-=======
 		Nesse exemplo, a chave `s_q_l_id` é uma surrogate key gerada automaticamente pelo banco de dados, enquanto o `cpf` é um identificador de negócio único. Essa abordagem desacopla a lógica de negócio das chaves do banco, permitindo maior flexibilidade.
->>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630
 	  </p>
 	</section>
   
@@ -272,18 +169,6 @@
 	<section class="post-section" data-aos="fade-up">
 	  <h2 class="post-section-title">Conclusão</h2>
 	  <p class="post-paragraph">
-<<<<<<< HEAD
-		O uso de Primary Keys é uma ferramenta poderosa em bancos de dados relacionais, mas não é uma solução universal. Dependendo do contexto, abordagens alternativas, como UUIDs ou modelagem desnormalizada, podem ser mais adequadas.
-	  </p>
-	  <blockquote class="post-quote">
-		"Design inteligente de bancos de dados é a chave para a escalabilidade e eficiência."
-	  </blockquote>
-	  <p class="post-paragraph">
-		Avalie cuidadosamente os requisitos do seu sistema e escolha a abordagem que melhor atenda às suas necessidades.
-	  </p>
-	</section>
-  </article>
-=======
 		As chaves primárias continuam sendo uma solução poderosa para garantir a integridade e eficiência dos bancos de dados relacionais. No entanto, em sistemas modernos e distribuídos, como microsserviços, é importante considerar alternativas como UUIDs e surrogate keys, que oferecem mais flexibilidade e escalabilidade.
 	  </p>
 	  <blockquote class="post-quote">
@@ -295,4 +180,3 @@
 	</section>
   </article>
   
->>>>>>> 26135da4fd2509448af34e722b1ce37d69edd630

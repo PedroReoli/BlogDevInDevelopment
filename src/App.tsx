@@ -6,6 +6,7 @@ import MainPage from "./_root/pages/MainPage";
 import RootLayout from "./_root/RootLayout";
 import PageTransition from "./components/Transition/PageTransition";
 
+
 const App = () => {
   return (
     <Router>

@@ -12,7 +12,7 @@ const Sessions = () => {
   const sessionsTopRef = useRef<HTMLDivElement>(null);
 
   const sections = [
-    { id: "blog", title: "Blog Posts", component: <BlogGridList /> },
+    { id: "blog", title: "Blog", component: <BlogGridList /> },
     { id: "lessons", title: "Aulas", component: <LessonGridList /> },
     { id: "projects", title: "Projetos", component: <ProjectGridList /> },
   ];
