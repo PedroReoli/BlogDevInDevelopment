@@ -16,10 +16,10 @@ const SearchBar: React.FC<SearchBarProps> = ({ searchQuery, onSearchChange }) =>
           value={searchQuery}
           onChange={onSearchChange}
           placeholder="Digite palavras-chave ou títulos..."
-          className="w-full py-4 px-16 rounded-full border border-gray-300 bg-white text-gray-800 placeholder-gray-500 shadow-lg focus:outline-none focus:ring-4 focus:ring-blue-500 focus:border-blue-500 transition-all duration-300"
+          className="w-full py-4 px-14 rounded-full border border-gray-700 bg-[#1b1b1b] text-gray-300 placeholder-gray-500 shadow-md focus:outline-none focus:ring-2 focus:ring-[#3b82f6] transition-all duration-300"
         />
         {/* Ícone de busca */}
-        <span className="absolute left-6 top-1/2 transform -translate-y-1/2 text-gray-400 text-xl transition-colors duration-300 hover:text-blue-500">
+        <span className="absolute left-5 top-1/2 transform -translate-y-1/2 text-gray-400 text-lg hover:text-[#3b82f6] transition-colors duration-300">
           <FaSearch />
         </span>
       </div>

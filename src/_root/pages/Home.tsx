@@ -1,5 +1,5 @@
 import Typewriter from "typewriter-effect";
-import "@/Responsive.css";
+import "@/CSS/Responsive.css";
 
 const Home = () => {
   return (

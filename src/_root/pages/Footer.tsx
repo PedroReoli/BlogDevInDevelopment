@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Popup from "@/components/pop-ups/Popup";
+import Popup from "@/components/layout/pop-ups/Popup";
 
 const Footer = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -27,9 +27,7 @@ const Footer = () => {
     setIsOpen(true);
     setContent("Chave Pix copiada com sucesso");
 
-    setTimeout(() => {
-      setIsOpen(false);
-    }, 800);
+    
   };
 
   return (

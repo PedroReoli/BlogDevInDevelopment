@@ -1,7 +1,7 @@
 // src/_root/RootLayout/RootLayout.tsx
 import { Outlet } from 'react-router-dom';
-import Topbar from '@/components/layout/Topbar';
-import ResponsiveTopbar from '@/components/layout/ResponsiveTopbar';
+import Topbar from '@/components/layout/Topbar/Topbar';
+import ResponsiveTopbar from '@/components/layout/Topbar/ResponsiveTopbar';
 import { useEffect, useState } from 'react';
 
 const RootLayout = () => {

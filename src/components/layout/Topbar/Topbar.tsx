@@ -11,8 +11,8 @@ const Topbar = () => {
           <Typewriter
             options={{
               autoStart: true,
-              delay: 50,
-              deleteSpeed: 25,
+              delay: 70,
+              deleteSpeed: 50,
               loop: false,
             }}
             onInit={(typewriter) => {

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Popup from "@/components/pop-ups/Popup";
+import Popup from "@/components/layout/pop-ups/Popup";
 
 const ResponsiveFooter = () => {
   const [isOpen, setIsOpen] = useState(false);
