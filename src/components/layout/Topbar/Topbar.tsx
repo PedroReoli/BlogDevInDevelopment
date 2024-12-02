@@ -1,6 +1,6 @@
-// src\components\layout\Topbar.tsx
 import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
+import { FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa"; // Importação de ícones
 
 const Topbar = () => {
   return (
@@ -23,43 +23,43 @@ const Topbar = () => {
                 .typeString("Blog feito por Pedro Lucas Reis")
                 .pauseFor(1000)
                 .deleteAll()
-                .typeString("DevEmDesenvolvimento") 
+                .typeString("DevEmDesenvolvimento")
                 .start();
             }}
           />
         </div>
 
-        {/* Menu */}
-        <nav className="topbar-nav flex space-x-6">
-          <Link
-          to="/"
-          className="text-white hover:text-blue-500 transition"
-          >
+        {/* Menu com links e ícones */}
+        <nav className="topbar-nav flex items-center space-x-6">
+          <Link to="/" className="text-white hover:text-blue-500 transition">
             Blog
           </Link>
           <a
             href="https://www.youtube.com/@DevDesenvolvimento"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
+            className="flex items-center space-x-1 text-white transition hover:text-red"
           >
-            Youtube
+            <FaYoutube className="text-xl text-red" /> 
+            <span>YouTube</span>
           </a>
           <a
             href="https://www.instagram.com/01_dev_em_desenvolvimento"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
+            className="flex items-center space-x-1 text-white transition hover:text-pink-500"
           >
-            Instagram
+            <FaInstagram className="text-xl text-pink-500" />
+            <span>Instagram</span>
           </a>
           <a
             href="https://x.com/opedroreoli"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
+            className="flex items-center space-x-1 text-white transition hover:text-blue-400"
           >
-            Twitter
+            <FaTwitter className="text-xl text-blue-400" />
+            <span>X</span>
           </a>
         </nav>
       </div>
