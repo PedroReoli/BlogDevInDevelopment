@@ -6,7 +6,7 @@ export const lessonsData = [
     date: "01/12/2024",
     keywords: ["JavaScript", "Fundamentos", "Web"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "intro-javascript.html",
+    filename: "intro-javascript",
   },
   {
     title: "CSS Flexbox e Grid",
@@ -14,7 +14,7 @@ export const lessonsData = [
     date: "05/12/2024",
     keywords: ["CSS", "Flexbox", "Grid", "Layouts"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "css-flexbox-grid.html",
+    filename: "css-flexbox-grid",
   },
   {
     title: "Manipulação do DOM com JavaScript",
@@ -22,6 +22,6 @@ export const lessonsData = [
     date: "10/12/2024",
     keywords: ["JavaScript", "DOM", "Interatividade"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "dom-manipulation.html",
+    filename: "dom-manipulation",
   },
 ];

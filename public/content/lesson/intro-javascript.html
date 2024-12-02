@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Introdução ao JavaScript</title>
+  <link rel="stylesheet" href="/lesson.css">
+</head>
+<body>
+  <div class="lesson-container">
+    <!-- Cabeçalho -->
+    <header class="lesson-header">
+      <h1 class="lesson-title">Introdução ao JavaScript</h1>
+      <p class="lesson-subtitle">Uma jornada completa pelo mundo do JavaScript.</p>
+      <img src="/images/javascript-intro.svg" alt="Introdução ao JavaScript" class="lesson-header-image">
+    </header>
+
+    <!-- Seção 1: Criação e Primeiros Passos -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Criação e Primeiros Passos</h2>
+      <p class="lesson-paragraph">
+        O JavaScript foi criado por <strong>Brendan Eich</strong> em 1995, enquanto ele trabalhava na <strong>Netscape Communications Corporation</strong>. Inicialmente, a linguagem foi chamada de "Mocha", depois "LiveScript", e finalmente recebeu o nome de "JavaScript" como estratégia de marketing, aproveitando a popularidade do <strong>Java</strong>.
+      </p>
+      <p class="lesson-paragraph">
+        Apesar do nome, JavaScript e Java são linguagens completamente diferentes. Java é uma linguagem compilada e orientada a objetos, enquanto o JavaScript é interpretado e voltado para o desenvolvimento web interativo.
+      </p>
+    </section>
+
+    <!-- Vídeo sobre a história do JavaScript -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Vídeo: A história do JavaScript</h2>
+      <iframe 
+        class="lesson-video" 
+        width="100%" 
+        height="400" 
+        src="youtube.com" 
+        title="A História do JavaScript - Curso em Vídeo" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <!-- Seção 2: Papel da Netscape e da Microsoft -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Papel da Netscape e da Microsoft</h2>
+      <p class="lesson-paragraph">
+        A Netscape introduziu o JavaScript para permitir interatividade em sites, mas a Microsoft logo criou sua própria versão chamada <strong>JScript</strong>. Isso resultou em inconsistências, dificultando o desenvolvimento web até o surgimento do padrão <strong>ECMAScript</strong> pela ECMA International, em 1997.
+      </p>
+    </section>
+
+    <!-- Seção 3: Padrões ECMAScript -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">O que é ECMAScript?</h2>
+      <p class="lesson-paragraph">
+        O ECMAScript é a padronização do JavaScript. A cada versão, novos recursos são introduzidos. As atualizações mais importantes foram:
+      </p>
+      <ul class="lesson-list">
+        <li><strong>ES3 (1999):</strong> Primeira versão consolidada do JavaScript.</li>
+        <li><strong>ES5 (2009):</strong> Introduziu recursos como JSON e métodos funcionais.</li>
+        <li><strong>ES6 (2015):</strong> Adicionou classes, arrow functions, let/const, e módulos.</li>
+      </ul>
+    </section>
+
+    <!-- Seção 4: Sintaxe Básica -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Sintaxe Básica e Declaração de Variáveis</h2>
+      <p class="lesson-paragraph">
+        O JavaScript permite declarar variáveis de diferentes maneiras:
+      </p>
+      <div class="lesson-code">
+        <pre><code>
+// Usando let
+let nome = "João";
+
+// Usando const (imutável)
+const idade = 25;
+
+// Usando var (não recomendado)
+var cidade = "São Paulo";
+        </code></pre>
+      </div>
+      <p class="lesson-paragraph">
+        Use <strong>let</strong> para variáveis mutáveis e <strong>const</strong> para valores constantes. Evite <strong>var</strong>, pois possui um comportamento menos previsível.
+      </p>
+    </section>
+
+    <!-- Vídeo sobre variáveis no JavaScript -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Vídeo: Trabalhando com variáveis</h2>
+      <iframe 
+        class="lesson-video" 
+        width="100%" 
+        height="400" 
+        src="youtube.com" 
+        title="Variáveis no JavaScript" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <!-- Seção 5: Funções -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Funções no JavaScript</h2>
+      <p class="lesson-paragraph">
+        As funções são blocos reutilizáveis de código. Veja um exemplo:
+      </p>
+      <div class="lesson-code">
+        <pre><code>
+// Função tradicional
+function saudacao(nome) {
+  return `Olá, ${nome}!`;
+}
+
+// Arrow function
+const saudacaoArrow = (nome) => `Olá, ${nome}!`;
+console.log(saudacao("Pedro"));
+        </code></pre>
+      </div>
+    </section>
+
+    <!-- Seção 6: DOM e Eventos -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">DOM e Manipulação de Eventos</h2>
+      <p class="lesson-paragraph">
+        O JavaScript permite manipular elementos HTML diretamente. Por exemplo:
+      </p>
+      <div class="lesson-code">
+        <pre><code>
+// Alterando texto de um elemento
+document.getElementById("titulo").textContent = "Novo Título";
+
+// Adicionando um evento de clique
+document.getElementById("botao").addEventListener("click", () => {
+  alert("Botão clicado!");
+});
+        </code></pre>
+      </div>
+    </section>
+
+    <!-- Vídeo sobre o DOM -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Vídeo: Manipulando o DOM</h2>
+      <iframe 
+        class="lesson-video" 
+        width="100%" 
+        height="400" 
+        src="youtube.com" 
+        title="Manipulando o DOM" 
+        frameborder="0" 
+        allowfullscreen>
+      </iframe>
+    </section>
+
+    <!-- Conclusão -->
+    <section class="lesson-section">
+      <h2 class="lesson-section-title">Conclusão</h2>
+      <p class="lesson-paragraph">
+        Nesta aula, você aprendeu sobre a história do JavaScript, seus padrões e fundamentos. Além disso, vimos exemplos práticos de como usar a linguagem. Explore mais e pratique!
+      </p>
+      <blockquote class="lesson-quote">
+        O JavaScript não é apenas uma linguagem de programação; é a expressão da nossa capacidade de transformar ideias em realidade, moldando o curso da web e influenciando gerações de desenvolvedores
+      </blockquote>
+    </section>
+  </div>
+</body>
+</html>
