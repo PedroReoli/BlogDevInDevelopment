@@ -4,6 +4,7 @@ import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import BlogGridList from "@/pages/blog/BlogGridList";
 import LessonGridList from "@/pages/lesson/LessonGridList";
 import ProjectGridList from "@/pages/project/ProjectGridList";
+import Button from "@/components/Shared/Button";
 
 const Sessions = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -83,12 +84,13 @@ const Sessions = () => {
 
       {/* Botão para voltar ao topo */}
       <div className="mt-8 text-center">
-        <button
+        <Button
           onClick={scrollToTop}
-          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded shadow-md transition-all"
+          variant="primary"
+          className="shadow-md"
         >
           Voltar para o Início
-        </button>
+        </Button>
       </div>
     </div>
   );
