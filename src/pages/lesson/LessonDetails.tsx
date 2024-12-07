@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { lessonsData } from "@/constants/LessonsData";
 import LessonNavigation from "@/components/_navigation/LessonNavigation";
+import Loader from "@/components/Shared/Loader"; // Importa o Loader
+import NotFoundPage from "@/pages/not-found/NotFoundPage.tsx"; // Importa a página 404
 
 const LessonDetails = () => {
   const { id } = useParams<{ id: string }>(); // "id" será o slug
@@ -13,7 +15,7 @@ const LessonDetails = () => {
   useEffect(() => {
     const selectedLesson = lessonsData.find((l) => l.slug === id);
     if (!selectedLesson) {
-      setError("Aula não encontrada.");
+      setError("Aula não encontrada."); // Define o erro caso a aula não seja encontrada
       return;
     }
 
@@ -29,16 +31,14 @@ const LessonDetails = () => {
       .then((data) => setLessonContent(data))
       .catch((error) => {
         console.error("Erro ao carregar a aula:", error);
-        setError("Erro ao carregar o conteúdo.");
+        setError("Erro ao carregar o conteúdo."); // Define o erro em caso de falha na requisição
       });
   }, [id]);
 
   return (
     <div className="container mx-auto py-8 px-5">
       {error ? (
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-red-500 text-xl font-semibold">{error}</p>
-        </div>
+        <NotFoundPage /> // Renderiza a página 404 em caso de erro
       ) : lesson && lessonContent ? (
         <>
           {/* Atualiza o título da aba */}
@@ -56,9 +56,7 @@ const LessonDetails = () => {
           <LessonNavigation currentSlug={id || ""} />
         </>
       ) : (
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-2xl font-semibold text-blue-500 animate-bounce">Carregando aula...</p>
-        </div>
+        <Loader /> // Mostra o loader enquanto os dados estão sendo carregados
       )}
     </div>
   );

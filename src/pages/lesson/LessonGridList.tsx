@@ -28,9 +28,11 @@ const LessonGridList = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
+    <div className="container mx-auto py-8 px-4">
       {/* Componente de Pesquisa */}
-      <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
+      <div className="mb-6">
+        <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
+      </div>
 
       {/* Grid de Aulas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -40,20 +42,51 @@ const LessonGridList = () => {
           filteredLessons.map((lesson: LessonInterface, index) => (
             <div
               key={index}
-              className="bg-[#1e1e2d] text-white p-5 rounded-xl shadow-md hover:shadow-lg border border-gray-600 transition-transform transform hover:scale-105"
+              className="bg-[#1f1f2e] text-white p-6 rounded-md shadow-lg hover:shadow-xl border border-gray-600 transition-transform transform hover:scale-105"
             >
-              <img
-                src={lesson.imageUrl}
-                alt={lesson.title}
-                className="w-full h-48 object-cover mb-4 rounded-md"
-              />
-              <h3 className="text-lg font-bold mb-2 text-blue-400">{lesson.title}</h3>
-              <p className="text-gray-300 text-sm mb-4">{lesson.description}</p>
-              <div className="flex justify-between items-center text-sm text-gray-500">
+              {/* Imagem */}
+              <div className="relative overflow-hidden rounded mb-4">
+                <img
+                  src={lesson.imageUrl}
+                  alt={lesson.title}
+                  className="w-full h-36 object-cover transition-transform duration-300 hover:scale-110"
+                />
+              </div>
+
+              {/* Título */}
+              <div className="mb-3">
+                <h3 className="text-lg font-semibold text-green-400 hover:text-green-300 transition-colors">
+                  {lesson.title}
+                </h3>
+              </div>
+
+              {/* Descrição */}
+              <div className="mb-3">
+                <p className="text-gray-300 text-sm">
+                  {lesson.description}
+                </p>
+              </div>
+
+              {/* Tags */}
+              <div className="mb-4">
+                <div className="flex flex-wrap gap-2">
+                  {lesson.keywords.map((keyword, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs font-semibold text-green-500 bg-green-900 px-3 py-1 rounded-md shadow-sm"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              {/* Data e Link */}
+              <div className="flex justify-between items-center text-sm text-gray-400">
                 <span>{lesson.date}</span>
                 <Link
                   to={`/lesson/${lesson.slug}`}
-                  className="text-blue-400 hover:text-blue-300"
+                  className="text-green-400 hover:text-green-300 underline"
                 >
                   Ver detalhes
                 </Link>

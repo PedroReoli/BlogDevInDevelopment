@@ -3,10 +3,9 @@ import { Link } from "react-router-dom";
 
 interface PostNavigationProps {
   currentSlug: string;
-  onBackToHome: () => void;
 }
 
-const PostNavigation: React.FC<PostNavigationProps> = ({ currentSlug, onBackToHome }) => {
+const PostNavigation: React.FC<PostNavigationProps> = ({ currentSlug }) => {
   const currentIndex = blogsData.findIndex((post) => post.slug === currentSlug);
   const previousPost = blogsData[currentIndex - 1];
   const nextPost = blogsData[currentIndex + 1];
@@ -22,7 +21,7 @@ const PostNavigation: React.FC<PostNavigationProps> = ({ currentSlug, onBackToHo
         <Link
           to={`/post/${previousPost.slug}`}
           className="btn-modern-alt transition hover:bg-gray-700 hover:text-blue-400"
-          onClick={scrollToTop} // Rola para o topo ao clicar
+          onClick={scrollToTop}
         >
           ← {previousPost.title}
         </Link>
@@ -31,22 +30,20 @@ const PostNavigation: React.FC<PostNavigationProps> = ({ currentSlug, onBackToHo
       )}
 
       {/* Botão para a página inicial */}
-      <button
-        onClick={() => {
-          onBackToHome();
-          scrollToTop(); // Rola para o topo ao clicar
-        }}
+      <Link
+        to="/"
         className="btn-modern-alt mx-5 transition hover:bg-blue-500 hover:text-white"
+        onClick={scrollToTop}
       >
         Página Inicial
-      </button>
+      </Link>
 
       {/* Botão para o próximo post */}
       {nextPost ? (
         <Link
           to={`/post/${nextPost.slug}`}
           className="btn-modern-alt transition hover:bg-gray-700 hover:text-blue-400"
-          onClick={scrollToTop} // Rola para o topo ao clicar
+          onClick={scrollToTop}
         >
           {nextPost.title} →
         </Link>

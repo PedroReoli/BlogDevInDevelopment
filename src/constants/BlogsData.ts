@@ -15,9 +15,10 @@ export const blogsData: BlogPost[] = [
     title: "Comandos Iniciais SQL",
     description: "Aprenda e pratique os comandos SQL básicos para começar a manipular dados em bancos de dados relacionais com facilidade.",
     date: "24/11/2024",
-    keywords: ["SQL", "Banco de Dados", "Nível Inicial", "SQL Inicial", "Comandos", "SGBD"],
+    keywords: ["SQL", "Banco de Dados", "Nível Inicial", "SQL", "SQL Inicial", "Comandos", "SGBD"],
     imageUrl: "/postpictures/bg/post-sql.svg",
-    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/67547bea0024b5fbdf0b/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
+    // SQL1.html no Appwrite
+    link:"https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/6759cd1c003bb0c4a595/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
     slug: generateSlug("Comandos Iniciais SQL"), // Gerado dinamicamente
   },
   {
@@ -26,7 +27,8 @@ export const blogsData: BlogPost[] = [
     date: "24/11/2024",
     keywords: ["SQL", "Banco de Dados", "Nível Intermediário", "Comandos", "SGBD"],
     imageUrl: "/postpictures/bg/post-sql.svg",
-    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/67547bf0000a210f1428/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
+    // SQL2.html 
+    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/6759d84100311b27a3e1/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
     slug: generateSlug("Comandos Intermediários SQL"),
   },
   {
@@ -35,16 +37,18 @@ export const blogsData: BlogPost[] = [
     date: "24/11/2024",
     keywords: ["Boas Práticas SQL", "Design de Banco de Dados", "SQL Avançado", "Escalabilidade"],
     imageUrl: "/postpictures/bg/post-sql.svg",
-    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/6754755100186a31724c/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
+    // BoasPraticasSQL.html
+    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/6759d7790032297693b4/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
     slug: generateSlug("Boas Praticas em SQL"),
   },
   {
     title: "Desafios e Benefícios das Primary Keys",
     description: "Explore os desafios e vantagens do uso de Primary Keys em bancos de dados, com exemplos e práticas modernas.",
     date: "24/11/2024",
-    keywords: ["Primary Keys", "Bancos de Dados", "SQL", "Chave Primária", "Dicas", "Vantagens e Desvantagens"],
+    keywords: ["Primary Keys", "Bancos de Dados", "Chave Primária", "Dicas", "Vantagens e Desvantagens","SQL"],
     imageUrl: "/postpictures/bg/post-pk.svg",
-    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/67547be5001747b3211a/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
+    // PK1.html
+    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/6759d53c000b3cf93715/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
     slug: generateSlug("Desafios e Benefícios das Primary Keys"),
   },
   ///////////////////////////////////////////////////////////
@@ -55,7 +59,8 @@ export const blogsData: BlogPost[] = [
     date: "24/11/2024",
     keywords: ["POO", "Programação Orientada a Objetos", "C#", "JavaScript"],
     imageUrl: "/postpictures/bg/post-poo.svg",
-    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/67547bdb000ab1b95077/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
+    // POO1.html
+    link: "https://cloud.appwrite.io/v1/storage/buckets/6754748b002e04fa000d/files/6759d351000baeff7746/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin",
     slug: generateSlug("Programação Orientada a Objetos: Estruturando Sistemas Reais"),
   },
 ];

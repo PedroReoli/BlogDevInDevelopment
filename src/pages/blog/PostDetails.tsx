@@ -2,6 +2,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet"; // Importa o Helmet
 import { blogsData } from "@/constants/BlogsData";
+import Loader from "@/components/Shared/Loader"; // Importa o Loader
+import NotFoundPage from "@/pages/not-found/NotFoundPage"; // Importa a página 404
+import PostNavigation from "@/components/_navigation/PostNavigation"; // Importa a navegação entre posts
 
 const PostDetails = () => {
   const { id } = useParams<{ id: string }>(); // "id" será o slug
@@ -35,7 +38,7 @@ const PostDetails = () => {
   return (
     <div className="container mx-auto py-8 px-5">
       {error ? (
-        <p className="text-red-500">{error}</p>
+        <NotFoundPage /> // Exibe a página 404 em caso de erro
       ) : post && postContent ? (
         <>
           {/* Atualiza o título da aba com Helmet */}
@@ -43,16 +46,17 @@ const PostDetails = () => {
             <title>{post.title} | Meu Blog</title>
           </Helmet>
 
-          {/* Renderiza o conteúdo do post */}
           <div
-            className="prose max-w-none"
-            dangerouslySetInnerHTML={{ __html: postContent }}
-          />
+              className="post-table-container"
+              dangerouslySetInnerHTML={{ __html: postContent }}
+            />
+
+
+          {/* Navegação entre posts */}
+          <PostNavigation currentSlug={id || ""} />
         </>
       ) : (
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-2xl font-semibold text-blue-500 animate-bounce">Carregando página...</p>
-        </div>
+        <Loader /> // Exibe o Loader enquanto os dados estão sendo carregados
       )}
     </div>
   );

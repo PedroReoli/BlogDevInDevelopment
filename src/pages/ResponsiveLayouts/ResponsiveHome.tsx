@@ -6,6 +6,9 @@ const ResponsiveHome = () => {
     <section id="home" className="bg-[#111111] text-white py-20 px-5">
       <div className="container mx-auto flex flex-col items-center">
         <div className="flex-1 max-w-2xl text-center">
+        <div className="flex-1 mt-10 flex justify-center items-center">
+          <img src="/images/owl.svg" alt="logo" className="w-26 h-26 max-w-xs" />
+        </div>
           <h1 className="text-3xl font-extrabold mb-5 leading-tight">
             DevEmDesenvolvimento <span className="text-blue-500">Blog</span>
           </h1>
@@ -29,9 +32,7 @@ const ResponsiveHome = () => {
             />
           </div>
         </div>
-        <div className="flex-1 mt-10 flex justify-center items-center">
-          <img src="/images/owl.svg" alt="logo" className="w-full max-w-xs" />
-        </div>
+       
       </div>
     </section>
   );
