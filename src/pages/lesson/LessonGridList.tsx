@@ -42,13 +42,34 @@ const LessonGridList = () => {
               key={index}
               className="bg-[#1e1e2d] text-white p-5 rounded-xl shadow-md hover:shadow-lg border border-gray-600 transition-transform transform hover:scale-105"
             >
+              {/* Imagem */}
               <img
                 src={lesson.imageUrl}
                 alt={lesson.title}
                 className="w-full h-48 object-cover mb-4 rounded-md"
               />
-              <h3 className="text-lg font-bold mb-2 text-blue-400">{lesson.title}</h3>
+
+              {/* Título */}
+              <h3 className="text-lg font-bold mb-2 text-blue-400">
+                {lesson.title}
+              </h3>
+
+              {/* Descrição */}
               <p className="text-gray-300 text-sm mb-4">{lesson.description}</p>
+
+              {/* Tags (Keywords) */}
+              <div className="flex flex-wrap gap-2 mb-4">
+                {lesson.keywords.map((keyword, idx) => (
+                  <span
+                    key={idx}
+                    className="text-xs font-semibold text-green-500 bg-green-900 px-2 py-1 rounded"
+                  >
+                    {keyword}
+                  </span>
+                ))}
+              </div>
+
+              {/* Data e Link */}
               <div className="flex justify-between items-center text-sm text-gray-500">
                 <span>{lesson.date}</span>
                 <Link
