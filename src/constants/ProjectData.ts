@@ -6,7 +6,8 @@ export const projectsData = [
     date: "01/11/2024",
     keywords: ["React", "Frontend", "CRUD"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "task-manager.html",
+    link: "https://cloud.appwrite.io/v1/storage/buckets/{bucketId}/files/{fileId}/view", // Substitua pelos valores reais
+    slug: "gerenciador-de-tarefas", // URL amigável
   },
   {
     title: "API de Produtos",
@@ -14,7 +15,8 @@ export const projectsData = [
     date: "15/11/2024",
     keywords: ["Node.js", "API", "Backend"],
     imageUrl: "https://via.placeholder.com/300x300",
-    filename: "product-api.html",
+    link: "https://cloud.appwrite.io/v1/storage/buckets/{bucketId}/files/{fileId}/view",
+    slug: "api-de-produtos",
   },
   {
     title: "Site Portfólio",
@@ -22,6 +24,7 @@ export const projectsData = [
     date: "25/11/2024",
     keywords: ["HTML", "CSS", "Responsivo"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "portfolio-site.html",
+    link: "https://cloud.appwrite.io/v1/storage/buckets/{bucketId}/files/{fileId}/view",
+    slug: "site-portfolio",
   },
 ];

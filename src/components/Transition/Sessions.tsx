@@ -1,9 +1,9 @@
 import { useState, useRef } from "react";
-import BlogGridList from "@/components/Blog/BlogGridList";
-import LessonGridList from "@/components/Lesson/LessonGridList";
-import ProjectGridList from "@/components/Projects/ProjectGridList";
 import { useSpring, animated } from "@react-spring/web";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
+import BlogGridList from "@/pages/blog/BlogGridList";
+import LessonGridList from "@/pages/lesson/LessonGridList";
+import ProjectGridList from "@/pages/project/ProjectGridList";
 
 const Sessions = () => {
   const [currentIndex, setCurrentIndex] = useState(0);

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { projectsData } from "@/constants/ProjectData";
 import { Project as ProjectInterface } from "@/constants/interfaces";
-import SearchBar from "@/components/layout/SearchBar/SearchBar";
+import SearchBar from "@/components/Shared/SearchBar";
 
 const ProjectGridList = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -29,10 +29,8 @@ const ProjectGridList = () => {
 
   return (
     <div className="container mx-auto py-8">
-      {/* Componente de Pesquisa */}
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
 
-      {/* Grid de Projetos */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {filteredProjects.length === 0 ? (
           <p className="text-center text-gray-400">Nenhum projeto encontrado.</p>
@@ -60,7 +58,7 @@ const ProjectGridList = () => {
                 ))}
               </div>
               <Link
-                to={`/project/${project.filename}`}
+                to={`/project/${project.slug}`}
                 className="block text-center bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600"
               >
                 Ver Projeto

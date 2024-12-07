@@ -5,6 +5,11 @@ module.exports = {
   content: [
     './src/_root/pages/**/*.{ts,tsx}',
     './src/components/**/*.{ts,tsx}',
+    './src/components/_navigation/**/*.{ts,tsx}',
+    './src/components/layout/**/*.{ts,tsx}',
+    './src/components/Shared/**/*.{ts,tsx}',
+    './src/components/Transition/**/*.{ts,tsx}',
+    './src/pages/**/*.{ts,tsx}',
     './public/index.html',
   ],
   theme: {

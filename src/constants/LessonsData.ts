@@ -6,7 +6,8 @@ export const lessonsData = [
     date: "01/12/2024",
     keywords: ["JavaScript", "Fundamentos", "Web"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "intro-javascript",
+    link: "https://cloud.appwrite.io/v1/storage/buckets/67547fcc0014f9f9ee95/files/67547fdd003bfd8659dc/view?project=6754745500352b3feccd&project=6754745500352b3feccd&mode=admin", 
+    slug: "introducao-ao-javascript",
   },
   {
     title: "CSS Flexbox e Grid",
@@ -14,7 +15,8 @@ export const lessonsData = [
     date: "05/12/2024",
     keywords: ["CSS", "Flexbox", "Grid", "Layouts"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "css-flexbox-grid",
+    link: "https://cloud.appwrite.io/v1/storage/buckets/{bucketId}/files/{fileId}/view", 
+    slug: "css-flexbox-e-grid",
   },
   {
     title: "Manipulação do DOM com JavaScript",
@@ -22,6 +24,7 @@ export const lessonsData = [
     date: "10/12/2024",
     keywords: ["JavaScript", "DOM", "Interatividade"],
     imageUrl: "https://via.placeholder.com/400x300",
-    filename: "dom-manipulation",
+    link: "https://cloud.appwrite.io/v1/storage/buckets/{bucketId}/files/{fileId}/view", 
+    slug: "manipulacao-do-dom-com-javascript",
   },
 ];

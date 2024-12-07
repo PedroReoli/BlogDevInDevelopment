@@ -1,9 +1,10 @@
-import Footer from './Footer';
-import Home from './Home';
-import ResponsiveHome from './ResponsiveLayouts/ResponsiveHome';
-import ResponsiveFooter from './ResponsiveLayouts/ResponsiveFooter';
+
 import Sessions from '@/components/Transition/Sessions';
 import { useEffect, useState } from 'react';
+import ResponsiveHome from '../ResponsiveLayouts/ResponsiveHome';
+import  Home  from '@/pages/Main/Home';
+import ResponsiveFooter from '../ResponsiveLayouts/ResponsiveFooter';
+import Footer from './Footer';
 
 const MainPage = () => {
   const [isSmallScreen, setIsSmallScreen] = useState(false);
