@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa"; // Importação de ícones
 import Popup from "@/components/layout/pop-ups/Popup";
 
 const Footer = () => {
@@ -26,8 +27,6 @@ const Footer = () => {
     navigator.clipboard.writeText("87ed50aa-9526-46a2-8aec-e1a1cce4a9e4");
     setIsOpen(true);
     setContent("Chave Pix copiada com sucesso");
-
-    
   };
 
   return (
@@ -47,102 +46,88 @@ const Footer = () => {
               </p>
             </div>
 
-            {/* Seções Contribua e Contato */}
-            <div className="hidden md:flex flex-1">
-              <div className="flex flex-row justify-between w-full md:space-x-24">
-                <div className="flex flex-col text-center md:text-left mb-6 md:mb-0">
-                  <h4 className="text-2xl font-semibold mb-5">Contribua</h4>
-                  <ul className="text-base space-y-3">
-                    <li>
-                      <a
-                        href="mailto:pedrosousa2160@gmail.com"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Reportar um bug
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://github.com/PedroReoli"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Github
-                      </a>
-                    </li>
-                    <li>
-                      <button
-                        onClick={handleCopyPix}
-                        className="text-blue-400 hover:underline"
-                      >
-                        Copiar chave Pix
-                      </button>
-                    </li>
-                    <li>
-                      <a
-                        href="#"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Patreon
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+            {/* Links com Ícones */}
+            <div className="flex flex-col items-center md:items-start">
+              <h4 className="text-2xl font-semibold mb-5">Redes Sociais</h4>
+              <nav className="space-y-3">
+                <a
+                  href="https://www.youtube.com/@DevDesenvolvimento"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-white transition hover:text-red"
+                >
+                  <FaYoutube className="text-xl text-red" />
+                  <span>YouTube</span>
+                </a>
+                <a
+                  href="https://www.instagram.com/01_dev_em_desenvolvimento"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-white transition hover:text-pink-500"
+                >
+                  <FaInstagram className="text-xl text-pink-500" />
+                  <span>Instagram</span>
+                </a>
+                <a
+                  href="https://x.com/opedroreoli"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center space-x-2 text-white transition hover:text-blue-400"
+                >
+                  <FaTwitter className="text-xl text-blue-400" />
+                  <span>X</span>
+                </a>
+              </nav>
+            </div>
 
-                <div className="flex flex-col text-center md:text-left mb-6 md:mb-0">
-                  <h4 className="text-2xl font-semibold mb-5">Contato</h4>
-                  <ul className="text-base space-y-3">
-                    <li>
-                      <a
-                        href="https://x.com/opedroreoli"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Twitter
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://www.youtube.com/@DevDesenvolvimento"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        YouTube
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="https://www.instagram.com/01_dev_em_desenvolvimento"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Instagram
-                      </a>
-                    </li>
-                    <li>
-                      <a
-                        href="mailto:pedrosousa2160@gmail.com"
-                        className="text-blue-400 hover:underline"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        Email
-                      </a>
-                    </li>
-                  </ul>
-                </div>
+            {/* Seções Contribua */}
+            <div className="hidden md:flex flex-1">
+              <div className="flex flex-col text-center md:text-left">
+                <h4 className="text-2xl font-semibold mb-5">Contribua</h4>
+                <ul className="text-base space-y-3">
+                  <li>
+                    <a
+                      href="mailto:pedrosousa2160@gmail.com"
+                      className="text-blue-400 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Reportar um bug
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/PedroReoli"
+                      className="text-blue-400 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Github
+                    </a>
+                  </li>
+                  <li>
+                    <button
+                      onClick={handleCopyPix}
+                      className="text-blue-400 hover:underline"
+                    >
+                      Copiar chave Pix
+                    </button>
+                  </li>
+                  <li>
+                    <a
+                      href="#"
+                      className="text-blue-400 hover:underline"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Patreon
+                    </a>
+                  </li>
+                </ul>
               </div>
             </div>
 
-            {/* Imagem Condicional - Alinhada à Direita */}
+            {/* Imagem Condicional */}
             <div className="hidden md:flex justify-end flex-1 text-center md:text-right">
               <img
                 src="/images/EuPIxar.png"
