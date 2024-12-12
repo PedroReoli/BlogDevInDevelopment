@@ -42,7 +42,7 @@ export const blogsData: BlogPost[] = [
     slug: generateSlug("Boas Praticas em SQL"),
   },
   {
-    title: "Desafios e Benefícios das Primary Keys",
+    title: "O que nunca te contaram sobre Primary Keys",
     description: "Explore os desafios e vantagens do uso de Primary Keys em bancos de dados, com exemplos e práticas modernas.",
     date: "24/11/2024",
     keywords: ["Primary Keys", "Bancos de Dados", "Chave Primária", "Dicas", "Vantagens e Desvantagens","SQL"],
@@ -54,7 +54,7 @@ export const blogsData: BlogPost[] = [
   ///////////////////////////////////////////////////////////
   // POO
   {
-    title: "Programação Orientada a Objetos: Estruturando Sistemas Reais",
+    title: "Orientação a Objetos - Parte I",
     description: "Aprenda como a Programação Orientada a Objetos (POO) revoluciona o desenvolvimento de software. Com exemplos práticos do mundo real.",
     date: "24/11/2024",
     keywords: ["POO", "Programação Orientada a Objetos", "C#", "JavaScript"],
