@@ -3,6 +3,8 @@ import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { projectsData } from "@/constants/ProjectData";
 import ProjectNavigation from "@/components/_navigation/ProjectNavigation";
+import Loader from "@/components/Shared/Loader"; // Importa o Loader
+import NotFoundPage from "@/pages/not-found/NotFoundPage"; // Importa o NotFoundPage
 
 const ProjectDetails = () => {
   const { id } = useParams<{ id: string }>(); // "id" será o slug
@@ -13,7 +15,7 @@ const ProjectDetails = () => {
   useEffect(() => {
     const selectedProject = projectsData.find((p) => p.slug === id);
     if (!selectedProject) {
-      setError("Projeto não encontrado.");
+      setError("Projeto não encontrado."); // Define o erro caso o projeto não seja encontrado
       return;
     }
 
@@ -29,16 +31,14 @@ const ProjectDetails = () => {
       .then((data) => setProjectContent(data))
       .catch((error) => {
         console.error("Erro ao carregar o projeto:", error.message);
-        setError("Erro ao carregar o conteúdo.");
+        setError("Erro ao carregar o conteúdo."); // Define o erro em caso de falha na requisição
       });
   }, [id]);
 
   return (
     <div className="container mx-auto py-8 px-5">
       {error ? (
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-red-500 text-xl font-semibold">{error}</p>
-        </div>
+        <NotFoundPage /> // Renderiza a página de erro 404 em caso de erro
       ) : project && projectContent ? (
         <>
           {/* Atualiza o título da guia */}
@@ -56,9 +56,7 @@ const ProjectDetails = () => {
           <ProjectNavigation currentSlug={id || ""} />
         </>
       ) : (
-        <div className="flex items-center justify-center h-screen">
-          <p className="text-2xl font-semibold text-blue-500 animate-bounce">Carregando projeto...</p>
-        </div>
+        <Loader /> // Renderiza o Loader enquanto os dados estão sendo carregados
       )}
     </div>
   );

@@ -28,55 +28,53 @@ const BlogGridList = () => {
   };
 
   return (
-    <div className="container mx-auto py-8">
-          {/* Componente de Pesquisa */}
+    <div className="container mx-auto py-6 px-4">
+      {/* Componente de Pesquisa */}
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
 
       {/* Grid de Posts */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
         {filteredPosts.map((post: BlogPostInterface, index) => (
           <div
             key={index}
-            className="bg-[#1b1b1b] text-white p-6 rounded-lg shadow-lg border border-white transition-transform transform hover:scale-105"
+            className="bg-[#1b1b1b] text-white p-4 rounded-lg shadow-lg border border-gray-700 transition-transform transform hover:scale-105 animate-fade-in"
           >
             {/* Imagem */}
-            <img
-              src={post.imageUrl}
-              alt={post.title}
-              className="w-full h-72 object-cover mb-6 rounded"
-            />
+            <div className="relative overflow-hidden rounded mb-4">
+              <img
+                src={post.imageUrl}
+                alt={post.title}
+                className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
+              />
+            </div>
 
             {/* Título */}
-            <h3 className="text-xl font-bold mb-3">{post.title}</h3>
+            <h3 className="text-lg font-bold mb-2 text-blue-400 hover:text-blue-300 transition-colors">
+              {post.title}
+            </h3>
 
             {/* Descrição */}
-            <p className="text-gray-400 text-sm mb-5">{post.description}</p>
+            <p className="text-gray-400 text-sm mb-4 line-clamp-2">
+              {post.description}
+            </p>
 
             {/* Keywords */}
-            <div className="flex flex-wrap gap-2 mb-5">
+            <div className="flex flex-wrap gap-2 mb-4">
               {post.keywords.map((keyword, idx) => (
                 <span
                   key={idx}
-                  className="text-xs font-semibold text-blue-500 bg-blue-900 px-2 py-1 rounded"
+                  className="text-xs font-medium text-blue-500 bg-gray-800 px-3 py-1 rounded-full shadow-sm"
                 >
                   {keyword}
                 </span>
               ))}
             </div>
 
-            {/* Linha separadora */}
-            <hr className="border-gray-600 mb-5" />
-
-            {/* Data */}
-            <div className="flex justify-between items-center text-sm text-gray-500 mb-5">
-              <span>{post.date}</span>
-            </div>
-
             {/* Link "Continuar lendo" */}
-            <div className="flex justify-center">
+            <div className="text-center">
               <Link
                 to={`/post/${post.slug}`}
-                className="bg-transparent text-blue-500 hover:text-blue-400 underline"
+                className="text-blue-400 hover:text-blue-300 underline text-sm"
               >
                 Continuar lendo
               </Link>

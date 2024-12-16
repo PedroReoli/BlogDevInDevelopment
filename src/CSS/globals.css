@@ -282,3 +282,26 @@
     transform: translateY(0);
   }
 }
+/* BLOG TESTE */
+.post-table-container {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch; /* Suaviza o scroll em dispositivos móveis */
+}
+
+.post-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #2a2a3b;
+}
+
+.post-table-header {
+  background-color: #4a90e2;
+  color: #fff;
+}
+
+.post-table-cell {
+  border: 1px solid #3e3e5e;
+  padding: 0.8rem;
+  text-align: left;
+  white-space: nowrap; /* Evita quebra de texto */
+}

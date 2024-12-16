@@ -14,21 +14,16 @@ const ResponsiveTopbar = () => {
               options={{
                 autoStart: true,
                 delay: 50,
-                deleteSpeed: 25,
               }}
               onInit={(typewriter) => {
                 typewriter
                   .typeString("DevEmDesenvolvimento")
-                  .pauseFor(1000)
-                  .deleteAll()
-                  .typeString("Blog feito por Pedro Lucas Reis")
-                  .pauseFor(1000)
-                  .callFunction(() => setAnimationComplete(true)) // Define que a animação acabou
+                  .callFunction(() => setAnimationComplete(true)) // Marca como completo
                   .start();
               }}
             />
           ) : (
-            "DevEmDesenvolvimento "
+            "DevEmDesenvolvimento"
           )}
         </div>
 

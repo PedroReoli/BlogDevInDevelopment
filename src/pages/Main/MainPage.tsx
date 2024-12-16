@@ -25,8 +25,9 @@ const MainPage = () => {
   return (
     <div>
       {/* Header */}
+      {/* Funcao           True             False */}
       {isSmallScreen ? <ResponsiveHome /> : <Home />}
-
+      
      
       <Sessions />
 
