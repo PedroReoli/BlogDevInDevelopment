@@ -16,6 +16,7 @@
         "@radix-ui/react-tabs": "^1.0.4",
         "@radix-ui/react-toast": "^1.1.5",
         "@react-spring/web": "^9.7.5",
+        "@tailwindcss/typography": "^0.5.15",
         "@tanstack/react-query": "^4.36.1",
         "@tanstack/react-query-devtools": "^4.35.7",
         "@types/react-icons": "^3.0.0",
@@ -43,6 +44,7 @@
         "react-snap-carousel": "^0.4.0",
         "solidjs-dropzone": "^1.0.0",
         "tailwind-merge": "^1.14.0",
+        "tailwind-scrollbar": "^3.1.0",
         "tailwindcss-animate": "^1.0.7",
         "typewriter-effect": "^2.21.0",
         "zod": "^3.22.4"
