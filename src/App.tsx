@@ -8,10 +8,12 @@ import MainPage from "@/pages/Main/MainPage";
 import RootLayout from "./_root/RootLayout";
 import PageTransition from "./components/Transition/PageTransition";
 import NotFoundPage from "@/pages/not-found/NotFoundPage";
+import { ThemeProvider } from "./context/ThemeContext";
 
 
 const App = () => {
   return (
+  <ThemeProvider>
     <Router>
       <AnimatePresence mode="wait">
         <Routes>
@@ -28,6 +30,7 @@ const App = () => {
         </Routes>
       </AnimatePresence>
     </Router>
+  </ThemeProvider>
   );
 };
 
