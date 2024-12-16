@@ -1,11 +1,13 @@
-// vite.config.js
-import { defineConfig } from 'vite'
-import path from 'path'
+const path = require('path');
+const { defineConfig } = require('vite');
 
-export default defineConfig({
+module.exports = defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
-})
+  build: {
+    outDir: 'dist', // Garante a saída no diretório correto
+  },
+});

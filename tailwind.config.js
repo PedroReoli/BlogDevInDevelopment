@@ -1,4 +1,4 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+
 
 module.exports = {
   darkMode: ["class"], // Ativa o modo escuro baseado em classe
