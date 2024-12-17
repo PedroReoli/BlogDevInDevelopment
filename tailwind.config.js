@@ -1,3 +1,4 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
 
 module.exports = {
   // ==========================
@@ -74,6 +75,7 @@ module.exports = {
         inter: ["Inter", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        kairos: ["Kairos Sans Extended Medium", "Montserrat", ...defaultTheme.fontFamily.sans],        
       },
 
       // Larguras Personalizadas

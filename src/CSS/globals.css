@@ -1,4 +1,10 @@
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap");
+@font-face {
+  font-family: "Kairos Sans Extended Medium";
+  src: url("/fonts/KairosSansExtendedMedium.woff2") format("woff2");
+  font-weight: normal;
+  font-style: normal;
+}
+
 
 @tailwind base;
 @tailwind components;
@@ -9,26 +15,26 @@
 ========================== */
 :root {
   /* Light Mode */
-  --bg-primary: #edf2f8; /* Fundo suave azul acinzentado */
-  --bg-secondary: #e2e8f0; /* Fundo secundário mais cinza */
-  --text-primary: #1f2937; /* Azul escuro para alta legibilidade */
-  --text-secondary: #4b5563; /* Cinza intermediário */
-  --border-primary: #cbd5e1; /* Cinza claro para bordas */
-  --hover-primary: #3b82f6; /* Azul vibrante padrão */
-  --header-bg: #3b82f6; /* Azul vibrante para destaque */
-  --header-text: #ffffff; /* Texto branco no header */
+  --bg-primary: #edf2f8;
+  --bg-secondary: #e2e8f0;
+  --text-primary: #1f2937;
+  --text-secondary: #4b5563;
+  --border-primary: #cbd5e1;
+  --hover-primary: #3b82f6;
+  --header-bg: #3b82f6;
+  --header-text: #ffffff;
 }
 
 .dark {
   /* Dark Mode */
-  --bg-primary: #0d1117; /* Fundo escuro com tom moderno */
-  --bg-secondary: #161b22; /* Fundo secundário levemente mais claro */
-  --text-primary: #e4eaf3; /* Texto quase branco, suave */
-  --text-secondary: #9ea9b9; /* Cinza claro para secundários */
-  --border-primary: #30363d; /* Cinza mais escuro para bordas */
-  --hover-primary: #58a6ff; /* Azul vibrante moderno */
-  --header-bg: #1f6feb; /* Azul intenso moderno */
-  --header-text: #f0f6fc; /* Texto quase branco */
+  --bg-primary: #0d1117;
+  --bg-secondary: #161b22;
+  --text-primary: #e4eaf3;
+  --text-secondary: #9ea9b9;
+  --border-primary: #30363d;
+  --hover-primary: #58a6ff;
+  --header-bg: #1f6feb;
+  --header-text: #f0f6fc;
 }
 
 /* =====================
@@ -47,18 +53,25 @@ html {
   }
 
   body {
-    @apply font-montserrat min-h-screen;
+    @apply min-h-screen;
+    font-family: "Kairos Sans Extended Medium", "Montserrat", sans-serif;
     background-color: var(--bg-primary);
     color: var(--text-primary);
     transition: background-color 0.5s ease, color 0.5s ease;
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     color: var(--text-primary);
     @apply font-poppins font-semibold;
   }
 
-  p, li {
+  p,
+  li {
     color: var(--text-secondary);
   }
 
@@ -123,31 +136,6 @@ html {
     background-color: var(--hover-primary);
     color: var(--header-text);
     box-shadow: 0 8px 16px rgba(59, 130, 246, 0.3);
-  }
-
-  /* Cartões */
-  .card {
-    @apply rounded-lg shadow-md p-5 transition-all duration-300;
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    border: 1px solid var(--border-primary);
-  }
-
-  .card-dark {
-    @apply rounded-lg shadow-lg p-5;
-    background-color: var(--bg-primary);
-    color: var(--text-secondary);
-    border: 1px solid var(--hover-primary);
-  }
-
-  /* Neon Hover */
-  .neon-hover {
-    position: relative;
-    transition: box-shadow 0.3s ease-in-out;
-  }
-
-  .neon-hover:hover {
-    box-shadow: 0 0 15px var(--hover-primary), 0 0 30px var(--hover-primary);
   }
 
   /* Flex Utils */

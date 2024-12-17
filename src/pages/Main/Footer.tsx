@@ -1,5 +1,16 @@
 import { useState } from "react";
-import { FaYoutube, FaInstagram, FaTwitter } from "react-icons/fa";
+import {
+  FaYoutube,
+  FaInstagram,
+  FaTwitter,
+  FaGithub,
+  FaBug,
+  FaPatreon,
+  FaUserShield,
+  FaUsers,
+  FaFlag,
+  FaClipboard,
+} from "react-icons/fa";
 import Popup from "@/components/layout/pop-ups/Popup";
 
 const Footer = () => {
@@ -7,7 +18,7 @@ const Footer = () => {
   const [content, setContent] = useState("");
 
   const handleOpen = (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>,
+    event: React.MouseEvent<HTMLAnchorElement>,
     contentType: string
   ) => {
     event.preventDefault();
@@ -20,162 +31,148 @@ const Footer = () => {
     setContent("");
   };
 
-  const handleCopyPix = (
-    event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-    navigator.clipboard.writeText("87ed50aa-9526-46a2-8aec-e1a1cce4a9e4");
-    setIsOpen(true);
-    setContent("Chave Pix copiada com sucesso");
-  };
-
   return (
     <>
-      <footer className="bg-[var(--bg-primary)] text-[var(--text-primary)] py-16 px-5 transition-all duration-300">
-        <div className="container mx-auto footer-container">
-          <div className="flex flex-col md:flex-row justify-between items-start gap-10 md:gap-20">
-            {/* Seção DevEmDesenvolvimento */}
-            <div className="flex-1 flex flex-col justify-center md:justify-start text-center md:text-left">
-              <h3 className="text-3xl font-bold mb-4">DevEmDesenvolvimento</h3>
-              <p className="text-base leading-7 tracking-wide">
-                O <span className="text-hover-primary">DevEmDesenvolvimento</span> é
-                um espaço dedicado ao compartilhamento de aprendizados e
-                insights sobre programação, focando em estudantes e
-                desenvolvedores juniores. Vamos evoluir juntos,{" "}
-                <span className="text-hover-primary">um código de cada vez</span>.
-              </p>
-            </div>
-
-            {/* Links com Ícones */}
-            <div className="flex flex-col items-center md:items-start">
-              <h4 className="text-2xl font-semibold mb-5">Redes Sociais</h4>
-              <nav className="space-y-3">
-                <a
-                  href="https://www.youtube.com/@DevDesenvolvimento"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-red transition-colors"
-                >
-                  <FaYoutube className="text-xl text-red" />
-                  <span>YouTube</span>
-                </a>
-                <a
-                  href="https://www.instagram.com/01_dev_em_desenvolvimento"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-pink-500 transition-colors"
-                >
-                  <FaInstagram className="text-xl text-pink-500" />
-                  <span>Instagram</span>
-                </a>
-                <a
-                  href="https://x.com/opedroreoli"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-blue-400 transition-colors"
-                >
-                  <FaTwitter className="text-xl text-blue-400" />
-                  <span>X</span>
-                </a>
-              </nav>
-            </div>
-
-            {/* Seções Contribua */}
-            <div className="hidden md:flex flex-1">
-              <div className="flex flex-col text-center md:text-left">
-                <h4 className="text-2xl font-semibold mb-5">Contribua</h4>
-                <ul className="text-base space-y-3">
-                  <li>
-                    <a
-                      href="mailto:pedrosousa2160@gmail.com"
-                      className="text-blue-400 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Reportar um bug
-                    </a>
-                  </li>
-                  <li>
-                    <a
-                      href="https://github.com/PedroReoli"
-                      className="text-blue-400 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Github
-                    </a>
-                  </li>
-                  <li>
-                    <button
-                      onClick={handleCopyPix}
-                      className="text-blue-400 hover:underline"
-                    >
-                      Copiar chave Pix
-                    </button>
-                  </li>
-                  <li>
-                    <a
-                      href="#"
-                      className="text-blue-400 hover:underline"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Patreon
-                    </a>
-                  </li>
-                </ul>
-              </div>
-            </div>
-
-            {/* Imagem Condicional */}
-            <div className="hidden md:flex justify-end flex-1 text-center md:text-right">
-              <img
-                src="/images/EuPIxar.png"
-                alt="Imagem do Autor"
-                className="w-32 h-32 md:w-48 md:h-48 object-cover rounded-full mx-auto md:mx-0"
-              />
-            </div>
-          </div>
-
-          {/* Botões em resoluções menores */}
-          <div className="flex justify-center mt-8 md:hidden">
-            <button
-              onClick={(e) => handleOpen(e, "Contribua")}
-              className="btn-enhanced mx-2"
-            >
-              Contribua
-            </button>
-            <button
-              onClick={(e) => handleOpen(e, "Contato")}
-              className="btn-enhanced mx-2"
-            >
-              Contato
-            </button>
-          </div>
-
-          {/* Linha de rodapé */}
-          <div className="text-center text-base mt-16 border-t border-[var(--border-color)] pt-8">
-            <div className="flex justify-center space-x-4">
+      <footer className="bg-[var(--bg-primary)] text-[var(--text-primary)] py-8 px-4">
+        {/* Container Principal */}
+        <div className="container mx-auto grid grid-cols-1 md:grid-cols-4 gap-8 items-center text-center md:text-left">
+          {/* Coluna 1: Redes Sociais */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold">Redes Sociais</h4>
+            <div className="space-y-2">
               <a
-                href="#"
-                onClick={(e) => handleOpen(e, "Termos de Serviço")}
-                className="text-hover-primary hover:underline"
+                href="https://www.youtube.com/@DevDesenvolvimento"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
               >
-                Termos de Serviço
+                <FaYoutube size={20} />
+                <span>YouTube</span>
               </a>
-              <span className="text-gray-500">|</span>
               <a
-                href="#"
-                onClick={(e) => handleOpen(e, "Privacidade")}
-                className="text-hover-primary hover:underline"
+                href="https://www.instagram.com/01_dev_em_desenvolvimento"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
               >
-                Privacidade
+                <FaInstagram size={20} />
+                <span>Instagram</span>
+              </a>
+              <a
+                href="https://x.com/opedroreoli"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaTwitter size={20} />
+                <span>Twitter</span>
+              </a>
+              <a
+                href="https://github.com/PedroReoli"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaGithub size={20} />
+                <span>GitHub</span>
               </a>
             </div>
           </div>
+
+          {/* Coluna 2: Contribua */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold">Contribua</h4>
+            <div className="space-y-2">
+              <a
+                href="/report-bug"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaBug size={20} />
+                <span>Reportar um Bug</span>
+              </a>
+              <a
+                href="/patreon"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaPatreon size={20} />
+                <span>Patreon</span>
+              </a>
+              <a
+                href="#"
+                onClick={(e) => handleOpen(e, "Pix Copiado")}
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaClipboard size={20} />
+                <span>Chave Pix</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Coluna 3: Moderação */}
+          <div className="space-y-4">
+            <h4 className="text-lg font-semibold">Moderação</h4>
+            <div className="space-y-2">
+              <a
+                href="/moderators"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaUserShield size={20} />
+                <span>Moderadores</span>
+              </a>
+              <a
+                href="/join-us"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaUsers size={20} />
+                <span>Junte-se a Nós</span>
+              </a>
+              <a
+                href="/report"
+                className="flex items-center space-x-2 hover:text-blue-400 transition"
+              >
+                <FaFlag size={20} />
+                <span>Reportar</span>
+              </a>
+            </div>
+          </div>
+
+          {/* Coluna 4: Foto do Autor */}
+          <div className="flex flex-col items-center">
+            <img
+              src="/images/EuPIxar.png"
+              alt="Imagem do Autor"
+              className="w-32 h-32 object-cover rounded-full mb-2"
+            />
+            <p className="text-sm font-semibold text-hover-primary">
+              Pedro Luca: CEO
+            </p>
+          </div>
+        </div>
+
+        {/* Rodapé */}
+        <div className="border-t border-[var(--border-primary)] mt-6 pt-4 text-center text-sm">
+          <div className="flex justify-center space-x-4">
+            <a
+              href="#"
+              onClick={(e) => handleOpen(e, "Termos de Serviço")}
+              className="hover:text-blue-400 transition"
+            >
+              Termos de Serviço
+            </a>
+            <span className="text-gray-500">|</span>
+            <a
+              href="#"
+              onClick={(e) => handleOpen(e, "Privacidade")}
+              className="hover:text-blue-400 transition"
+            >
+              Privacidade
+            </a>
+          </div>
+          <p className="mt-2 text-gray-400">2024 DevEmDesenvolvimento</p>
         </div>
       </footer>
 
+      {/* Popup Component */}
       <Popup isOpen={isOpen} content={content} onClose={handleClose} />
     </>
   );

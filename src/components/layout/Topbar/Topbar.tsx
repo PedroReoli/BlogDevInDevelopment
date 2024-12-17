@@ -8,7 +8,7 @@ const sections = ["blogs", "aulas", "projetos", "perfil"];
 
 const Topbar: React.FC = () => {
   return (
-    <header className="w-full py-3 px-6 shadow-md bg-[var(--bg-secondary)] text-[var(--text-primary)] flex items-center justify-between">
+    <header className="sticky top-0 w-full py-3 px-6 shadow-md bg-[var(--bg-secondary)] text-[var(--text-primary)] flex items-center justify-between z-50">
       <Link to="/" className="flex items-center space-x-2">
         <img src="/images/logo.svg" alt="Logo" className="h-10 w-10" />
         <span className="text-xl font-bold">DevEmDesenvolvimento</span>

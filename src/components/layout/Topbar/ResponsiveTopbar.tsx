@@ -1,68 +1,64 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import Typewriter from "typewriter-effect";
+import NotificationBell from "@/components/Shared/NotificationBell";
+import ThemeSwitch from "@/components/Shared/ThemeSwitch";
+import { FaBars, FaTimes } from "react-icons/fa";
+import HamburguerMenu from "@/components/Shared/HamburguerMenu";
 
-const ResponsiveTopbar = () => {
+const sections = ["blogs", "aulas", "projetos", "perfil"];
+
+const ResponsiveTopbar: React.FC = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [animationComplete, setAnimationComplete] = useState(false);
 
-  return (
-    <header className="topbar-container bg-gradient-to-b from-black to-[#111111] p-4 sticky top-0 z-50 shadow-md border-b-2 border-gray-700 w-full">
-      <div className="w-full flex justify-between items-center">
-        {/* Logo com animação ou texto final */}
-        <div className="topbar-logo text-2xl font-bold text-white">
-          {!animationComplete ? (
-            <Typewriter
-              options={{
-                autoStart: true,
-                delay: 50,
-              }}
-              onInit={(typewriter) => {
-                typewriter
-                  .typeString("DevEmDesenvolvimento")
-                  .callFunction(() => setAnimationComplete(true)) // Marca como completo
-                  .start();
-              }}
-            />
-          ) : (
-            "DevEmDesenvolvimento"
-          )}
-        </div>
+  const toggleMenu = () => setMenuOpen((prev) => !prev);
 
-        {/* Menu para telas grandes */}
-        <nav className="hidden md:flex space-x-6">
-          <a
-            href="https://devemdesenvolvimento.netlify.app"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
+  return (
+    <header className="w-full bg-[var(--bg-secondary)] text-[var(--text-primary)] py-4 px-6 shadow-md sticky top-0 z-50 border-b border-[var(--border-color)]">
+      {/* Topbar Container */}
+      <div className="flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/" className="flex items-center space-x-2">
+          <img src="/images/logo.svg" alt="Logo" className="h-10 w-10" />
+          <span className="text-xl font-bold">
+            {!animationComplete ? (
+              <Typewriter
+                options={{ autoStart: true, delay: 50 }}
+                onInit={(typewriter) => {
+                  typewriter
+                    .typeString("DevEmDesenvolvimento")
+                    .callFunction(() => setAnimationComplete(true))
+                    .start();
+                }}
+              />
+            ) : (
+              "DevEmDesenvolvimento"
+            )}
+          </span>
+        </Link>
+
+        {/* Ícones Fixos */}
+        <div className="flex items-center space-x-4">
+          <ThemeSwitch />
+          <NotificationBell />
+
+          {/* Menu Toggle (Hamburguer) */}
+          <button
+            onClick={toggleMenu}
+            className="text-[var(--text-primary)] text-2xl md:hidden focus:outline-none"
           >
-            Blog
-          </a>
-          <a
-            href="https://www.youtube.com/@DevDesenvolvimento"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
-          >
-            Youtube
-          </a>
-          <a
-            href="https://www.instagram.com/01_dev_em_desenvolvimento"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
-          >
-            Instagram
-          </a>
-          <a
-            href="https://x.com/opedroreoli"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-white hover:text-blue-500 transition"
-          >
-            Twitter
-          </a>
-        </nav>
+            {menuOpen ? <FaTimes /> : <FaBars />}
+          </button>
+        </div>
       </div>
+
+      {/* Menu Responsivo */}
+      {menuOpen && (
+        <div className="mt-4 md:hidden">
+          <HamburguerMenu sections={sections} onClose={() => setMenuOpen(false)} />
+        </div>
+      )}
     </header>
   );
 };
