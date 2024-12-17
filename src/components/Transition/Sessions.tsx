@@ -27,24 +27,32 @@ const Sessions = () => {
 
   return (
     <div ref={sessionsTopRef} className="relative container mx-auto py-8">
-      <div className="flex items-center justify-between mb-8">
+      {/* Título Centralizado */}
+      <div className="text-center mb-6">
+        <h2 className="text-4xl font-extrabold text-[var(--hover-primary)] tracking-tight">
+          {sections[currentIndex].title}
+        </h2>
+      </div>
+
+ 
+      {/* Controles de Navegação */}
+      <div className="flex items-center justify-between mt-8 mb-6">
         {currentIndex > 0 && (
           <FaArrowLeft
-            className="text-3xl cursor-pointer text-hover-primary hover:text-border-primary"
+            className="text-3xl cursor-pointer text-[var(--hover-primary)] hover:text-[var(--border-primary)] transition-colors duration-300"
             onClick={goToPrev}
           />
         )}
-        <h2 className="text-3xl font-bold text-primary text-center flex-1">
-          {sections[currentIndex].title}
-        </h2>
+        <div></div> {/* Espaço vazio centralizado */}
         {currentIndex < sections.length - 1 && (
           <FaArrowRight
-            className="text-3xl cursor-pointer text-hover-primary hover:text-border-primary"
+            className="text-3xl cursor-pointer text-[var(--hover-primary)] hover:text-[var(--border-primary)] transition-colors duration-300"
             onClick={goToNext}
           />
         )}
       </div>
 
+      {/* Carrossel */}
       <div className="relative overflow-hidden">
         <animated.div style={{ display: "flex", ...springProps }}>
           {sections.map((section) => (
@@ -55,8 +63,13 @@ const Sessions = () => {
         </animated.div>
       </div>
 
-      <div className="mt-8 text-center">
-        <Button onClick={scrollToTop} variant="primary" className="shadow-md">
+      {/* Botão Voltar */}
+      <div className="mt-12 text-center">
+        <Button
+          onClick={scrollToTop}
+          variant="secondary"
+          className="border-[var(--hover-primary)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--hover-primary)] hover:text-white"
+        >
           Voltar para o Início
         </Button>
       </div>
