@@ -12,77 +12,78 @@ const BlogGridList = () => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
-    const filtered = query
-      ? blogsData.filter(
-          (post) =>
-            post.title.toLowerCase().includes(query) ||
-            post.keywords.some((keyword) =>
-              keyword.toLowerCase().includes(query)
-            )
-        )
-      : blogsData;
+    if (query === "") {
+      setFilteredPosts(blogsData);
+    } else {
+      const filtered = blogsData.filter((post) => {
+        const titleMatch = post.title.toLowerCase().includes(query);
+        const keywordMatch = post.keywords.some((keyword) =>
+          keyword.toLowerCase().includes(query)
+        );
+        return titleMatch || keywordMatch;
+      });
 
-    setFilteredPosts(filtered);
+      setFilteredPosts(filtered);
+    }
   };
 
   return (
     <div className="container mx-auto py-8 px-4">
-      {/* Search Bar */}
-      <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
+      {/* Barra de Pesquisa */}
+      <div className="mb-6">
+        <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
+      </div>
 
       {/* Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
         {filteredPosts.map((post: BlogPostInterface, index) => (
           <div
             key={index}
-            className="group bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden"
+            className="bg-[var(--bg-secondary)] rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-[1.02] flex flex-col"
           >
-            {/* Imagem com Data */}
-            <div className="relative h-48">
+            {/* Imagem no Topo */}
+            <div className="relative w-full h-48">
               <img
                 src={post.imageUrl}
                 alt={post.title}
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+                className="w-full h-full object-cover"
               />
-              <span className="absolute top-2 right-2 bg-[var(--hover-primary)] text-white text-xs font-bold px-2 py-1 rounded-md">
+              <span className="absolute top-2 right-2 bg-[var(--hover-primary)] bg-opacity-90 text-gray-900 text-xs font-bold px-2 py-1 rounded-md">
                 {post.date}
               </span>
             </div>
 
-            {/* Conteúdo */}
+            {/* Conteúdo do Card */}
             <div className="p-5 flex flex-col flex-grow">
               {/* Título */}
-              <h3 className="text-lg md:text-base font-bold text-[var(--hover-primary)] mb-2 line-clamp-2">
+              <h3 className="text-lg font-bold text-[var(--hover-primary)] mb-3 leading-tight line-clamp-2">
                 {post.title}
               </h3>
 
               {/* Descrição */}
-              <p className="text-sm text-[var(--text-secondary)] mb-4 line-clamp-3 leading-relaxed">
+              <p className="text-sm text-[var(--text-secondary)] line-clamp-3 leading-relaxed mb-4">
                 {post.description}
               </p>
 
-              {/* Tags Organizáveis */}
+              {/* Tags Ajustadas */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {post.keywords
-                  .sort((a, b) => a.localeCompare(b)) // Ordena as tags em ordem alfabética
-                  .slice(0, 4) // Limita a 4 tags visíveis
-                  .map((keyword, idx) => (
-                    <span
-                      key={idx}
-                      className="text-xs bg-[var(--hover-primary)] text-white px-2 py-1 rounded-full font-medium"
-                    >
-                      {keyword}
-                    </span>
-                  ))}
+                {post.keywords.map((keyword, idx) => (
+                  <span
+                    key={idx}
+                    className="text-xs font-semibold px-2 py-1 rounded-full bg-[var(--hover-primary)] bg-opacity-20 text-gray-900"
+                  >
+                    {keyword}
+                  </span>
+                ))}
               </div>
 
-              {/* Link */}
-              <div className="mt-auto text-right">
+              {/* Link Centralizado */}
+              <div className="mt-auto text-center">
                 <Link
                   to={`/post/${post.slug}`}
                   className="text-[var(--hover-primary)] font-semibold hover:underline transition-all duration-300"
                 >
-                  Continuar lendo →
+                  Continuar lendo
                 </Link>
               </div>
             </div>
