@@ -48,9 +48,16 @@ const BlogGridList = () => {
                 alt={post.title}
                 className="w-full h-full object-cover"
               />
-              <span className="absolute top-2 right-2 bg-[var(--hover-primary)] bg-opacity-90 text-gray-900 text-xs font-bold px-2 py-1 rounded-md">
+              {/* {/* Data */}
+              <span
+                className="absolute top-2 right-2 border-2 border-[var(--hover-primary)] 
+                bg-transparent text-[var(--text-primary)] 
+                px-2 py-1 rounded-full text-xs font-semibold 
+                hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300"
+              >
                 {post.date}
               </span>
+
             </div>
 
             {/* Conteúdo do Card */}
@@ -70,12 +77,16 @@ const BlogGridList = () => {
                 {post.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
-                    className="text-xs font-semibold px-2 py-1 rounded-full bg-[var(--hover-primary)] bg-opacity-20 text-gray-900"
+                    className="text-xs font-semibold px-2 py-1 rounded-full border-2 border-[var(--hover-primary)] 
+                    bg-transparent text-[var(--text-primary)] 
+                    hover:bg-[var(--hover-primary)] hover:text-white 
+                    transition-all duration-300"
                   >
                     {keyword}
                   </span>
                 ))}
               </div>
+
 
               {/* Link Centralizado */}
               <div className="mt-auto text-center">
