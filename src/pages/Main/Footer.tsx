@@ -144,7 +144,7 @@ const Footer = () => {
               className="w-32 h-32 object-cover rounded-full mb-2"
             />
             <p className="text-sm font-semibold text-hover-primary">
-              Pedro Luca: CEO
+              Pedro Lucas: CEO
             </p>
           </div>
         </div>

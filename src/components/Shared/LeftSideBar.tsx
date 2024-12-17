@@ -10,6 +10,9 @@ import {
   FaBug,
   FaGithub,
   FaDonate,
+  FaCompass,
+  FaFlask,
+  FaHandsHelping as FaContribute,
 } from "react-icons/fa";
 
 const LeftSideBar: React.FC = () => {
@@ -19,15 +22,17 @@ const LeftSideBar: React.FC = () => {
   };
 
   return (
-    <aside className="sticky top-16 h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg overflow-y-auto custom-scrollbar">
+    <aside className="sticky top-16 h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar">
       <nav className="p-4">
-        <h3 className="text-lg font-semibold mb-4">Navegação</h3>
+        {/* Navegação */}
+        <div className="flex items-center mb-2 space-x-2">
+          <h3 className="text-lg font-semibold">Navegação</h3>
+          <FaCompass className="text-[var(--hover-primary)]" />
+        </div>
+        <hr className="border-[var(--border-primary)] mb-4" />
         <ul className="space-y-4">
           <li>
-            <Link
-              to="/"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
+            <Link to="/" className="flex items-center space-x-2 hover:text-[var(--hover-primary)]">
               <FaHome />
               <span>Início</span>
             </Link>
@@ -59,8 +64,15 @@ const LeftSideBar: React.FC = () => {
               <span>Apoiadores</span>
             </Link>
           </li>
+        </ul>
 
-          <h4 className="mt-6 mb-2 font-semibold">Laboratório</h4>
+        {/* Laboratório */}
+        <div className="flex items-center mt-6 mb-2 space-x-2">
+          <h4 className="text-lg font-semibold">Laboratório</h4>
+          <FaFlask className="text-[var(--hover-primary)]" />
+        </div>
+        <hr className="border-[var(--border-primary)] mb-4" />
+        <ul className="space-y-4">
           <li>
             <Link
               to="/vagas"
@@ -79,8 +91,15 @@ const LeftSideBar: React.FC = () => {
               <span>Discussões</span>
             </Link>
           </li>
+        </ul>
 
-          <h4 className="mt-6 mb-2 font-semibold">Contribua</h4>
+        {/* Contribua */}
+        <div className="flex items-center mt-6 mb-2 space-x-2">
+          <h4 className="text-lg font-semibold">Contribua</h4>
+          <FaContribute className="text-[var(--hover-primary)]" />
+        </div>
+        <hr className="border-[var(--border-primary)] mb-4" />
+        <ul className="space-y-4">
           <li>
             <a
               href="mailto:pedrosousa2160@gmail.com"
