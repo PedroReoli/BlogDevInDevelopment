@@ -31,28 +31,28 @@ const BlogGridList = () => {
       <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
 
       {/* Grid Layout */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mt-8">
         {filteredPosts.map((post: BlogPostInterface, index) => (
           <div
             key={index}
-            className="rounded-lg overflow-hidden border border-[var(--border-primary)] hover:shadow-lg transition-shadow duration-300 bg-[var(--bg-secondary)]"
+            className="group bg-[var(--bg-secondary)] dark:bg-[var(--bg-primary)] rounded-lg shadow-lg hover:shadow-2xl transition-all duration-300 flex flex-col overflow-hidden"
           >
             {/* Imagem com Data */}
-            <div className="relative overflow-hidden h-48">
+            <div className="relative h-48">
               <img
                 src={post.imageUrl}
                 alt={post.title}
-                className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
               />
-              <span className="absolute top-2 right-2 bg-[var(--hover-primary)] text-white text-xs font-semibold px-2 py-1 rounded-md shadow-sm">
+              <span className="absolute top-2 right-2 bg-[var(--hover-primary)] text-white text-xs font-bold px-2 py-1 rounded-md">
                 {post.date}
               </span>
             </div>
 
             {/* Conteúdo */}
-            <div className="p-5">
+            <div className="p-5 flex flex-col flex-grow">
               {/* Título */}
-              <h3 className="text-lg font-semibold mb-3 text-[var(--hover-primary)] line-clamp-2">
+              <h3 className="text-lg md:text-base font-bold text-[var(--hover-primary)] mb-2 line-clamp-2">
                 {post.title}
               </h3>
 
@@ -61,23 +61,26 @@ const BlogGridList = () => {
                 {post.description}
               </p>
 
-              {/* Palavras-chave */}
+              {/* Tags Organizáveis */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {post.keywords.map((keyword, idx) => (
-                  <span
-                    key={idx}
-                    className="bg-[var(--hover-primary)] text-white text-xs font-medium px-2 py-1 rounded-full"
-                  >
-                    {keyword}
-                  </span>
-                ))}
+                {post.keywords
+                  .sort((a, b) => a.localeCompare(b)) // Ordena as tags em ordem alfabética
+                  .slice(0, 4) // Limita a 4 tags visíveis
+                  .map((keyword, idx) => (
+                    <span
+                      key={idx}
+                      className="text-xs bg-[var(--hover-primary)] text-white px-2 py-1 rounded-full font-medium"
+                    >
+                      {keyword}
+                    </span>
+                  ))}
               </div>
 
               {/* Link */}
-              <div className="text-right">
+              <div className="mt-auto text-right">
                 <Link
                   to={`/post/${post.slug}`}
-                  className="text-[var(--hover-primary)] font-semibold hover:underline transition-colors duration-300"
+                  className="text-[var(--hover-primary)] font-semibold hover:underline transition-all duration-300"
                 >
                   Continuar lendo →
                 </Link>
