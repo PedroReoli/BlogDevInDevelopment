@@ -25,12 +25,12 @@ const LeftSideBar: React.FC = () => {
     <aside className="sticky top-16 h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar">
       <nav className="p-4">
         {/* Navegação */}
-        <div className="flex items-center mb-2 space-x-2">
+        <div className="flex items-center mb-1 space-x-2">
           <h3 className="text-lg font-semibold">Navegação</h3>
           <FaCompass className="text-[var(--hover-primary)]" />
         </div>
-        <hr className="border-[var(--border-primary)] mb-4" />
-        <ul className="space-y-4">
+        <hr className="border-[var(--border-primary)] mb-2" />
+        <ul className="space-y-3">
           <li>
             <Link to="/" className="flex items-center space-x-2 hover:text-[var(--hover-primary)]">
               <FaHome />
@@ -67,12 +67,12 @@ const LeftSideBar: React.FC = () => {
         </ul>
 
         {/* Laboratório */}
-        <div className="flex items-center mt-6 mb-2 space-x-2">
+        <div className="flex items-center mt-4 mb-1 space-x-2">
           <h4 className="text-lg font-semibold">Laboratório</h4>
           <FaFlask className="text-[var(--hover-primary)]" />
         </div>
-        <hr className="border-[var(--border-primary)] mb-4" />
-        <ul className="space-y-4">
+        <hr className="border-[var(--border-primary)] mb-2" />
+        <ul className="space-y-3">
           <li>
             <Link
               to="/vagas"
@@ -94,12 +94,12 @@ const LeftSideBar: React.FC = () => {
         </ul>
 
         {/* Contribua */}
-        <div className="flex items-center mt-6 mb-2 space-x-2">
+        <div className="flex items-center mt-4 mb-1 space-x-2">
           <h4 className="text-lg font-semibold">Contribua</h4>
           <FaContribute className="text-[var(--hover-primary)]" />
         </div>
-        <hr className="border-[var(--border-primary)] mb-4" />
-        <ul className="space-y-4">
+        <hr className="border-[var(--border-primary)] mb-2" />
+        <ul className="space-y-3">
           <li>
             <a
               href="mailto:pedrosousa2160@gmail.com"
