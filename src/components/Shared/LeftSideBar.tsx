@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import Profile from "@/components/Shared/Profile";
 import {
   FaLock,
   FaUser,
@@ -30,12 +29,29 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
   const closeModal = () => setModalOpen(false);
 
   return (
-    <aside className="sticky top-0 h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar overflow-y-auto">
+    <aside className="h-screen sticky top-0 bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar">
       <nav className="p-4 space-y-4">
         {/* Perfil do Usuário */}
-        <Profile user={user} />
+        <div className="flex items-center space-x-4 bg-[var(--bg-secondary)] p-3 rounded-md shadow-md">
+          {/* Foto do Usuário */}
+          <div className="w-12 h-12 rounded-full border-2 border-[var(--hover-primary)] overflow-hidden">
+            <img
+              src="/images/profile.jpg"
+              alt="Profile"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          {/* Nome e Cargo */}
+          <div className="flex flex-col">
+            <span className="text-sm font-semibold text-[var(--text-primary)]">
+              {user.name}
+            </span>
+            <span className="text-xs font-medium text-[var(--hover-primary)]">
+              {user.role}
+            </span>
+          </div>
+        </div>
 
-       
         {/* Pessoal */}
         <div>
           <h4 className="text-sm font-bold uppercase mb-2">Perfil</h4>

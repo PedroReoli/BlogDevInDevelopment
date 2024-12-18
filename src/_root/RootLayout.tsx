@@ -17,6 +17,12 @@ const RootLayout = () => {
     return () => window.removeEventListener("resize", handleResize);
   }, []);
 
+  const user = {
+    name: "Pedro Sousa",
+    isLoggedIn: true,
+    role: "CEO" as const,
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       {/* Sticky Topbar */}
@@ -28,14 +34,8 @@ const RootLayout = () => {
       <div className="flex flex-1">
         {/* LeftSideBar */}
         {!isSmallScreen && (
-          <aside className="w-64 flex-shrink-0 bg-[var(--bg-secondary)]">
-            <div className="sticky top-16 h-[calc(100vh-4rem)]">
-              <LeftSideBar user={{
-                name: "",
-                isLoggedIn: false,
-                role: "CEO"
-              }} />
-            </div>
+          <aside className="w-64 h-screen flex-shrink-0 sticky top-0 overflow-hidden">
+            <LeftSideBar user={user} />
           </aside>
         )}
 
