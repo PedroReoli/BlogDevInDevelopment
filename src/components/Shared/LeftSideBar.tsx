@@ -1,136 +1,199 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import Profile from "@/components/Shared/Profile";
 import {
-  FaHome,
-  FaQuestionCircle,
+  FaLock,
+  FaUser,
+  FaTrophy,
+  FaGamepad,
   FaUsers,
-  FaHandsHelping,
-  FaBriefcase,
   FaComments,
-  FaBug,
-  FaGithub,
-  FaDonate,
-  FaCompass,
-  FaFlask,
-  FaHandsHelping as FaContribute,
+  FaBriefcase,
+  FaSignOutAlt,
+  FaSignInAlt,
+  FaFileAlt,
+  FaBullhorn,
 } from "react-icons/fa";
 
-const LeftSideBar: React.FC = () => {
-  const copyPix = () => {
-    navigator.clipboard.writeText("87ed50aa-9526-46a2-8aec-e1a1cce4a9e4");
-    alert("Chave Pix copiada com sucesso!");
+interface LeftSidebarProps {
+  user: {
+    name: string;
+    isLoggedIn: boolean;
+    role: "CEO" | "ADM" | "MOD" | "USER";
   };
+}
+
+const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
 
   return (
-    <aside className="sticky top-16 h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar">
-      <nav className="p-4">
-        {/* Navegação */}
-        <div className="flex items-center mb-1 space-x-2">
-          <h3 className="text-lg font-semibold">Navegação</h3>
-          <FaCompass className="text-[var(--hover-primary)]" />
-        </div>
-        <hr className="border-[var(--border-primary)] mb-2" />
-        <ul className="space-y-3">
-          <li>
-            <Link to="/" className="flex items-center space-x-2 hover:text-[var(--hover-primary)]">
-              <FaHome />
-              <span>Início</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/questoes"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaQuestionCircle />
-              <span>Questões</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/usuarios"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaUsers />
-              <span>Usuários</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/apoiadores"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaHandsHelping />
-              <span>Apoiadores</span>
-            </Link>
-          </li>
-        </ul>
+    <aside className="sticky top-0 h-[calc(100vh-4rem)] bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar overflow-y-auto">
+      <nav className="p-4 space-y-4">
+        {/* Perfil do Usuário */}
+        <Profile user={user} />
 
-        {/* Laboratório */}
-        <div className="flex items-center mt-4 mb-1 space-x-2">
-          <h4 className="text-lg font-semibold">Laboratório</h4>
-          <FaFlask className="text-[var(--hover-primary)]" />
+       
+        {/* Pessoal */}
+        <div>
+          <h4 className="text-sm font-bold uppercase mb-2">Perfil</h4>
+          <hr className="border-[var(--border-primary)] mb-3" />
+          <ul className="space-y-3">
+            <li>
+              <Link
+                to="/profile"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaUser />
+                <span>Meu Perfil</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/salvos"
+                className={`flex items-center space-x-2 ${
+                  !user.isLoggedIn ? "opacity-50" : "hover:text-[var(--hover-primary)]"
+                }`}
+                onClick={!user.isLoggedIn ? openModal : undefined}
+              >
+                <FaLock />
+                <span>Salvos</span>
+              </Link>
+            </li>
+            <li>
+              <button
+                onClick={user.role === "MOD" || user.role === "ADM" ? undefined : openModal}
+                className={`flex items-center space-x-2 ${
+                  user.role === "MOD" || user.role === "ADM"
+                    ? "hover:text-[var(--hover-primary)]"
+                    : "opacity-50"
+                }`}
+              >
+                <FaLock />
+                <span>Meus Posts</span>
+              </button>
+            </li>
+          </ul>
         </div>
-        <hr className="border-[var(--border-primary)] mb-2" />
-        <ul className="space-y-3">
-          <li>
-            <Link
-              to="/vagas"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaBriefcase />
-              <span>Vagas</span>
-            </Link>
-          </li>
-          <li>
-            <Link
-              to="/discussoes"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaComments />
-              <span>Discussões</span>
-            </Link>
-          </li>
-        </ul>
 
-        {/* Contribua */}
-        <div className="flex items-center mt-4 mb-1 space-x-2">
-          <h4 className="text-lg font-semibold">Contribua</h4>
-          <FaContribute className="text-[var(--hover-primary)]" />
+        {/* Jogos */}
+        <div>
+          <h4 className="text-sm font-bold uppercase mb-2">Jogos</h4>
+          <hr className="border-[var(--border-primary)] mb-3" />
+          <ul className="space-y-3">
+            <li>
+              <Link
+                to="/jogar"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaGamepad />
+                <span>Jogar</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/ranking"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaTrophy />
+                <span>Ranking</span>
+              </Link>
+            </li>
+          </ul>
         </div>
-        <hr className="border-[var(--border-primary)] mb-2" />
-        <ul className="space-y-3">
-          <li>
-            <a
-              href="mailto:pedrosousa2160@gmail.com"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaBug />
-              <span>Reportar um bug</span>
-            </a>
-          </li>
-          <li>
-            <a
-              href="https://github.com/PedroReoli"
-              target="_blank"
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-              rel="noopener noreferrer"
-            >
-              <FaGithub />
-              <span>Github</span>
-            </a>
-          </li>
-          <li>
-            <button
-              onClick={copyPix}
-              className="flex items-center space-x-2 hover:text-[var(--hover-primary)]"
-            >
-              <FaDonate />
-              <span>Copiar chave Pix</span>
-            </button>
-          </li>
-        </ul>
+
+        {/* Comunidade */}
+        <div>
+          <h4 className="text-sm font-bold uppercase mb-2">Comunidade</h4>
+          <hr className="border-[var(--border-primary)] mb-3" />
+          <ul className="space-y-3">
+            <li>
+              <Link
+                to="/usuarios"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaUsers />
+                <span>Usuários</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/discussoes"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaComments />
+                <span>Discussões</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Profissional */}
+        <div>
+          <h4 className="text-sm font-bold uppercase mb-2">Profissional</h4>
+          <hr className="border-[var(--border-primary)] mb-3" />
+          <ul className="space-y-3">
+            <li>
+              <Link
+                to="/vagas"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaBriefcase />
+                <span>Portal de Vagas</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/curriculo"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaFileAlt />
+                <span>Meu Currículo</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/anunciar-vaga"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaBullhorn />
+                <span>Anunciar Vaga</span>
+              </Link>
+            </li>
+          </ul>
+        </div>
+
+        {/* Login/Logout */}
+        <div className="mt-6">
+          <hr className="border-[var(--border-primary)] mb-3" />
+          <Link
+            to={user.isLoggedIn ? "/logout" : "/login"}
+            className="flex items-center space-x-2 text-red-500 hover:text-red-600 transition-all"
+          >
+            {user.isLoggedIn ? <FaSignOutAlt /> : <FaSignInAlt />}
+            <span>{user.isLoggedIn ? "Sair" : "Fazer Login"}</span>
+          </Link>
+        </div>
       </nav>
+
+      {/* Modal para Bloqueio */}
+      {modalOpen && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-[var(--bg-secondary)] p-6 rounded-md shadow-lg text-center">
+            <p className="mb-4 text-[var(--text-primary)]">
+              Você precisa fazer login ou ser moderador para acessar esta seção.
+            </p>
+            <button
+              onClick={closeModal}
+              className="bg-[var(--hover-primary)] text-white px-4 py-2 rounded-md hover:bg-blue-600"
+            >
+              Fechar
+            </button>
+          </div>
+        </div>
+      )}
     </aside>
   );
 };

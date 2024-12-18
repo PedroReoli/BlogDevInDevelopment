@@ -26,11 +26,17 @@ const RootLayout = () => {
 
       {/* Layout Principal */}
       <div className="flex flex-1">
-        {/* Sticky LeftSideBar */}
+        {/* LeftSideBar */}
         {!isSmallScreen && (
-          <div className="sticky top-16 h-[calc(100vh-4rem)] w-64">
-            <LeftSideBar />
-          </div>
+          <aside className="w-64 flex-shrink-0 bg-[var(--bg-secondary)]">
+            <div className="sticky top-16 h-[calc(100vh-4rem)]">
+              <LeftSideBar user={{
+                name: "",
+                isLoggedIn: false,
+                role: "CEO"
+              }} />
+            </div>
+          </aside>
         )}
 
         {/* Conteúdo Principal */}
@@ -38,7 +44,6 @@ const RootLayout = () => {
           <Outlet />
         </main>
       </div>
-
     </div>
   );
 };
