@@ -1,10 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { 
-  DiHtml5, DiCss3, DiJavascript, DiReact, DiNodejsSmall, DiPython, DiJava, DiGithub, DiDatabase, DiDjango, DiDocker, DiRust, DiGo, DiAngularSimple,
+  DiHtml5, DiCss3, DiJavascript, DiReact, DiNodejsSmall, DiPython, DiJava, DiGithub, DiDatabase, DiDocker, DiRust, DiAngularSimple,
 } from "react-icons/di";
-import { FaCuttlefish, FaCogs, FaShieldAlt } from "react-icons/fa";
-import { SiTailwindcss, SiTypescript, SiFlutter } from "react-icons/si";
+import { FaCogs, FaShieldAlt } from "react-icons/fa";
+import { SiTailwindcss, SiTypescript, SiFlutter , SiCsharp ,SiDjango , SiGo , SiCplusplus } from "react-icons/si";
 
 const PlayPage: React.FC = () => {
   const categories = [
@@ -13,16 +13,16 @@ const PlayPage: React.FC = () => {
     { name: "JavaScript", link: "/play/javascript", icon: <DiJavascript /> },
     { name: "React", link: "/play/react", icon: <DiReact /> },
     { name: "Node.js", link: "/play/nodejs", icon: <DiNodejsSmall /> },
-    { name: "C#", link: "/play/csharp", icon: <FaCuttlefish /> },
+    { name: "C#", link: "/play/csharp", icon: <SiCsharp /> },
     { name: "TailwindCSS", link: "/play/tailwind", icon: <SiTailwindcss /> },
     { name: "Python", link: "/play/python", icon: <DiPython /> },
     { name: "Java", link: "/play/java", icon: <DiJava /> },
-    { name: "C++", link: "/play/cpp", icon: <FaCuttlefish /> },
+    { name: "C++", link: "/play/cpp", icon: <SiCplusplus /> },
     { name: "Git e GitHub", link: "/play/git", icon: <DiGithub /> },
     { name: "SQL", link: "/play/sql", icon: <DiDatabase /> },
-    { name: "Django", link: "/play/django", icon: <DiDjango /> },
+    { name: "Django", link: "/play/django", icon: <SiDjango /> },
     { name: "Angular", link: "/play/angular", icon: <DiAngularSimple /> },
-    { name: "GoLang", link: "/play/golang", icon: <DiGo /> },
+    { name: "GoLang", link: "/play/golang", icon: <SiGo /> },
     { name: "Rust", link: "/play/rust", icon: <DiRust /> },
     { name: "TypeScript", link: "/play/typescript", icon: <SiTypescript /> },
     { name: "Docker", link: "/play/docker", icon: <DiDocker /> },
