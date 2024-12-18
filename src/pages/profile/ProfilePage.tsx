@@ -3,14 +3,31 @@ import { FaLock, FaLockOpen } from "react-icons/fa";
 
 const ProfilePage: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
+
+  // Campos editáveis
   const [bio, setBio] = useState("Desenvolvedor apaixonado por inovação e tecnologia.");
   const [profession, setProfession] = useState("Desenvolvedor Fullstack");
+  const [location, setLocation] = useState("Rio de Janeiro, Brasil");
+  const [age, setAge] = useState("22");
+  const [education, setEducation] = useState("Bacharel em Ciência da Computação");
+
+  // Campos não editáveis
   const [connectedSince] = useState("03/01/2022");
 
   return (
     <div className="p-6 bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
-      {/* Título */}
-      <h1 className="text-3xl font-bold mb-6">Meu Perfil</h1>
+      {/* Botão Editar Perfil */}
+      <div className="flex justify-end mb-4">
+        <button
+          onClick={() => setIsEditing(!isEditing)}
+          className="flex items-center space-x-2 border-2 border-[var(--hover-primary)] 
+            text-[var(--hover-primary)] bg-transparent px-4 py-2 rounded-full 
+            hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300"
+        >
+          {isEditing ? <FaLockOpen /> : <FaLock />}
+          <span>{isEditing ? "Salvar Alterações" : "Editar Perfil"}</span>
+        </button>
+      </div>
 
       {/* Container Principal */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -41,7 +58,7 @@ const ProfilePage: React.FC = () => {
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                   className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
-                  rows={3}
+                  rows={5}
                 />
               ) : (
                 <div className="border-2 border-[var(--hover-primary)] p-3 rounded-lg bg-transparent text-[var(--text-secondary)]">
@@ -62,6 +79,51 @@ const ProfilePage: React.FC = () => {
                 />
               ) : (
                 <p className="text-[var(--text-secondary)]">{profession}</p>
+              )}
+            </div>
+
+            {/* Mora em */}
+            <div>
+              <p className="text-[var(--hover-primary)] font-bold">Mora em:</p>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
+                />
+              ) : (
+                <p className="text-[var(--text-secondary)]">{location}</p>
+              )}
+            </div>
+
+            {/* Idade */}
+            <div>
+              <p className="text-[var(--hover-primary)] font-bold">Idade:</p>
+              {isEditing ? (
+                <input
+                  type="number"
+                  value={age}
+                  onChange={(e) => setAge(e.target.value)}
+                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
+                />
+              ) : (
+                <p className="text-[var(--text-secondary)]">{age}</p>
+              )}
+            </div>
+
+            {/* Formações */}
+            <div>
+              <p className="text-[var(--hover-primary)] font-bold">Formações:</p>
+              {isEditing ? (
+                <input
+                  type="text"
+                  value={education}
+                  onChange={(e) => setEducation(e.target.value)}
+                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
+                />
+              ) : (
+                <p className="text-[var(--text-secondary)]">{education}</p>
               )}
             </div>
 
@@ -97,54 +159,15 @@ const ProfilePage: React.FC = () => {
           </div>
         </div>
 
-        {/* Tecnologias Favoritas */}
+        {/* Conquistas */}
         <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-[var(--hover-primary)] mb-4">
-            Tecnologias Favoritas
-          </h2>
-          <div className="flex flex-wrap gap-2">
-            {["React", "Node.js", "TypeScript", "C#", "TailwindCSS", "Docker"].map(
-              (tech, idx) => (
-                <span
-                  key={idx}
-                  className="text-xs font-semibold px-3 py-1 rounded-full border-2 border-[var(--hover-primary)] 
-                    bg-transparent text-[var(--text-primary)] hover:bg-[var(--hover-primary)] 
-                    hover:text-white transition-all duration-300"
-                >
-                  {tech}
-                </span>
-              )
-            )}
+          <h2 className="text-lg font-bold text-[var(--hover-primary)] mb-4">Conquistas</h2>
+          <div className="flex flex-wrap gap-3">
+            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
+            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
           </div>
-        </div>
-
-        {/* Conquistas + Botão Editar Perfil */}
-        <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-md flex justify-between items-start">
-          <div className="flex flex-col gap-4">
-            <h2 className="text-lg font-bold text-[var(--hover-primary)]">Conquistas</h2>
-            {/* Pins Placeholder */}
-            <div className="flex flex-wrap gap-3">
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-              <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-            </div>
-          </div>
-
-          {/* Botão Editar Perfil */}
-          <button
-            onClick={() => setIsEditing(!isEditing)}
-            className="flex items-center space-x-2 border-2 border-[var(--hover-primary)] 
-              text-[var(--hover-primary)] bg-transparent px-4 py-2 rounded-full 
-              hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300"
-          >
-            {isEditing ? (
-              <FaLockOpen className="text-[var(--hover-primary)]" />
-            ) : (
-              <FaLock className="text-[var(--hover-primary)]" />
-            )}
-            <span>{isEditing ? "Salvar Alterações" : "Editar Perfil"}</span>
-          </button>
         </div>
       </div>
     </div>
