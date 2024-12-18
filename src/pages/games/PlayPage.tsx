@@ -1,34 +1,36 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { 
-  DiHtml5, DiCss3, DiJavascript, DiReact, DiNodejsSmall, DiPython, DiJava, DiGithub, DiDatabase, DiDocker, DiRust, DiAngularSimple,
-} from "react-icons/di";
-import { FaCogs, FaShieldAlt } from "react-icons/fa";
-import { SiTailwindcss, SiTypescript, SiFlutter , SiCsharp ,SiDjango , SiGo , SiCplusplus } from "react-icons/si";
+import {
+  SiHtml5, SiCss3, SiJavascript, SiReact, SiNodedotjs, SiCsharp, SiTailwindcss, SiPython,
+  SiCplusplus, SiGithub, SiPostgresql, SiDjango, SiAngular, SiGo, SiRust, SiTypescript, SiDocker,
+  SiFlutter,  SiKubernetes, 
+  
+} from "react-icons/si";
 
 const PlayPage: React.FC = () => {
   const categories = [
-    { name: "HTML", link: "/play/html", icon: <DiHtml5 /> },
-    { name: "CSS", link: "/play/css", icon: <DiCss3 /> },
-    { name: "JavaScript", link: "/play/javascript", icon: <DiJavascript /> },
-    { name: "React", link: "/play/react", icon: <DiReact /> },
-    { name: "Node.js", link: "/play/nodejs", icon: <DiNodejsSmall /> },
+    { name: "HTML", link: "/play/html", icon: <SiHtml5 /> },
+    { name: "CSS", link: "/play/css", icon: <SiCss3 /> },
+    { name: "JavaScript", link: "/play/javascript", icon: <SiJavascript /> },
+    { name: "React", link: "/play/react", icon: <SiReact /> },
+    { name: "Node.js", link: "/play/nodejs", icon: <SiNodedotjs /> },
     { name: "C#", link: "/play/csharp", icon: <SiCsharp /> },
     { name: "TailwindCSS", link: "/play/tailwind", icon: <SiTailwindcss /> },
-    { name: "Python", link: "/play/python", icon: <DiPython /> },
-    { name: "Java", link: "/play/java", icon: <DiJava /> },
+    { name: "Python", link: "/play/python", icon: <SiPython /> },
+    // { name: "Java", link: "/play/java", icon: <SiJava /> },
     { name: "C++", link: "/play/cpp", icon: <SiCplusplus /> },
-    { name: "Git e GitHub", link: "/play/git", icon: <DiGithub /> },
-    { name: "SQL", link: "/play/sql", icon: <DiDatabase /> },
+    { name: "Git e GitHub", link: "/play/git", icon: <SiGithub /> },
+    { name: "SQL", link: "/play/sql", icon: <SiPostgresql /> },
     { name: "Django", link: "/play/django", icon: <SiDjango /> },
-    { name: "Angular", link: "/play/angular", icon: <DiAngularSimple /> },
+    { name: "Angular", link: "/play/angular", icon: <SiAngular /> },
     { name: "GoLang", link: "/play/golang", icon: <SiGo /> },
-    { name: "Rust", link: "/play/rust", icon: <DiRust /> },
+    { name: "Rust", link: "/play/rust", icon: <SiRust /> },
     { name: "TypeScript", link: "/play/typescript", icon: <SiTypescript /> },
-    { name: "Docker", link: "/play/docker", icon: <DiDocker /> },
+    { name: "Docker", link: "/play/docker", icon: <SiDocker /> },
     { name: "Flutter", link: "/play/flutter", icon: <SiFlutter /> },
-    { name: "Cybersecurity", link: "/play/cybersecurity", icon: <FaShieldAlt /> },
-    { name: "DevOps", link: "/play/devops", icon: <FaCogs /> },
+    // { name: "Cybersecurity", link: "/play/cybersecurity", icon: <SiSecurity /> },
+    // { name: "DevOps", link: "/play/devops", icon: <SiDevops /> },
+    { name: "Kubernetes", link: "/play/kubernetes", icon: <SiKubernetes /> },
   ];
 
   return (
