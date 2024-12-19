@@ -28,78 +28,72 @@ const BlogGridList = () => {
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
+    <div className="container mx-auto py-8 px-4 bg-[var(--bg-primary)] text-[var(--text-primary)]">
       {/* Barra de Pesquisa */}
-      <div className="mb-6">
-        <SearchBar searchQuery={searchQuery} onSearchChange={handleSearch} />
+      <div className="mb-8 max-w-3xl mx-auto">
+        <SearchBar
+          searchQuery={searchQuery}
+          onSearchChange={handleSearch}
+          placeholder="Buscar blogs por título ou palavra-chave..."
+        />
       </div>
 
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-        {filteredPosts.map((post: BlogPostInterface, index) => (
-          <div
-            key={index}
-            className="bg-[var(--bg-secondary)] rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-[1.02] flex flex-col"
-          >
-            {/* Imagem no Topo */}
-            <div className="relative w-full h-48">
-              <img
-                src={post.imageUrl}
-                alt={post.title}
-                className="w-full h-full object-cover"
-              />
-              {/* {/* Data */}
-              <span
-                className="absolute top-2 right-2 border-2 border-[var(--hover-primary)] 
-                bg-transparent text-[var(--text-primary)] 
-                px-2 py-1 rounded-full text-xs font-semibold 
-                hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300"
-              >
-                {post.date}
-              </span>
+      {/* Grid de Blogs */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredPosts.length === 0 ? (
+          <p className="text-center text-[var(--text-secondary)]">
+            Nenhum blog encontrado.
+          </p>
+        ) : (
+          filteredPosts.map((post: BlogPostInterface, index) => (
+            <div
+              key={index}
+              className="p-5 bg-[var(--bg-secondary)] rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105 border border-[var(--hover-primary)] flex flex-col"
+            >
+              {/* Imagem */}
+              <div className="relative overflow-hidden rounded-lg mb-4">
+                <img
+                  src={post.imageUrl}
+                  alt={post.title}
+                  className="w-full h-40 object-cover transition-transform duration-300 hover:scale-110 rounded-lg"
+                />
+              </div>
 
-            </div>
-
-            {/* Conteúdo do Card */}
-            <div className="p-5 flex flex-col flex-grow">
               {/* Título */}
-              <h3 className="text-lg font-bold text-[var(--hover-primary)] mb-3 leading-tight line-clamp-2">
+              <h3 className="text-xl font-semibold text-[var(--hover-primary)] mb-3 hover:underline">
                 {post.title}
               </h3>
 
               {/* Descrição */}
-              <p className="text-sm text-[var(--text-secondary)] line-clamp-3 leading-relaxed mb-4">
+              <p className="text-[var(--text-secondary)] text-sm mb-4 line-clamp-3">
                 {post.description}
               </p>
 
-              {/* Tags Ajustadas */}
+              {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-4">
                 {post.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
-                    className="text-xs font-semibold px-2 py-1 rounded-full border-2 border-[var(--hover-primary)] 
-                    bg-transparent text-[var(--text-primary)] 
-                    hover:bg-[var(--hover-primary)] hover:text-white 
-                    transition-all duration-300"
+                    className="px-2 py-1 text-xs font-semibold rounded-full border border-[var(--hover-primary)] text-[var(--hover-primary)] hover:bg-[var(--hover-primary)] hover:text-white transition-all"
                   >
                     {keyword}
                   </span>
                 ))}
               </div>
 
-
-              {/* Link Centralizado */}
-              <div className="mt-auto text-center">
+              {/* Data e Link */}
+              <div className="flex justify-between items-center mt-auto text-sm text-[var(--text-secondary)]">
+                <span>{post.date}</span>
                 <Link
                   to={`/post/${post.slug}`}
-                  className="text-[var(--hover-primary)] font-semibold hover:underline transition-all duration-300"
+                  className="text-[var(--hover-primary)] font-semibold hover:underline transition-all"
                 >
                   Continuar lendo
                 </Link>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );

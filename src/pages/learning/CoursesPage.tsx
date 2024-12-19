@@ -18,8 +18,8 @@ const CoursesPage: React.FC = () => {
   const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [filterCategory, setFilterCategory] = useState<string>("Todos");
   const [searchTerm, setSearchTerm] = useState<string>("");
-  const [, setLoading] = useState<boolean>(true);
-  const [, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   const API_URL = "https://api.sheety.co/f07cf17198b5bb94b23fee472faecc25/apiDev/cursos";
 
@@ -61,6 +61,7 @@ const CoursesPage: React.FC = () => {
 
   const categories = ["Todos", ...new Set(courses.map((course) => course.categoria))];
 
+  // Estilo para Botões
   const buttonStyles = `
     py-3 px-6 rounded-full text-sm font-medium border-2 transition-all duration-300 transform hover:scale-105 focus:outline-none 
     focus:ring-2 focus:ring-offset-2 
@@ -68,11 +69,20 @@ const CoursesPage: React.FC = () => {
     hover:bg-[var(--hover-primary)] hover:text-white
   `;
 
+  if (loading) {
+    return <p className="text-center mt-10 text-[var(--text-secondary)]">Carregando cursos...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-10 text-red-500">{error}</p>;
+  }
+
   return (
     <div className="p-8 bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
       <h1 className="text-4xl font-bold mb-6 text-center">Cursos Recomendados</h1>
       <p className="text-lg text-[var(--text-secondary)] text-center mb-8">
-        Descubra cursos cuidadosamente selecionados para aprimorar suas habilidades em programação.
+        Explore uma seleção de cursos recomendados para aprimorar suas habilidades e expandir seu
+        conhecimento.
       </p>
 
       {/* Barra de Busca */}
@@ -105,9 +115,9 @@ const CoursesPage: React.FC = () => {
         {filteredCourses.map((course) => (
           <div
             key={course.id}
-            className="relative p-6 bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--hover-primary-light)] rounded-xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300 flex flex-col justify-between"
+            className="p-6 bg-[var(--bg-secondary)] rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:scale-105 flex flex-col"
           >
-            {/* Nível  */}
+            {/* Nível do Curso */}
             <div className="absolute -top-3 -right-3 bg-[var(--hover-primary)] text-white text-xs font-bold py-1 px-4 rounded-full shadow-md">
               {course.nível}
             </div>
@@ -118,7 +128,9 @@ const CoursesPage: React.FC = () => {
             </h2>
 
             {/* Descrição */}
-            <p className="text-[var(--text-secondary)] text-sm mb-4">{course.descrição}</p>
+            <p className="text-[var(--text-secondary)] text-sm mb-4">
+              {course.descrição}
+            </p>
 
             {/* Detalhes do Curso */}
             <ul className="text-sm text-[var(--text-secondary)] space-y-1 mb-6">
@@ -154,7 +166,8 @@ const CoursesPage: React.FC = () => {
       {filteredCourses.length === 0 && (
         <div className="flex justify-center items-center mt-16">
           <p className="text-center text-[var(--text-secondary)]">
-            Nenhum curso encontrado para os critérios selecionados. Tente ajustar os filtros ou pesquisar novamente.
+            Nenhum curso encontrado para os critérios selecionados. Tente ajustar os filtros ou
+            pesquisar novamente.
           </p>
         </div>
       )}
