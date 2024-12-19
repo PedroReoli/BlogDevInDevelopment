@@ -107,7 +107,7 @@ const CoursesPage: React.FC = () => {
             key={course.id}
             className="relative p-6 bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--hover-primary-light)] rounded-xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300 flex flex-col justify-between"
           >
-            {/* Nível (Estilo atualizado) */}
+            {/* Nível  */}
             <div className="absolute -top-3 -right-3 bg-[var(--hover-primary)] text-white text-xs font-bold py-1 px-4 rounded-full shadow-md">
               {course.nível}
             </div>
