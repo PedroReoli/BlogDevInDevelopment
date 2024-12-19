@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import {
   FaLock,
   FaUser,
-  FaTrophy,
-  FaGamepad,
   FaUsers,
   FaComments,
   FaBriefcase,
@@ -12,6 +10,10 @@ import {
   FaSignInAlt,
   FaFileAlt,
   FaBullhorn,
+  FaBook,
+  FaVideo,
+  FaFileCode,
+  FaDiscord,
 } from "react-icons/fa";
 import Profile from "./Profile";
 
@@ -33,12 +35,7 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
     <aside className="h-screen sticky top-0 bg-[var(--bg-secondary)] text-[var(--text-primary)] shadow-lg custom-scrollbar">
       <nav className="p-4 space-y-4">
         {/* Perfil do Usuário */}
-        
-         <Profile
-          name={user.name}
-          role={user.role}
-          imageUrl="/images/profile.jpg"
-        />
+        <Profile name={user.name} role={user.role} imageUrl="/images/profile.jpg" />
 
         {/* Pessoal */}
         <div>
@@ -82,27 +79,36 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
           </ul>
         </div>
 
-        {/* Jogos */}
+        {/* Aprendizado */}
         <div>
-          <h4 className="text-sm font-bold uppercase mb-2">Jogos</h4>
+          <h4 className="text-sm font-bold uppercase mb-2">Aprendizado</h4>
           <hr className="border-[var(--border-primary)] mb-3" />
           <ul className="space-y-3">
             <li>
               <Link
-                to="/jogar"
+                to="/aprendizado/tutoriais"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
-                <FaGamepad />
-                <span>Jogar</span>
+                <FaBook />
+                <span>Tutoriais</span>
               </Link>
             </li>
             <li>
               <Link
-                to="/ranking"
+                to="/aprendizado/cursos"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
-                <FaTrophy />
-                <span>Ranking</span>
+                <FaVideo />
+                <span>Cursos</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/aprendizado/documentacao"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaFileCode />
+                <span>Documentação</span>
               </Link>
             </li>
           </ul>
@@ -129,6 +135,15 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
               >
                 <FaComments />
                 <span>Discussões</span>
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/discord"
+                className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+              >
+                <FaDiscord />
+                <span>Discord</span>
               </Link>
             </li>
           </ul>

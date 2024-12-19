@@ -11,16 +11,18 @@ import NotFoundPage from "@/pages/not-found/NotFoundPage";
 import ProfilePage from "@/pages/profile/ProfilePage";
 import SavedContentPage from "@/pages/profile/SavedContentPage";
 import MyPostsPage from "@/pages/profile/MyPostsPage";
-import PlayPage from "@/pages/games/PlayPage";
-import RankingPage from "@/pages/games/RankingPage";
 import UsersPage from "@/pages/community/UsersPage";
 import DiscussionsPage from "@/pages/community/DiscussionsPage";
 import JobPortalPage from "@/pages/professional/JobPortalPage";
 import ResumePage from "@/pages/professional/ResumePage";
 import AnnounceJobPage from "@/pages/professional/AnnounceJobPage";
 import LoginPage from "@/pages/auth/LoginPage";
+import TutorialsPage from "@/pages/learning/TutorialsPage"; // Nova rota
+import CoursesPage from "@/pages/learning/CoursesPage"; // Nova rota
+import DocumentationPage from "@/pages/learning/DocumentationPage"; // Nova rota
 import { ThemeProvider } from "./context/ThemeContext";
-// DEPOIS FAZER UM ROUTES.TS para organizar isso aqui 
+
+// DEPOIS FAZER UM ROUTES.TS para organizar isso aqui
 const App = () => {
   return (
     <ThemeProvider>
@@ -62,6 +64,32 @@ const App = () => {
                 }
               />
 
+              {/* Rotas de Aprendizado */}
+              <Route
+                path="aprendizado/tutoriais"
+                element={
+                  <PageTransition>
+                    <TutorialsPage />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="aprendizado/cursos"
+                element={
+                  <PageTransition>
+                    <CoursesPage />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="aprendizado/documentacao"
+                element={
+                  <PageTransition>
+                    <DocumentationPage />
+                  </PageTransition>
+                }
+              />
+
               {/* Rotas de Perfil e Pessoal */}
               <Route
                 path="profile"
@@ -84,24 +112,6 @@ const App = () => {
                 element={
                   <PageTransition>
                     <MyPostsPage />
-                  </PageTransition>
-                }
-              />
-
-              {/* Rotas de Jogos */}
-              <Route
-                path="jogar"
-                element={
-                  <PageTransition>
-                    <PlayPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="ranking"
-                element={
-                  <PageTransition>
-                    <RankingPage />
                   </PageTransition>
                 }
               />
