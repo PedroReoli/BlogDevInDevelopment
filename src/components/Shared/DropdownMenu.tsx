@@ -5,69 +5,59 @@ interface DropdownMenuProps {
   title: string;
   isOpen: boolean;
   onToggle: () => void;
-  items: { title: string; description: string; icon: React.ReactNode; link: string }[];
-  position?: "left" | "right"; // Define a posição do dropdown
+  className?: string; // Suporte para classes personalizadas
+  items: {
+    title: string;
+    description: string;
+    icon: React.ReactNode;
+    link: string;
+  }[];
 }
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
   title,
   isOpen,
   onToggle,
+  className,
   items,
-  position = "left",
 }) => {
   return (
     <div className="relative group">
-      {/* Botão para abrir o dropdown */}
+      {/* Botão que controla o Dropdown */}
       <button
         onClick={onToggle}
-        className="flex items-center space-x-2 text-white hover:text-red-500 transition-all"
+        className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--hover-primary)] transition-all"
       >
         <span>{title}</span>
         <span className="text-sm">▼</span>
       </button>
 
-      {/* Dropdown */}
+      {/* Menu Dropdown */}
       {isOpen && (
         <div
-          className={`absolute ${
-            position === "right" ? "right-0" : "left-0"
-          } mt-2 w-[600px] bg-gray-900 text-white shadow-lg rounded-lg p-6 grid grid-cols-2 gap-4 animate-fade`}
+          className={`absolute left-0 mt-2 w-[300px] bg-[var(--bg-secondary)] text-[var(--text-primary)] rounded-lg shadow-lg p-4 grid grid-cols-1 gap-4 border border-[var(--border-primary)] transition-all duration-300 ${
+            className || ""
+          }`}
         >
-          {/* Lista de itens */}
-          <ul className="space-y-4 col-span-1">
-            {items.map((item, index) => (
-              <li key={index} className="flex items-start space-x-3">
-                {/* Ícone */}
-                <div className="text-red-500">{item.icon}</div>
-                {/* Conteúdo */}
-                <div>
-                  <Link
-                    to={item.link}
-                    className="text-base font-semibold hover:text-red-500 transition-all"
-                  >
-                    {item.title}
-                  </Link>
-                  <p className="text-sm text-gray-400">{item.description}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
-
-          {/* Destaques ou outros conteúdos */}
-          <div className="col-span-1 border-l border-gray-700 pl-4">
-            <h4 className="text-sm font-bold uppercase text-gray-400 mb-4">Destaques</h4>
-            <div className="space-y-4">
-              <div className="bg-gray-800 p-4 rounded-md">
-                <h5 className="text-base font-semibold">Networking</h5>
-                <p className="text-sm text-gray-400">Conecte-se com outros profissionais.</p>
-              </div>
-              <div className="bg-gray-800 p-4 rounded-md">
-                <h5 className="text-base font-semibold">Eventos</h5>
-                <p className="text-sm text-gray-400">Participe de eventos exclusivos.</p>
+          {items.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-start space-x-3 hover:bg-[var(--hover-primary)] hover:text-white p-2 rounded-md transition-all"
+            >
+              <div className="text-[var(--hover-primary)]">{item.icon}</div>
+              <div>
+                <Link
+                  to={item.link}
+                  className="font-semibold hover:underline"
+                >
+                  {item.title}
+                </Link>
+                <p className="text-sm text-[var(--text-secondary)]">
+                  {item.description}
+                </p>
               </div>
             </div>
-          </div>
+          ))}
         </div>
       )}
     </div>

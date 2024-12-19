@@ -8,10 +8,23 @@ const ThemeSwitch: React.FC = () => {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full bg-gray-800 hover:bg-gray-700 transition"
+      className="p-2 rounded-full bg-[var(--bg-secondary)] hover:bg-[var(--hover-primary)] transition-all duration-300 flex items-center justify-center"
       aria-label="Alternar tema"
     >
-      {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
+      <div
+        className={`transition-transform duration-300 ${
+          theme === "light" ? "rotate-0 opacity-100" : "rotate-180 opacity-0"
+        }`}
+      >
+        <FiSun size={20} className="text-[var(--text-primary)]" />
+      </div>
+      <div
+        className={`absolute transition-transform duration-300 ${
+          theme === "dark" ? "rotate-0 opacity-100" : "-rotate-180 opacity-0"
+        }`}
+      >
+        <FiMoon size={20} className="text-[var(--text-primary)]" />
+      </div>
     </button>
   );
 };
