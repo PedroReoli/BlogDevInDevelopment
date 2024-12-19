@@ -1,28 +1,41 @@
 // src/App.tsx
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { AnimatePresence } from "framer-motion"; // Importação para animação de transição
+import { AnimatePresence } from "framer-motion"; // Para animações de transição
+import { ThemeProvider } from "./context/ThemeContext";
+
+// Layouts e Transições
+import RootLayout from "./_root/RootLayout";
+import PageTransition from "./components/Transition/PageTransition";
+
+// Páginas principais
+import MainPage from "@/pages/Main/MainPage";
+import NotFoundPage from "@/pages/not-found/NotFoundPage";
+import LoginPage from "@/pages/auth/LoginPage";
+
+// Blog e Detalhes
 import PostDetails from "./pages/blog/PostDetails";
 import LessonDetails from "./pages/lesson/LessonDetails";
 import ProjectDetails from "./pages/project/ProjectDetails";
-import MainPage from "@/pages/Main/MainPage";
-import RootLayout from "./_root/RootLayout";
-import PageTransition from "./components/Transition/PageTransition";
-import NotFoundPage from "@/pages/not-found/NotFoundPage";
+
+// Aprendizado
+import TutorialsPage from "@/pages/learning/TutorialsPage";
+import CoursesPage from "@/pages/learning/CoursesPage";
+import DocumentationPage from "@/pages/learning/DocumentationPage";
+
+// Perfil e Pessoal
 import ProfilePage from "@/pages/profile/ProfilePage";
 import SavedContentPage from "@/pages/profile/SavedContentPage";
 import MyPostsPage from "@/pages/profile/MyPostsPage";
+
+// Comunidade
 import UsersPage from "@/pages/community/UsersPage";
 import DiscussionsPage from "@/pages/community/DiscussionsPage";
+
+// Profissional
 import JobPortalPage from "@/pages/professional/JobPortalPage";
 import NetworkingPage from "@/pages/professional/NetworkingPage";
 import AnnounceJobPage from "@/pages/professional/AnnounceJobPage";
-import LoginPage from "@/pages/auth/LoginPage";
-import TutorialsPage from "@/pages/learning/TutorialsPage"; // Nova rota
-import CoursesPage from "@/pages/learning/CoursesPage"; // Nova rota
-import DocumentationPage from "@/pages/learning/DocumentationPage"; // Nova rota
-import { ThemeProvider } from "./context/ThemeContext";
 
-// DEPOIS FAZER UM ROUTES.TS para organizar isso aqui
 const App = () => {
   return (
     <ThemeProvider>
@@ -31,6 +44,7 @@ const App = () => {
           <Routes>
             {/* Layout Principal */}
             <Route path="/" element={<RootLayout />}>
+              {/* Página Inicial */}
               <Route
                 index
                 element={
@@ -39,6 +53,8 @@ const App = () => {
                   </PageTransition>
                 }
               />
+
+              {/* Blog e Detalhes */}
               <Route
                 path="post/:id"
                 element={
@@ -161,7 +177,7 @@ const App = () => {
               />
             </Route>
 
-            {/* Rotas de Login */}
+            {/* Rota de Login */}
             <Route
               path="login"
               element={
