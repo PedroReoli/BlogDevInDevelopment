@@ -8,12 +8,12 @@ import {
   FaBriefcase,
   FaSignOutAlt,
   FaSignInAlt,
-  FaBullhorn,
   FaBook,
   FaVideo,
   FaFileCode,
   FaDiscord,
   FaNetworkWired,
+  FaCalendarAlt,
 } from "react-icons/fa";
 import Profile from "./Profile";
 
@@ -104,11 +104,11 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
             </li>
             <li>
               <Link
-                to="/aprendizado/documentacao"
+                to="/aprendizado/materiais"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
                 <FaFileCode />
-                <span>Documentação</span>
+                <span>Materiais</span>
               </Link>
             </li>
           </ul>
@@ -139,7 +139,7 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
             </li>
             <li>
               <Link
-                to="/discord"
+                to="https://discord.gg/teDfu39G7r"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
                 <FaDiscord />
@@ -174,11 +174,11 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
             </li>
             <li>
               <Link
-                to="/anuncios"
+                to="/eventos"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
-                <FaBullhorn />
-                <span>Anúncios</span>
+                <FaCalendarAlt />
+                <span>Eventos</span>
               </Link>
             </li>
           </ul>

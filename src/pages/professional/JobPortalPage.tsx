@@ -9,8 +9,8 @@ interface Job {
   estado: string;
   nível: string;
   dataDePublicação: string;
-  linkDaVaga: string;
   regimeDeTrabalho: string;
+  linkDaVaga: string;
 }
 
 const JobPortalPage: React.FC = () => {
@@ -24,21 +24,20 @@ const JobPortalPage: React.FC = () => {
     nível: "Todos",
     regimeDeTrabalho: "Todos",
   });
-  const [showModal, setShowModal] = useState<boolean>(false);
 
   const fetchJobs = async () => {
     try {
       const response = await fetch(
-        "https://api.sheety.co/f07cf17198b5bb94b23fee472faecc25/apiDev/página1"
+        "https://api.sheety.co/f07cf17198b5bb94b23fee472faecc25/apiDev/vagas"
       );
       if (!response.ok) {
         throw new Error("Erro ao carregar as vagas.");
       }
       const data = await response.json();
-      setJobs(data.página1);
+      setJobs(data.vagas || []); // Atualizado para usar o campo correto
       setError(null);
-    } catch (err: unknown) {
-      setError(err instanceof Error ? err.message : "Erro desconhecido");
+    } catch (err: any) {
+      setError(err.message || "Erro desconhecido");
     } finally {
       setLoading(false);
     }
@@ -154,7 +153,6 @@ const JobPortalPage: React.FC = () => {
             {filters.estado === "Todos" && (
               <FaLock
                 className="ml-2 text-[var(--text-secondary)] cursor-pointer"
-                onClick={() => setShowModal(true)}
               />
             )}
           </label>
@@ -208,23 +206,6 @@ const JobPortalPage: React.FC = () => {
           </select>
         </div>
       </div>
-
-      {/* Modal */}
-      {showModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-          <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-lg text-center">
-            <p className="text-[var(--text-primary)] mb-4">
-              Selecione um estado antes de filtrar por cidade.
-            </p>
-            <button
-              className="py-2 px-4 bg-[var(--hover-primary)] text-white rounded-lg hover:bg-blue-600 transition-all"
-              onClick={() => setShowModal(false)}
-            >
-              Fechar
-            </button>
-          </div>
-        </div>
-      )}
 
       {/* Lista de Vagas */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">

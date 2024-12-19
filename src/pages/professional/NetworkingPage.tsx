@@ -1,53 +1,41 @@
-import React from "react";
-import { FaDiscord, FaUsers, FaTelegram, FaSlack, FaWhatsapp } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { FaDiscord, FaTelegram, FaSlack, FaWhatsapp, FaUsers } from "react-icons/fa";
+
+interface NetworkingItem {
+  id: number;
+  tipo: string;
+  plataforma: string;
+  nome: string;
+  descrição: string;
+  link: string;
+}
 
 const NetworkingPage: React.FC = () => {
-  const discordServers = [
-    {
-      name: "Dev Brasil",
-      description: "Comunidade ativa para desenvolvedores brasileiros.",
-      link: "https://discord.gg/devbrasil",
-    },
-    {
-      name: "Frontend Masters",
-      description: "Discussões sobre frontend e tendências.",
-      link: "https://discord.gg/frontendmasters",
-    },
-  ];
+  const [networkingData, setNetworkingData] = useState<NetworkingItem[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const chatGroups = [
-    {
-      platform: "Telegram",
-      name: "Tech Updates",
-      description: "Novidades e oportunidades na área de tecnologia.",
-      link: "https://t.me/techupdates",
-    },
-    {
-      platform: "Slack",
-      name: "Remote Work",
-      description: "Discussões sobre trabalho remoto e freelancing.",
-      link: "https://slack.com/remote-work",
-    },
-    {
-      platform: "WhatsApp",
-      name: "Dev Group",
-      description: "Grupo de WhatsApp para networking entre desenvolvedores.",
-      link: "https://wa.me/123456789",
-    },
-  ];
+  const API_URL = "https://api.sheety.co/f07cf17198b5bb94b23fee472faecc25/apiDev/networking";
 
-  const recommendedCommunities = [
-    {
-      name: "Women Who Code",
-      description: "Comunidade global para mulheres na tecnologia.",
-      link: "https://www.womenwhocode.com/",
-    },
-    {
-      name: "GDG (Google Developer Groups)",
-      description: "Grupos de desenvolvedores organizados pelo Google.",
-      link: "https://developers.google.com/community/gdg",
-    },
-  ];
+  useEffect(() => {
+    const fetchNetworkingData = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error("Erro ao carregar os dados de networking.");
+        }
+        const data = await response.json();
+        setNetworkingData(data.networking);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message || "Erro desconhecido.");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNetworkingData();
+  }, []);
 
   const getChatIcon = (platform: string) => {
     switch (platform.toLowerCase()) {
@@ -57,10 +45,29 @@ const NetworkingPage: React.FC = () => {
         return <FaSlack className="text-[var(--hover-primary)]" />;
       case "whatsapp":
         return <FaWhatsapp className="text-[var(--hover-primary)]" />;
+      case "discord":
+        return <FaDiscord className="text-[var(--hover-primary)]" />;
       default:
         return <FaUsers className="text-[var(--hover-primary)]" />;
     }
   };
+
+  const categorizedData = networkingData.reduce(
+    (acc: Record<string, NetworkingItem[]>, item) => {
+      if (!acc[item.plataforma]) acc[item.plataforma] = [];
+      acc[item.plataforma].push(item);
+      return acc;
+    },
+    {}
+  );
+
+  if (loading) {
+    return <p className="text-center mt-10 text-[var(--text-secondary)]">Carregando dados...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-10 text-red-500">{error}</p>;
+  }
 
   return (
     <div className="p-8 bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
@@ -69,92 +76,34 @@ const NetworkingPage: React.FC = () => {
         Descubra comunidades, servidores e grupos para expandir sua rede profissional.
       </p>
 
-      {/* Servidores de Discord */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <FaDiscord className="text-[var(--hover-primary)]" /> Servidores de Discord
-        </h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {discordServers.map((server, index) => (
-            <li
-              key={index}
-              className="p-4 bg-[var(--bg-secondary)] rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2"
-            >
-              <h3 className="text-lg font-bold mb-2">{server.name}</h3>
-              <p className="text-sm text-[var(--text-secondary)] mb-4">
-                {server.description}
-              </p>
-              <a
-                href={server.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center py-2 px-4 text-[var(--hover-primary)] border border-[var(--hover-primary)] rounded-full font-semibold hover:bg-[var(--hover-primary)] hover:text-white transition-all"
+      {Object.keys(categorizedData).map((platform) => (
+        <section key={platform} className="mb-10">
+          <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
+            {getChatIcon(platform)} {platform}
+          </h2>
+          <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categorizedData[platform].map((item) => (
+              <li
+                key={item.id}
+                className="p-4 bg-[var(--bg-secondary)] rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2"
               >
-                Entrar no Servidor
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Chats e Grupos */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <FaUsers className="text-[var(--hover-primary)]" /> Chats e Grupos
-        </h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {chatGroups.map((group, index) => (
-            <li
-              key={index}
-              className="p-4 bg-[var(--bg-secondary)] rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2"
-            >
-              <div className="flex items-center gap-2 mb-2">
-                {getChatIcon(group.platform)}
-                <h3 className="text-lg font-bold">{group.name}</h3>
-              </div>
-              <p className="text-sm text-[var(--text-secondary)] mb-4">
-                {group.description}
-              </p>
-              <a
-                href={group.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center py-2 px-4 text-[var(--hover-primary)] border border-[var(--hover-primary)] rounded-full font-semibold hover:bg-[var(--hover-primary)] hover:text-white transition-all"
-              >
-                Entrar no Grupo
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
-
-      {/* Comunidades Recomendadas */}
-      <section className="mb-10">
-        <h2 className="text-2xl font-bold mb-4 flex items-center gap-2">
-          <FaUsers className="text-[var(--hover-primary)]" /> Comunidades Recomendadas
-        </h2>
-        <ul className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          {recommendedCommunities.map((community, index) => (
-            <li
-              key={index}
-              className="p-4 bg-[var(--bg-secondary)] rounded-lg shadow-lg hover:shadow-xl transition-transform transform hover:-translate-y-2"
-            >
-              <h3 className="text-lg font-bold mb-2">{community.name}</h3>
-              <p className="text-sm text-[var(--text-secondary)] mb-4">
-                {community.description}
-              </p>
-              <a
-                href={community.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-center py-2 px-4 text-[var(--hover-primary)] border border-[var(--hover-primary)] rounded-full font-semibold hover:bg-[var(--hover-primary)] hover:text-white transition-all"
-              >
-                Acessar
-              </a>
-            </li>
-          ))}
-        </ul>
-      </section>
+                <h3 className="text-lg font-bold mb-2">{item.nome}</h3>
+                <p className="text-sm text-[var(--text-secondary)] mb-4">
+                  {item.descrição}
+                </p>
+                <a
+                  href={item.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block text-center py-2 px-4 text-[var(--hover-primary)] border border-[var(--hover-primary)] rounded-full font-semibold hover:bg-[var(--hover-primary)] hover:text-white transition-all"
+                >
+                  Acessar
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
     </div>
   );
 };

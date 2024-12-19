@@ -20,7 +20,7 @@ import ProjectDetails from "./pages/project/ProjectDetails";
 // Aprendizado
 import TutorialsPage from "@/pages/learning/TutorialsPage";
 import CoursesPage from "@/pages/learning/CoursesPage";
-import DocumentationPage from "@/pages/learning/DocumentationPage";
+import MaterialsPage from "@/pages/learning/MaterialsPage";
 
 // Perfil e Pessoal
 import ProfilePage from "@/pages/profile/ProfilePage";
@@ -34,7 +34,7 @@ import DiscussionsPage from "@/pages/community/DiscussionsPage";
 // Profissional
 import JobPortalPage from "@/pages/professional/JobPortalPage";
 import NetworkingPage from "@/pages/professional/NetworkingPage";
-import AnnounceJobPage from "@/pages/professional/AnnounceJobPage";
+import Events from "@/pages/professional/Events";
 
 const App = () => {
   return (
@@ -98,10 +98,10 @@ const App = () => {
                 }
               />
               <Route
-                path="aprendizado/documentacao"
+                path="aprendizado/materiais"
                 element={
                   <PageTransition>
-                    <DocumentationPage />
+                    <MaterialsPage />
                   </PageTransition>
                 }
               />
@@ -168,10 +168,10 @@ const App = () => {
                 }
               />
               <Route
-                path="anuncios"
+                path="eventos"
                 element={
                   <PageTransition>
-                    <AnnounceJobPage />
+                    <Events />
                   </PageTransition>
                 }
               />

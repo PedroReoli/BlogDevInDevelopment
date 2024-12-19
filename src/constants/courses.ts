@@ -7,8 +7,8 @@ const courses = [
       instructor: "Carlos Silva",
       hours: 40,
       level: "Iniciante",
-      url: "https://www.example.com/javascript-course",
       category: "JavaScript",
+      url: "https://www.example.com/javascript-course",
     },
     {
       id: 2,

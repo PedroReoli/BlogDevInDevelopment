@@ -5,8 +5,8 @@ const tutorials = [
       description: "Tutorial para iniciantes sobre as bases do HTML.",
       creator: "Curso em Vídeo",
       thumbnail: "https://via.placeholder.com/150",
-      url: "https://www.youtube.com/watch?v=html-basic",
       category: "HTML",
+      url: "https://www.youtube.com/watch?v=html-basic",
     },
     {
       id: 2,

@@ -1,101 +1,103 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { blogsData } from "@/constants";
-import { BlogPost as BlogPostInterface } from "@/constants/interfaces";
+import { lessonsData } from "@/constants/LessonsData";
+import { Lesson as LessonInterface } from "@/constants/interfaces";
 import SearchBar from "@/components/Shared/SearchBar";
 
-const BlogGridList = () => {
+const LessonGridList = () => {
   const [searchQuery, setSearchQuery] = useState("");
-  const [filteredPosts, setFilteredPosts] = useState(blogsData);
+  const [filteredLessons, setFilteredLessons] = useState(lessonsData);
 
   const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value.toLowerCase();
     setSearchQuery(query);
 
-    if (!query) {
-      setFilteredPosts(blogsData);
+    if (query === "") {
+      setFilteredLessons(lessonsData);
     } else {
-      const filtered = blogsData.filter((post) => {
-        const titleMatch = post.title.toLowerCase().includes(query);
-        const keywordMatch = post.keywords.some((keyword) =>
+      const filtered = lessonsData.filter((lesson) => {
+        const titleMatch = lesson.title.toLowerCase().includes(query);
+        const keywordMatch = lesson.keywords.some((keyword) =>
           keyword.toLowerCase().includes(query)
         );
         return titleMatch || keywordMatch;
       });
-      setFilteredPosts(filtered);
+
+      setFilteredLessons(filtered);
     }
   };
 
   return (
-    <div className="container mx-auto py-8 px-4">
-      {/* Barra de Pesquisa */}
-      <div className="mb-6">
+    <div className="container mx-auto py-8 px-4 bg-[var(--bg-primary)] text-[var(--text-primary)]">
+
+      {/* Componente de Pesquisa */}
+      <div className="mb-8 max-w-3xl mx-auto">
         <SearchBar
           searchQuery={searchQuery}
           onSearchChange={handleSearch}
-          placeholder="Buscar por título ou palavras-chave..."
+          placeholder="Buscar aulas por título ou palavra-chave..."
         />
       </div>
 
-      {/* Grid Layout */}
-      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-        {filteredPosts.map((post: BlogPostInterface, index) => (
-          <div
-            key={index}
-            className="bg-[var(--bg-secondary)] rounded-lg shadow-md hover:shadow-lg transition-transform transform hover:scale-[1.02] flex flex-col"
-          >
-            {/* Imagem no Topo */}
-            <div className="relative w-full h-48">
-              <img
-                src={post.imageUrl}
-                alt={post.title}
-                className="w-full h-full object-cover rounded-t-lg"
-              />
-              {/* Data */}
-              <span className="absolute top-2 right-2 border-2 border-[var(--hover-primary)] bg-transparent text-[var(--text-primary)] px-2 py-1 rounded-full text-xs font-semibold hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300">
-                {post.date}
-              </span>
-            </div>
+      {/* Grid de Aulas */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {filteredLessons.length === 0 ? (
+          <p className="text-center text-[var(--text-secondary)]">
+            Nenhuma aula encontrada.
+          </p>
+        ) : (
+          filteredLessons.map((lesson: LessonInterface, index) => (
+            <div
+              key={index}
+              className="p-5 bg-[var(--bg-secondary)] rounded-lg shadow-md hover:shadow-xl transition-transform transform hover:scale-105 border border-[var(--hover-primary)] flex flex-col"
+            >
+              {/* Imagem */}
+              <div className="relative overflow-hidden rounded-lg mb-4">
+                <img
+                  src={lesson.imageUrl}
+                  alt={lesson.title}
+                  className="w-full h-40 object-cover transition-transform duration-300 hover:scale-110 rounded-lg"
+                />
+              </div>
 
-            {/* Conteúdo do Card */}
-            <div className="p-5 flex flex-col flex-grow">
               {/* Título */}
-              <h3 className="text-lg font-bold text-[var(--hover-primary)] mb-3 leading-tight line-clamp-2">
-                {post.title}
+              <h3 className="text-xl font-semibold text-[var(--hover-primary)] mb-3 hover:underline">
+                {lesson.title}
               </h3>
 
               {/* Descrição */}
-              <p className="text-sm text-[var(--text-secondary)] line-clamp-3 leading-relaxed mb-4">
-                {post.description}
+              <p className="text-[var(--text-secondary)] text-sm mb-4 line-clamp-3">
+                {lesson.description}
               </p>
 
               {/* Tags */}
               <div className="flex flex-wrap gap-2 mb-4">
-                {post.keywords.map((keyword, idx) => (
+                {lesson.keywords.map((keyword, idx) => (
                   <span
                     key={idx}
-                    className="text-xs font-semibold px-2 py-1 rounded-full border-2 border-[var(--hover-primary)] bg-transparent text-[var(--text-primary)] hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300"
+                    className="px-2 py-1 text-xs font-semibold rounded-full border border-[var(--hover-primary)] text-[var(--hover-primary)] hover:bg-[var(--hover-primary)] hover:text-white transition-all"
                   >
                     {keyword}
                   </span>
                 ))}
               </div>
 
-              {/* Link */}
-              <div className="mt-auto text-center">
+              {/* Data e Link */}
+              <div className="flex justify-between items-center mt-auto text-sm text-[var(--text-secondary)]">
+                <span>{lesson.date}</span>
                 <Link
-                  to={`/post/${post.slug}`}
-                  className="text-[var(--hover-primary)] font-semibold hover:underline transition-all duration-300"
+                  to={`/lesson/${lesson.slug}`}
+                  className="text-[var(--hover-primary)] font-semibold hover:underline transition-all"
                 >
-                  Continuar lendo
+                  Ver detalhes
                 </Link>
               </div>
             </div>
-          </div>
-        ))}
+          ))
+        )}
       </div>
     </div>
   );
 };
 
-export default BlogGridList;
+export default LessonGridList;

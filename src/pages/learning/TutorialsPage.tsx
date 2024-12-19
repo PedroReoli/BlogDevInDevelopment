@@ -1,23 +1,62 @@
-import React, { useState } from "react";
-import tutorials from "@/constants/tutorials";
+import React, { useEffect, useState } from "react";
 import SearchBarTutorials from "@/components/Shared/SearchBarTutorials";
 
+interface Tutorial {
+  id: number;
+  título: string;
+  descrição: string;
+  criador: string;
+  categoria: string;
+  urlDoVídeo: string;
+}
+
 const TutorialsPage: React.FC = () => {
+  const [tutorials, setTutorials] = useState<Tutorial[]>([]);
+  const [filteredTutorials, setFilteredTutorials] = useState<Tutorial[]>([]);
   const [filterCategory, setFilterCategory] = useState<string>("Todos");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const filteredTutorials = tutorials.filter((tutorial) => {
-    const matchesCategory =
-      filterCategory === "Todos" || tutorial.category === filterCategory;
-    const matchesSearch =
-      tutorial.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      tutorial.creator.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      tutorial.description.toLowerCase().includes(searchTerm.toLowerCase());
+  const API_URL = "https://api.sheety.co/f07cf17198b5bb94b23fee472faecc25/apiDev/videos";
 
-    return matchesCategory && matchesSearch;
-  });
+  const fetchTutorials = async () => {
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) {
+        throw new Error("Erro ao carregar os tutoriais.");
+      }
+      const data = await response.json();
+      setTutorials(data.videos);
+      setFilteredTutorials(data.videos);
+      setError(null);
+    } catch (err: any) {
+      setError(err.message || "Erro desconhecido");
+    } finally {
+      setLoading(false);
+    }
+  };
 
-  const categories = ["Todos", "HTML", "CSS", "React", "JavaScript"];
+  useEffect(() => {
+    fetchTutorials();
+  }, []);
+
+  useEffect(() => {
+    const filtered = tutorials.filter((tutorial) => {
+      const matchesCategory =
+        filterCategory === "Todos" || tutorial.categoria === filterCategory;
+      const matchesSearch =
+        tutorial.título.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tutorial.criador.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        tutorial.descrição.toLowerCase().includes(searchTerm.toLowerCase());
+
+      return matchesCategory && matchesSearch;
+    });
+
+    setFilteredTutorials(filtered);
+  }, [filterCategory, searchTerm, tutorials]);
+
+  const categories = ["Todos", ...new Set(tutorials.map((tutorial) => tutorial.categoria))];
 
   // Componente de Botão Personalizado
   const SmallButton: React.FC<{
@@ -36,6 +75,14 @@ const TutorialsPage: React.FC = () => {
       {children}
     </button>
   );
+
+  if (loading) {
+    return <p className="text-center mt-10 text-[var(--text-secondary)]">Carregando tutoriais...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center mt-10 text-red-500">{error}</p>;
+  }
 
   return (
     <div className="p-8 bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
@@ -73,19 +120,21 @@ const TutorialsPage: React.FC = () => {
             className="p-4 bg-[var(--bg-secondary)] rounded-lg shadow-lg flex flex-col items-center"
           >
             <img
-              src={tutorial.thumbnail}
-              alt={tutorial.title}
+              src={`https://img.youtube.com/vi/${new URL(tutorial.urlDoVídeo).searchParams.get(
+                "v"
+              )}/hqdefault.jpg`}
+              alt={tutorial.título}
               className="w-full h-40 object-cover rounded-lg mb-4"
             />
-            <h2 className="text-xl font-bold mb-2 text-center">{tutorial.title}</h2>
+            <h2 className="text-xl font-bold mb-2 text-center">{tutorial.título}</h2>
             <p className="text-[var(--text-secondary)] mb-2">
-              Criador: <span className="font-semibold">{tutorial.creator}</span>
+              Criador: <span className="font-semibold">{tutorial.criador}</span>
             </p>
             <p className="text-[var(--text-secondary)] text-sm mb-4 text-center">
-              {tutorial.description}
+              {tutorial.descrição}
             </p>
             <a
-              href={tutorial.url}
+              href={tutorial.urlDoVídeo}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full flex justify-center"

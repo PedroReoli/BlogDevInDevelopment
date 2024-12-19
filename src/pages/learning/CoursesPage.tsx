@@ -1,28 +1,71 @@
-import React, { useState } from "react";
-import courses from "@/constants/courses";
+import React, { useEffect, useState } from "react";
 import SearchBarTutorials from "@/components/Shared/SearchBarTutorials";
 
+interface Course {
+  id: number;
+  título: string;
+  descrição: string;
+  plataforma: string;
+  instrutor: string;
+  horas: number;
+  nível: string;
+  categoria: string;
+  url: string;
+}
+
 const CoursesPage: React.FC = () => {
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [filteredCourses, setFilteredCourses] = useState<Course[]>([]);
   const [filterCategory, setFilterCategory] = useState<string>("Todos");
   const [searchTerm, setSearchTerm] = useState<string>("");
+  const [, setLoading] = useState<boolean>(true);
+  const [, setError] = useState<string | null>(null);
 
-  const filteredCourses = courses.filter((course) => {
-    const matchesCategory =
-      filterCategory === "Todos" || course.category === filterCategory;
-    const matchesSearch =
-      course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.instructor.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      course.description.toLowerCase().includes(searchTerm.toLowerCase());
+  const API_URL = "https://api.sheety.co/f07cf17198b5bb94b23fee472faecc25/apiDev/cursos";
 
-    return matchesCategory && matchesSearch;
-  });
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+          throw new Error("Erro ao carregar os cursos.");
+        }
+        const data = await response.json();
+        setCourses(data.cursos);
+        setFilteredCourses(data.cursos);
+        setError(null);
+      } catch (err: any) {
+        setError(err.message || "Erro desconhecido.");
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  const categories = ["Todos", "JavaScript", "React", "CSS"];
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    const filtered = courses.filter((course) => {
+      const matchesCategory =
+        filterCategory === "Todos" || course.categoria === filterCategory;
+      const matchesSearch =
+        course.título.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.instrutor.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        course.descrição.toLowerCase().includes(searchTerm.toLowerCase());
+
+      return matchesCategory && matchesSearch;
+    });
+
+    setFilteredCourses(filtered);
+  }, [filterCategory, searchTerm, courses]);
+
+  const categories = ["Todos", ...new Set(courses.map((course) => course.categoria))];
 
   const buttonStyles = `
-    py-3 px-6 rounded-full text-sm font-semibold border-2 transition-all duration-300 transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-offset-2 
+    py-3 px-6 rounded-full text-sm font-medium border-2 transition-all duration-300 transform hover:scale-105 focus:outline-none 
+    focus:ring-2 focus:ring-offset-2 
     border-[var(--hover-primary)] bg-transparent text-[var(--hover-primary)] 
-    hover:bg-[var(--hover-primary)] hover:text-[var(--header-text)]
+    hover:bg-[var(--hover-primary)] hover:text-white
   `;
 
   return (
@@ -33,7 +76,7 @@ const CoursesPage: React.FC = () => {
       </p>
 
       {/* Barra de Busca */}
-      <div className="mb-6">
+      <div className="mb-8">
         <SearchBarTutorials
           searchQuery={searchTerm}
           onSearchChange={(e) => setSearchTerm(e.target.value)}
@@ -41,14 +84,14 @@ const CoursesPage: React.FC = () => {
       </div>
 
       {/* Filtros de Categoria */}
-      <div className="flex justify-center space-x-3 mb-8">
+      <div className="flex justify-center space-x-4 mb-10">
         {categories.map((category) => (
           <button
             key={category}
             onClick={() => setFilterCategory(category)}
             className={`${buttonStyles} ${
               filterCategory === category
-                ? "bg-[var(--hover-primary)] text-[var(--header-text)]"
+                ? "bg-[var(--hover-primary)] text-white"
                 : ""
             }`}
           >
@@ -62,31 +105,46 @@ const CoursesPage: React.FC = () => {
         {filteredCourses.map((course) => (
           <div
             key={course.id}
-            className="p-6 bg-[var(--bg-secondary)] rounded-lg shadow-lg hover:shadow-xl flex flex-col justify-between transition-all"
+            className="relative p-6 bg-gradient-to-br from-[var(--bg-secondary)] to-[var(--hover-primary-light)] rounded-xl shadow-lg hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300 flex flex-col justify-between"
           >
-            <h2 className="text-2xl font-semibold mb-2">{course.title}</h2>
-            <p className="text-[var(--text-secondary)] text-sm mb-4">{course.description}</p>
+            {/* Nível (Estilo atualizado) */}
+            <div className="absolute -top-3 -right-3 bg-[var(--hover-primary)] text-white text-xs font-bold py-1 px-4 rounded-full shadow-md">
+              {course.nível}
+            </div>
+
+            {/* Título */}
+            <h2 className="text-xl font-bold text-[var(--hover-primary)] mb-4">
+              {course.título}
+            </h2>
+
+            {/* Descrição */}
+            <p className="text-[var(--text-secondary)] text-sm mb-4">{course.descrição}</p>
+
+            {/* Detalhes do Curso */}
             <ul className="text-sm text-[var(--text-secondary)] space-y-1 mb-6">
               <li>
-                <strong>Plataforma:</strong> {course.platform}
+                <strong>Plataforma:</strong> {course.plataforma}
               </li>
               <li>
-                <strong>Instrutor:</strong> {course.instructor}
+                <strong>Instrutor:</strong> {course.instrutor}
               </li>
               <li>
-                <strong>Duração:</strong> {course.hours}h
-              </li>
-              <li>
-                <strong>Nível:</strong> {course.level}
+                <strong>Duração:</strong> {course.horas} horas
               </li>
             </ul>
+
+            {/* Botão de Acesso */}
             <a
               href={course.url}
               target="_blank"
               rel="noopener noreferrer"
               className="flex justify-center"
             >
-              <button className={buttonStyles}>Acessar Curso</button>
+              <button
+                className={`w-full py-3 px-4 border-2 border-[var(--hover-primary)] text-[var(--hover-primary)] rounded-full font-semibold transition-all duration-300 hover:bg-[var(--hover-primary)] hover:text-white`}
+              >
+                Acessar Curso
+              </button>
             </a>
           </div>
         ))}
