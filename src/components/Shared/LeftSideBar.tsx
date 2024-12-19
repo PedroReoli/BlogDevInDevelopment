@@ -8,12 +8,12 @@ import {
   FaBriefcase,
   FaSignOutAlt,
   FaSignInAlt,
-  FaFileAlt,
   FaBullhorn,
   FaBook,
   FaVideo,
   FaFileCode,
   FaDiscord,
+  FaNetworkWired,
 } from "react-icons/fa";
 import Profile from "./Profile";
 
@@ -165,20 +165,20 @@ const LeftSideBar: React.FC<LeftSidebarProps> = ({ user }) => {
             </li>
             <li>
               <Link
-                to="/curriculo"
+                to="/networking"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
-                <FaFileAlt />
-                <span>Meu Currículo</span>
+                <FaNetworkWired  />
+                <span>Networking</span>
               </Link>
             </li>
             <li>
               <Link
-                to="/anunciar-vaga"
+                to="/anuncios"
                 className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
               >
                 <FaBullhorn />
-                <span>Anunciar Vaga</span>
+                <span>Anúncios</span>
               </Link>
             </li>
           </ul>

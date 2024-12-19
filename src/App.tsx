@@ -14,7 +14,7 @@ import MyPostsPage from "@/pages/profile/MyPostsPage";
 import UsersPage from "@/pages/community/UsersPage";
 import DiscussionsPage from "@/pages/community/DiscussionsPage";
 import JobPortalPage from "@/pages/professional/JobPortalPage";
-import ResumePage from "@/pages/professional/ResumePage";
+import NetworkingPage from "@/pages/professional/NetworkingPage";
 import AnnounceJobPage from "@/pages/professional/AnnounceJobPage";
 import LoginPage from "@/pages/auth/LoginPage";
 import TutorialsPage from "@/pages/learning/TutorialsPage"; // Nova rota
@@ -144,15 +144,15 @@ const App = () => {
                 }
               />
               <Route
-                path="curriculo"
+                path="networking"
                 element={
                   <PageTransition>
-                    <ResumePage />
+                    <NetworkingPage />
                   </PageTransition>
                 }
               />
               <Route
-                path="anunciar-vaga"
+                path="anuncios"
                 element={
                   <PageTransition>
                     <AnnounceJobPage />
