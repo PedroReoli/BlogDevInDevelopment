@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { FaLock, FaLockOpen } from "react-icons/fa";
+import { FaLock, FaLockOpen, FaPlus, FaTrash } from "react-icons/fa";
 
 const ProfilePage: React.FC = () => {
   const [isEditing, setIsEditing] = useState(false);
@@ -9,10 +9,34 @@ const ProfilePage: React.FC = () => {
   const [profession, setProfession] = useState("Desenvolvedor Fullstack");
   const [location, setLocation] = useState("Rio de Janeiro, Brasil");
   const [age, setAge] = useState("22");
-  const [education, setEducation] = useState("Bacharel em Ciência da Computação");
+  const [educations, setEducations] = useState<string[]>(["Bacharel em Ciência da Computação"]);
+  const [newEducation, setNewEducation] = useState("");
+  const [socialLinks, setSocialLinks] = useState<{ platform: string; link: string }[]>([]);
+  const [newSocial, setNewSocial] = useState({ platform: "", link: "" });
 
-  // Campos não editáveis
-  const [connectedSince] = useState("03/01/2022");
+  // Funções para adicionar/remover formações
+  const handleAddEducation = () => {
+    if (newEducation.trim()) {
+      setEducations([...educations, newEducation]);
+      setNewEducation("");
+    }
+  };
+
+  const handleRemoveEducation = (index: number) => {
+    setEducations(educations.filter((_, i) => i !== index));
+  };
+
+  // Funções para adicionar/remover redes sociais
+  const handleAddSocial = () => {
+    if (newSocial.platform && newSocial.link) {
+      setSocialLinks([...socialLinks, newSocial]);
+      setNewSocial({ platform: "", link: "" });
+    }
+  };
+
+  const handleRemoveSocial = (index: number) => {
+    setSocialLinks(socialLinks.filter((_, i) => i !== index));
+  };
 
   return (
     <div className="p-6 bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
@@ -29,44 +53,42 @@ const ProfilePage: React.FC = () => {
         </button>
       </div>
 
-      {/* Container Principal */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Card da Foto */}
-        <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-md flex flex-col items-center">
-          <div className="w-32 h-32 rounded-full border-4 border-[var(--hover-primary)] flex items-center justify-center overflow-hidden mb-4">
+      {/* Card Principal */}
+      <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-lg max-w-4xl mx-auto">
+        {/* Header do Card */}
+        <div className="flex items-center mb-6">
+          <div className="w-24 h-24 rounded-full border-4 border-[var(--hover-primary)] flex items-center justify-center overflow-hidden">
             <img
               src="/images/profile.jpg"
               alt="Profile"
               className="w-full h-full object-cover"
             />
           </div>
-          <h2 className="text-2xl font-bold text-[var(--text-primary)]">Pedro Sousa</h2>
-          <p className="text-sm text-[var(--text-secondary)]">Pronomes: Ele/Dele</p>
+          <div className="ml-6">
+            <h2 className="text-3xl font-bold">Pedro Sousa</h2>
+            <p className="text-sm text-[var(--text-secondary)]">Pronomes: Ele/Dele</p>
+          </div>
         </div>
 
-        {/* Informações Pessoais */}
-        <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-[var(--hover-primary)] mb-4">
-            Informações Pessoais
-          </h2>
-          <div className="space-y-4">
-            {/* Bio */}
-            <div>
-              <p className="text-[var(--hover-primary)] font-bold">Bio:</p>
-              {isEditing ? (
-                <textarea
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
-                  rows={5}
-                />
-              ) : (
-                <div className="border-2 border-[var(--hover-primary)] p-3 rounded-lg bg-transparent text-[var(--text-secondary)]">
-                  {bio}
-                </div>
-              )}
-            </div>
+        {/* Informações Editáveis */}
+        <div className="space-y-6">
+          {/* Bio */}
+          <div>
+            <p className="text-[var(--hover-primary)] font-bold">Bio:</p>
+            {isEditing ? (
+              <textarea
+                value={bio}
+                onChange={(e) => setBio(e.target.value)}
+                className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1 bg-[var(--bg-primary)] text-[var(--text-primary)]"
+                rows={4}
+              />
+            ) : (
+              <p className="text-[var(--text-secondary)]">{bio}</p>
+            )}
+          </div>
 
+          {/* Outras Informações */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {/* Profissão */}
             <div>
               <p className="text-[var(--hover-primary)] font-bold">Profissão:</p>
@@ -75,14 +97,14 @@ const ProfilePage: React.FC = () => {
                   type="text"
                   value={profession}
                   onChange={(e) => setProfession(e.target.value)}
-                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
+                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1 bg-[var(--bg-primary)] text-[var(--text-primary)]"
                 />
               ) : (
                 <p className="text-[var(--text-secondary)]">{profession}</p>
               )}
             </div>
 
-            {/* Mora em */}
+            {/* Localização */}
             <div>
               <p className="text-[var(--hover-primary)] font-bold">Mora em:</p>
               {isEditing ? (
@@ -90,7 +112,7 @@ const ProfilePage: React.FC = () => {
                   type="text"
                   value={location}
                   onChange={(e) => setLocation(e.target.value)}
-                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
+                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1 bg-[var(--bg-primary)] text-[var(--text-primary)]"
                 />
               ) : (
                 <p className="text-[var(--text-secondary)]">{location}</p>
@@ -105,7 +127,7 @@ const ProfilePage: React.FC = () => {
                   type="number"
                   value={age}
                   onChange={(e) => setAge(e.target.value)}
-                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
+                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1 bg-[var(--bg-primary)] text-[var(--text-primary)]"
                 />
               ) : (
                 <p className="text-[var(--text-secondary)]">{age}</p>
@@ -115,58 +137,97 @@ const ProfilePage: React.FC = () => {
             {/* Formações */}
             <div>
               <p className="text-[var(--hover-primary)] font-bold">Formações:</p>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={education}
-                  onChange={(e) => setEducation(e.target.value)}
-                  className="w-full border-2 border-[var(--hover-primary)] rounded-lg p-2 mt-1"
-                />
-              ) : (
-                <p className="text-[var(--text-secondary)]">{education}</p>
+              <div className="space-y-2">
+                {educations.map((edu, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between border border-[var(--hover-primary)] rounded-lg p-2"
+                  >
+                    <span className="text-[var(--text-secondary)]">{edu}</span>
+                    {isEditing && (
+                      <button
+                        onClick={() => handleRemoveEducation(index)}
+                        className="text-red-500 hover:text-red-700"
+                      >
+                        <FaTrash />
+                      </button>
+                    )}
+                  </div>
+                ))}
+                {isEditing && (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="Nova Formação"
+                      value={newEducation}
+                      onChange={(e) => setNewEducation(e.target.value)}
+                      className="flex-1 border-2 border-[var(--hover-primary)] rounded-lg p-2 bg-[var(--bg-primary)] text-[var(--text-primary)]"
+                    />
+                    <button
+                      onClick={handleAddEducation}
+                      className="text-[var(--hover-primary)] hover:text-white hover:bg-[var(--hover-primary)] p-2 rounded-lg border-2 border-[var(--hover-primary)]"
+                    >
+                      <FaPlus />
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Redes Sociais */}
+          <div>
+            <p className="text-[var(--hover-primary)] font-bold">Meus Sites e Redes Sociais:</p>
+            <div className="space-y-4">
+              {socialLinks.map((social, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between border border-[var(--hover-primary)] rounded-lg p-2"
+                >
+                  <span className="text-[var(--text-secondary)]">{social.platform}</span>
+                  <a
+                      href={social.link.startsWith("http://") || social.link.startsWith("https://") ? social.link : `https://${social.link}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-[var(--hover-primary)] underline"
+                    >
+                      Acessar
+                    </a>
+                  {isEditing && (
+                    <button
+                      onClick={() => handleRemoveSocial(index)}
+                      className="text-red-500 hover:text-red-700"
+                    >
+                      <FaTrash />
+                    </button>
+                  )}
+                </div>
+              ))}
+              {isEditing && (
+                <div className="flex items-center gap-2">
+                  <input
+                    type="text"
+                    placeholder="Plataforma"
+                    value={newSocial.platform}
+                    onChange={(e) => setNewSocial({ ...newSocial, platform: e.target.value })}
+                    className="flex-1 border-2 border-[var(--hover-primary)] rounded-lg p-2 bg-[var(--bg-primary)] text-[var(--text-primary)]"
+                  />
+                  <input
+                    type="url"
+                    placeholder="Link"
+                    value={newSocial.link}
+                    onChange={(e) => setNewSocial({ ...newSocial, link: e.target.value })}
+                    className="flex-1 border-2 border-[var(--hover-primary)] rounded-lg p-2 bg-[var(--bg-primary)] text-[var(--text-primary)]"
+                  />
+                  <button
+                    onClick={handleAddSocial}
+                    className="text-[var(--hover-primary)] hover:text-white hover:bg-[var(--hover-primary)] p-2 rounded-lg border-2 border-[var(--hover-primary)]"
+                  >
+                    <FaPlus />
+                  </button>
+                </div>
               )}
             </div>
-
-            {/* Conectado Desde */}
-            <div>
-              <p className="text-[var(--hover-primary)] font-bold">Conectado Desde:</p>
-              <p className="text-[var(--text-secondary)]">{connectedSince}</p>
-            </div>
-          </div>
-        </div>
-
-        {/* Pontuações e Jogos */}
-        <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-[var(--hover-primary)] mb-4">
-            Pontuações e Jogos
-          </h2>
-          <div className="space-y-2">
-            <p className="text-[var(--text-secondary)]">
-              <strong>Pontuação Geral:</strong> 15230
-            </p>
-            <p className="text-[var(--text-secondary)]">
-              <strong>Pontuação da Temporada:</strong> 870
-            </p>
-            <p className="text-[var(--text-secondary)]">
-              <strong>Sequência de Dias Conectado:</strong> 42
-            </p>
-            <p className="text-[var(--text-secondary)]">
-              <strong>Jogos Jogados:</strong> 185
-            </p>
-            <p className="text-[var(--text-secondary)]">
-              <strong>Melhor Pontuação:</strong> 3120
-            </p>
-          </div>
-        </div>
-
-        {/* Conquistas */}
-        <div className="bg-[var(--bg-secondary)] p-6 rounded-lg shadow-md">
-          <h2 className="text-lg font-bold text-[var(--hover-primary)] mb-4">Conquistas</h2>
-          <div className="flex flex-wrap gap-3">
-            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
-            <div className="w-16 h-16 bg-gray-300 rounded-full"></div>
           </div>
         </div>
       </div>
