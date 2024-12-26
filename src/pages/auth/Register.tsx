@@ -3,18 +3,21 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "@/components/Shared/Button";
 
-const LoginPage: React.FC = () => {
+const RegisterPage: React.FC = () => {
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    if (email === "admin@example.com" && password === "password123") {
-      navigate("/", { state: { message: "Login realizado com sucesso!" } });
+    // Here you would typically handle the registration process
+    // For now, we'll just simulate a successful registration
+    if (name && email && password) {
+      navigate("/login", { state: { message: "Registro realizado com sucesso! Faça login para continuar." } });
     } else {
-      setError("Email ou senha inválidos");
+      setError("Por favor, preencha todos os campos.");
     }
   };
 
@@ -55,9 +58,23 @@ const LoginPage: React.FC = () => {
         animate={{ scale: 1, opacity: 1 }}
         transition={{ delay: 0.3 }}
       >
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Criar Conta</h2>
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-        <form onSubmit={handleLogin} className="space-y-6">
+        <form onSubmit={handleRegister} className="space-y-6">
+          <div>
+            <label htmlFor="name" className="block mb-2 text-sm font-medium">
+              Nome
+            </label>
+            <input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              className="w-full px-4 py-2 border rounded-md bg-[var(--input-bg)] focus:outline-none focus:ring-2 focus:ring-[var(--hover-primary)]"
+              placeholder="Digite seu nome"
+              required
+            />
+          </div>
           <div>
             <label htmlFor="email" className="block mb-2 text-sm font-medium">
               Email
@@ -87,14 +104,14 @@ const LoginPage: React.FC = () => {
             />
           </div>
           <Button type="submit" className="w-full">
-            Entrar
+            Criar Conta
           </Button>
         </form>
         <div className="mt-6 text-center">
           <p className="text-sm">
-            Não tem uma conta?{" "}
-            <Link to="/register" className="text-[var(--hover-primary)] hover:underline">
-              Registre-se aqui
+            Já tem uma conta?{" "}
+            <Link to="/login" className="text-[var(--hover-primary)] hover:underline">
+              Faça login aqui
             </Link>
           </p>
         </div>
@@ -108,5 +125,5 @@ const LoginPage: React.FC = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
 

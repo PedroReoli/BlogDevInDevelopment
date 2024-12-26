@@ -35,6 +35,8 @@ import DiscussionsPage from "@/pages/community/DiscussionsPage";
 import JobPortalPage from "@/pages/professional/JobPortalPage";
 import NetworkingPage from "@/pages/professional/NetworkingPage";
 import Events from "@/pages/professional/Events";
+import LogoutPage from "./pages/auth/LogoutPage";
+import Register from "./pages/auth/Register";
 
 const App = () => {
   return (
@@ -183,6 +185,24 @@ const App = () => {
               element={
                 <PageTransition>
                   <LoginPage />
+                </PageTransition>
+              }
+            />
+               {/* Rota de LogOut */}
+               <Route
+              path="register"
+              element={
+                <PageTransition>
+                  <Register/>
+                </PageTransition>
+              }
+            />
+         {/* Rota de registro */}
+         <Route
+              path="logout"
+              element={
+                <PageTransition>
+                  <LogoutPage/>
                 </PageTransition>
               }
             />

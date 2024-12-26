@@ -150,6 +150,7 @@ const Footer = () => {
         </div>
 
         {/* Rodapé */}
+        {/* Linha */}
         <div className="border-t border-[var(--border-primary)] mt-6 pt-4 text-center text-sm">
           <div className="flex justify-center space-x-4">
             <a

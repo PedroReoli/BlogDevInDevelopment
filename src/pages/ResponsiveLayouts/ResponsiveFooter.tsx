@@ -8,26 +8,32 @@ const ResponsiveFooter: React.FC = () => {
   const [isTermsModalOpen, setTermsModalOpen] = useState(false);
 
   return (
-    <footer className="bg-[var(--bg-primary)] text-[var(--text-primary)] py-6 transition-all duration-300">
-      <div className="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center">
+    <footer className="bg-[var(--bg-primary)] text-[var(--text-primary)] py-4 sm:py-6 transition-all duration-300">
+      {/* Linha Divisória */}
+      <div className="border-t border-[var(--border-primary)] mx-auto w-[90%] sm:w-[80%]"></div>
+
+      {/* Container Principal */}
+      <div className="container mx-auto px-2 sm:px-4 flex flex-col sm:flex-row sm:justify-between sm:items-center mt-4">
         {/* Direitos Reservados */}
-        <div className="mb-4 md:mb-0">
-          <p className="text-sm text-[var(--text-secondary)]">
+        <div className="text-center sm:text-left mb-3 sm:mb-0">
+          <p className="text-xs sm:text-sm text-[var(--text-secondary)]">
             © 2024 Todos os direitos reservados.
           </p>
         </div>
 
         {/* Botões de Ação */}
-        <div className="flex space-x-4">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-2 sm:space-y-0">
           <Button
             onClick={() => setContactModalOpen(true)}
-            className="text-sm bg-[var(--text-secondary)] hover:bg-[var(--border-color)] text-[var(--bg-primary)] transition"
+            variant="secondary"
+            className="text-xs sm:text-sm py-2 px-4 text-center"
           >
             Entre em Contato
           </Button>
           <Button
             onClick={() => setTermsModalOpen(true)}
-            className="text-sm bg-[var(--text-secondary)] hover:bg-[var(--border-color)] text-[var(--bg-primary)] transition"
+            variant="secondary"
+            className="text-xs sm:text-sm py-2 px-4 text-center"
           >
             Termos de Serviço
           </Button>
