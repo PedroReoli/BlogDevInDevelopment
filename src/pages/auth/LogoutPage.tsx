@@ -3,7 +3,7 @@ import { useNavigate, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Button from "@/components/Shared/Button";
 
-const LogoutPage: React.FC = () => {
+const LogOutPage: React.FC = () => {
   const navigate = useNavigate();
   const [countdown, setCountdown] = useState(5);
 
@@ -81,4 +81,4 @@ const LogoutPage: React.FC = () => {
   );
 };
 
-export default LogoutPage;
+export default LogOutPage;
