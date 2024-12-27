@@ -8,7 +8,6 @@ import RootLayout from "@/_root/RootLayout";
 import MainPage from "@/pages/Main/MainPage";
 import NotFoundPage from "@/pages/not-found/NotFoundPage";
 import LoginPage from "@/pages/auth/LoginPage";
-import LogoutPage from "@/pages/auth/LogOutPage";
 import RegisterPage from "@/pages/auth/RegisterPage";
 
 // Blog e Detalhes
@@ -186,14 +185,6 @@ const AppRoutes: React.FC = () => (
       element={
         <PageTransition>
           <RegisterPage />
-        </PageTransition>
-      }
-    />
-    <Route
-      path="logout"
-      element={
-        <PageTransition>
-          <LogoutPage />
         </PageTransition>
       }
     />
