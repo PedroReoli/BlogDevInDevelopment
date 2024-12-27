@@ -1,7 +1,7 @@
-// src/App.tsx
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { AnimatePresence } from "framer-motion"; // Para animações de transição
 import { ThemeProvider } from "./context/ThemeContext";
+import { OverlayProvider } from "@react-aria/overlays";
 
 // Layouts e Transições
 import RootLayout from "./_root/RootLayout";
@@ -35,191 +35,193 @@ import DiscussionsPage from "@/pages/community/DiscussionsPage";
 import JobPortalPage from "@/pages/professional/JobPortalPage";
 import NetworkingPage from "@/pages/professional/NetworkingPage";
 import Events from "@/pages/professional/Events";
-import LogoutPage from "./pages/auth/LogoutPage";
-import Register from "./pages/auth/Register";
+
+// Autenticação
+import LogoutPage from "@/pages/auth/LogOutPage";
+import RegisterPage from "@/pages/auth/RegisterPage";
 
 const App = () => {
   return (
-    <ThemeProvider>
-      <Router>
-        <AnimatePresence mode="wait">
-          <Routes>
-            {/* Layout Principal */}
-            <Route path="/" element={<RootLayout />}>
-              {/* Página Inicial */}
+    <OverlayProvider>
+      <ThemeProvider>
+        <Router>
+          <AnimatePresence mode="wait">
+            <Routes>
+              {/* Layout Principal */}
+              <Route path="/" element={<RootLayout />}>
+                {/* Página Inicial */}
+                <Route
+                  index
+                  element={
+                    <PageTransition>
+                      <MainPage />
+                    </PageTransition>
+                  }
+                />
+
+                {/* Blog e Detalhes */}
+                <Route
+                  path="post/:id"
+                  element={
+                    <PageTransition>
+                      <PostDetails />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="lesson/:id"
+                  element={
+                    <PageTransition>
+                      <LessonDetails />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="project/:id"
+                  element={
+                    <PageTransition>
+                      <ProjectDetails />
+                    </PageTransition>
+                  }
+                />
+
+                {/* Aprendizado */}
+                <Route
+                  path="aprendizado/tutoriais"
+                  element={
+                    <PageTransition>
+                      <TutorialsPage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="aprendizado/cursos"
+                  element={
+                    <PageTransition>
+                      <CoursesPage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="aprendizado/materiais"
+                  element={
+                    <PageTransition>
+                      <MaterialsPage />
+                    </PageTransition>
+                  }
+                />
+
+                {/* Perfil */}
+                <Route
+                  path="profile"
+                  element={
+                    <PageTransition>
+                      <ProfilePage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="salvos"
+                  element={
+                    <PageTransition>
+                      <SavedContentPage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="meus-posts"
+                  element={
+                    <PageTransition>
+                      <MyPostsPage />
+                    </PageTransition>
+                  }
+                />
+
+                {/* Comunidade */}
+                <Route
+                  path="usuarios"
+                  element={
+                    <PageTransition>
+                      <UsersPage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="discussoes"
+                  element={
+                    <PageTransition>
+                      <DiscussionsPage />
+                    </PageTransition>
+                  }
+                />
+
+                {/* Profissional */}
+                <Route
+                  path="vagas"
+                  element={
+                    <PageTransition>
+                      <JobPortalPage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="networking"
+                  element={
+                    <PageTransition>
+                      <NetworkingPage />
+                    </PageTransition>
+                  }
+                />
+                <Route
+                  path="eventos"
+                  element={
+                    <PageTransition>
+                      <Events />
+                    </PageTransition>
+                  }
+                />
+              </Route>
+
+              {/* Autenticação */}
               <Route
-                index
+                path="login"
                 element={
                   <PageTransition>
-                    <MainPage />
+                    <LoginPage />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="register"
+                element={
+                  <PageTransition>
+                    <RegisterPage />
+                  </PageTransition>
+                }
+              />
+              <Route
+                path="logout"
+                element={
+                  <PageTransition>
+                    <LogoutPage />
                   </PageTransition>
                 }
               />
 
-              {/* Blog e Detalhes */}
+              {/* Página 404 */}
               <Route
-                path="post/:id"
+                path="*"
                 element={
                   <PageTransition>
-                    <PostDetails />
+                    <NotFoundPage />
                   </PageTransition>
                 }
               />
-              <Route
-                path="lesson/:id"
-                element={
-                  <PageTransition>
-                    <LessonDetails />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="project/:id"
-                element={
-                  <PageTransition>
-                    <ProjectDetails />
-                  </PageTransition>
-                }
-              />
-
-              {/* Rotas de Aprendizado */}
-              <Route
-                path="aprendizado/tutoriais"
-                element={
-                  <PageTransition>
-                    <TutorialsPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="aprendizado/cursos"
-                element={
-                  <PageTransition>
-                    <CoursesPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="aprendizado/materiais"
-                element={
-                  <PageTransition>
-                    <MaterialsPage />
-                  </PageTransition>
-                }
-              />
-
-              {/* Rotas de Perfil e Pessoal */}
-              <Route
-                path="profile"
-                element={
-                  <PageTransition>
-                    <ProfilePage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="salvos"
-                element={
-                  <PageTransition>
-                    <SavedContentPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="meus-posts"
-                element={
-                  <PageTransition>
-                    <MyPostsPage />
-                  </PageTransition>
-                }
-              />
-
-              {/* Rotas de Comunidade */}
-              <Route
-                path="usuarios"
-                element={
-                  <PageTransition>
-                    <UsersPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="discussoes"
-                element={
-                  <PageTransition>
-                    <DiscussionsPage />
-                  </PageTransition>
-                }
-              />
-
-              {/* Rotas Profissionais */}
-              <Route
-                path="vagas"
-                element={
-                  <PageTransition>
-                    <JobPortalPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="networking"
-                element={
-                  <PageTransition>
-                    <NetworkingPage />
-                  </PageTransition>
-                }
-              />
-              <Route
-                path="eventos"
-                element={
-                  <PageTransition>
-                    <Events />
-                  </PageTransition>
-                }
-              />
-            </Route>
-
-            {/* Rota de Login */}
-            <Route
-              path="login"
-              element={
-                <PageTransition>
-                  <LoginPage />
-                </PageTransition>
-              }
-            />
-               {/* Rota de LogOut */}
-               <Route
-              path="register"
-              element={
-                <PageTransition>
-                  <Register/>
-                </PageTransition>
-              }
-            />
-         {/* Rota de registro */}
-         <Route
-              path="logout"
-              element={
-                <PageTransition>
-                  <LogoutPage/>
-                </PageTransition>
-              }
-            />
-
-            {/* Página 404 */}
-            <Route
-              path="*"
-              element={
-                <PageTransition>
-                  <NotFoundPage />
-                </PageTransition>
-              }
-            />
-          </Routes>
-        </AnimatePresence>
-      </Router>
-    </ThemeProvider>
+            </Routes>
+          </AnimatePresence>
+        </Router>
+      </ThemeProvider>
+    </OverlayProvider>
   );
 };
 

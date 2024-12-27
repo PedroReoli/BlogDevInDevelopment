@@ -93,17 +93,18 @@ const Topbar: React.FC = () => {
 
   return (
     <header className="w-full py-3 px-4 sm:px-6 shadow-md sticky top-0 z-50 transition-all duration-300 bg-[var(--bg-secondary)] text-[var(--text-primary)] border-b border-[var(--border-primary)]">
-      <div className="container mx-auto flex items-center justify-between">
+      <div className="container mx-auto flex items-center justify-between px-4">
         {/* Logo e Nome */}
         <Link to="/" className="flex items-center space-x-3">
           <img src="/images/logo.svg" alt="Logo" className="h-8 w-8 sm:h-10 sm:w-10" />
           <span className="text-lg sm:text-xl font-bold text-[var(--hover-primary)] hover:text-blue-400 transition-all">
-            DevEmDesenvolvimento
+            <span className="hidden sm:inline">DevEmDesenvolvimento</span>
+            <span className="sm:hidden">DevEmDev</span>
           </span>
         </Link>
 
         {/* Menu Principal (Desktop) */}
-        <nav className="hidden xl:flex items-center space-x-6 text-sm">
+        <nav className="hidden xl:flex items-center space-x-8 text-sm">
           {menuItems.map((item) => (
             <div key={item.name} className="relative">
               <button
@@ -131,10 +132,10 @@ const Topbar: React.FC = () => {
             to="https://discord.gg/teDfu39G7r"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center space-x-2 hover:text-[var(--hover-primary)] transition-all"
+            className="hover:text-[var(--hover-primary)] transition-all"
+            aria-label="Join our Discord"
           >
-            <FaDiscord />
-            <span>Discord</span>
+            <FaDiscord className="text-xl" />
           </Link>
         </nav>
 
