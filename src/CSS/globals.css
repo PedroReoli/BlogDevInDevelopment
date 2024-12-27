@@ -1,9 +1,10 @@
 @font-face {
-  font-family: "Kairos Sans Extended Medium";
-  src: url("/fonts/KairosSansExtendedMedium.woff2") format("woff2");
-  font-weight: normal;
+  font-family: "KairosSans";
+  src: url("/assets/fonts/KairosSansExtendedMedium.woff2") format("woff2");
+  font-weight: 500;
   font-style: normal;
 }
+
 
 
 @tailwind base;
