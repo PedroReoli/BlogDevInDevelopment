@@ -22,17 +22,13 @@ import MaterialsPage from "@/pages/learning/MaterialsPage";
 
 // Perfil e Pessoal
 import ProfilePage from "@/pages/profile/ProfilePage";
-import SavedContentPage from "@/pages/profile/SavedContentPage";
-import MyPostsPage from "@/pages/profile/MyPostsPage";
 
 // Comunidade
 import UsersPage from "@/pages/community/UsersPage";
 import DiscussionsPage from "@/pages/community/DiscussionsPage";
 
 // Profissional
-import JobPortalPage from "@/pages/professional/JobPortalPage";
 import NetworkingPage from "@/pages/professional/NetworkingPage";
-import Events from "@/pages/professional/Events";
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -76,7 +72,7 @@ const AppRoutes: React.FC = () => (
 
       {/* Aprendizado */}
 
-      {/* mudar para videos recomendados */}
+      {/* mudar para vídeos recomendados */}
       <Route
         path="aprendizado/tutoriais"
         element={
@@ -84,8 +80,8 @@ const AppRoutes: React.FC = () => (
             <TutorialsPage />
           </PageTransition>
         }
-    />
-    {/* Manter */}
+      />
+      {/* Manter */}
       <Route
         path="aprendizado/cursos"
         element={
@@ -113,22 +109,6 @@ const AppRoutes: React.FC = () => (
           </PageTransition>
         }
       />
-      {/* <Route
-        path="salvos"
-        element={
-          <PageTransition>
-            <SavedContentPage />
-          </PageTransition>
-        }
-      />
-      <Route
-        path="meus-posts"
-        element={
-          <PageTransition>
-            <MyPostsPage />
-          </PageTransition>
-        }
-      /> */}
 
       {/* Comunidade */}
       <Route
@@ -149,16 +129,6 @@ const AppRoutes: React.FC = () => (
       />
 
       {/* Profissional */}
-      {/* tirar */}
-      <Route
-        path="vagas"
-        element={
-          <PageTransition>
-            <JobPortalPage />
-          </PageTransition>
-        }
-      />
-      {/* manter */}
       <Route
         path="networking"
         element={
@@ -167,19 +137,9 @@ const AppRoutes: React.FC = () => (
           </PageTransition>
         }
       />
-      {/* tirar */}
-      <Route
-        path="eventos"
-        element={
-          <PageTransition>
-            <Events />
-          </PageTransition>
-        }
-      />
-    </Route>
+    </Route> {/* Fechamento correto do RootLayout */}
 
     {/* Autenticação */}
-    {/* manter */}
     <Route
       path="login"
       element={
