@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <section
       id="home"
-      className="bg-[var(--bg-primary)] text-[var(--text-primary)] py-16 xs:py-18 sm:py-20 px-4 xs:px-5 transition-all duration-300"
+      className="bg-[var(--bg-primary)] text-[var(--text-primary)] py-16 xs:py-18 sm:py-20 px-4 xs:px-5 transition-all duration-300 min-h-screen"
     >
       <div className="container mx-auto flex flex-col tablet:flex-row items-center tablet:justify-between">
         <div className="flex-1 max-w-full tablet:max-w-2xl text-center tablet:text-left">

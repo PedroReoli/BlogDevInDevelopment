@@ -135,7 +135,7 @@ const Topbar: React.FC = () => {
           <NotificationBell />
           <ThemeSwitch />
 
-          <LoginOuPerfil isLoggedIn={false} profileImage="/images/profile.jpg" />
+          <LoginOuPerfil isLoggedIn={true} profileImage="/images/profile.jpg" />
         </div>
       </div>
     </header>
