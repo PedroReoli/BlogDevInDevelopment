@@ -1,8 +1,8 @@
 "use client"
 
-import type React from "react"
-
 import { useState, useEffect } from "react"
+import { motion, AnimatePresence } from "framer-motion"
+import { toast, Toaster } from "react-hot-toast"
 import {
   FaLock,
   FaLockOpen,
@@ -18,11 +18,20 @@ import {
   FaMedium,
   FaDev,
   FaEdit,
+  FaMapMarkerAlt,
+  FaBriefcase,
+  FaBirthdayCake,
+  FaGraduationCap,
+  FaLink,
+  FaUserAlt,
+  FaCalendarAlt,
 } from "react-icons/fa"
-import { motion, AnimatePresence } from "framer-motion"
-import { toast } from "react-hot-toast"
+import type { JSX } from "react"
 
-// Map of social media platforms to their icons
+import { userProfileService } from "@/services/userProfileService"
+import type { UserProfile, Education, SocialLink } from "@/types/userProfile"
+
+// Mapeamento de plataformas de mídia social para seus ícones
 const socialIcons: Record<string, JSX.Element> = {
   github: <FaGithub />,
   linkedin: <FaLinkedin />,
@@ -35,93 +44,147 @@ const socialIcons: Record<string, JSX.Element> = {
   dev: <FaDev />,
 }
 
-// Get icon for a platform (case insensitive)
+// Obter ícone para uma plataforma (não diferencia maiúsculas de minúsculas)
 const getSocialIcon = (platform: string) => {
   const key = platform.toLowerCase()
   return socialIcons[key] || <FaGlobe />
 }
 
-const ProfilePage: React.FC = () => {
+// Gerar um ID único para novos itens
+const generateId = () => `id_${Math.random().toString(36).substr(2, 9)}`
+
+const ProfilePage = () => {
+  // Estado para dados do perfil do usuário
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null)
+
+  // Estados da interface
   const [isEditing, setIsEditing] = useState(false)
-  const [isLoading, setIsLoading] = useState(false)
-  const [profileImage, setProfileImage] = useState("/images/profile.jpg")
+  const [isLoading, setIsLoading] = useState(true)
+  const [isSaving, setIsSaving] = useState(false)
   const [isHoveringImage, setIsHoveringImage] = useState(false)
 
-  // Campos editáveis
-  const [bio, setBio] = useState(
-    "Desenvolvedor apaixonado por inovação e tecnologia. Trabalho com desenvolvimento web há mais de 5 anos, focando em criar experiências de usuário intuitivas e acessíveis. Entusiasta de código aberto e sempre em busca de novos desafios.",
-  )
-  const [profession, setProfession] = useState("Desenvolvedor Fullstack")
-  const [location, setLocation] = useState("Rio de Janeiro, Brasil")
-  const [age, setAge] = useState("22")
-  const [educations, setEducations] = useState<string[]>([
-    "Bacharel em Ciência da Computação",
-    "Especialização em Desenvolvimento Web",
-  ])
-  const [newEducation, setNewEducation] = useState("")
-  const [socialLinks, setSocialLinks] = useState<{ platform: string; link: string }[]>([
-    { platform: "GitHub", link: "github.com/pedrosousa" },
-    { platform: "LinkedIn", link: "linkedin.com/in/pedrosousa" },
-    { platform: "Website", link: "pedrosousa.dev" },
-  ])
+  // Estados temporários para novos itens
+  const [newEducation, setNewEducation] = useState({ title: "", institution: "", year: "" })
   const [newSocial, setNewSocial] = useState({ platform: "", link: "" })
 
-  // Salvar alterações
-  const handleSaveChanges = () => {
-    setIsLoading(true)
+  // Buscar perfil do usuário ao montar o componente
+  useEffect(() => {
+    const loadUserProfile = async () => {
+      setIsLoading(true)
+      try {
+        // Usando um ID de usuário fictício, já que nosso serviço mock não o utiliza realmente
+        const data = await userProfileService.getUserProfile("user123")
+        setUserProfile(data)
+      } catch (error) {
+        console.error("Falha ao carregar perfil do usuário:", error)
+        toast.error("Falha ao carregar dados do perfil")
+      } finally {
+        setIsLoading(false)
+      }
+    }
 
-    // Simulando uma chamada de API
-    setTimeout(() => {
-      setIsLoading(false)
+    loadUserProfile()
+  }, [])
+
+  // Lidar com o salvamento de alterações
+  const handleSaveChanges = async () => {
+    if (!userProfile) return
+
+    setIsSaving(true)
+    try {
+      const updatedProfile = await userProfileService.updateUserProfile(userProfile)
+      setUserProfile(updatedProfile)
       setIsEditing(false)
       toast.success("Perfil atualizado com sucesso!")
-    }, 1000)
+    } catch (error) {
+      console.error("Erro ao atualizar perfil:", error)
+      toast.error("Falha ao atualizar perfil")
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  // Lidar com alterações de campo
+  const handleFieldChange = (field: keyof UserProfile, value: any) => {
+    if (!userProfile) return
+
+    setUserProfile((prev) => {
+      if (!prev) return prev
+      return {
+        ...prev,
+        [field]: value,
+      }
+    })
   }
 
   // Funções para adicionar/remover formações
   const handleAddEducation = () => {
-    if (newEducation.trim()) {
-      setEducations([...educations, newEducation])
-      setNewEducation("")
-      toast.success("Formação adicionada!")
-    } else {
-      toast.error("Por favor, insira uma formação válida")
+    if (!userProfile) return
+    if (!newEducation.title.trim()) {
+      toast.error("O título da formação é obrigatório")
+      return
     }
+
+    const newEducationItem: Education = {
+      id: generateId(),
+      title: newEducation.title,
+      institution: newEducation.institution || undefined,
+      year: newEducation.year || undefined,
+    }
+
+    setUserProfile({
+      ...userProfile,
+      educations: [...userProfile.educations, newEducationItem],
+    })
+
+    setNewEducation({ title: "", institution: "", year: "" })
+    toast.success("Formação adicionada com sucesso!")
   }
 
-  const handleRemoveEducation = (index: number) => {
-    setEducations(educations.filter((_, i) => i !== index))
-    toast.success("Formação removida!")
+  const handleRemoveEducation = (id: string) => {
+    if (!userProfile) return
+
+    setUserProfile({
+      ...userProfile,
+      educations: userProfile.educations.filter((edu) => edu.id !== id),
+    })
+
+    toast.success("Formação removida com sucesso!")
   }
 
-  // Funções para adicionar/remover redes sociais
+  // Funções para adicionar/remover links sociais
   const handleAddSocial = () => {
-    if (newSocial.platform && newSocial.link) {
-      setSocialLinks([...socialLinks, newSocial])
-      setNewSocial({ platform: "", link: "" })
-      toast.success("Rede social adicionada!")
-    } else {
-      toast.error("Por favor, preencha todos os campos")
-    }
-  }
-
-  const handleRemoveSocial = (index: number) => {
-    setSocialLinks(socialLinks.filter((_, i) => i !== index))
-    toast.success("Rede social removida!")
-  }
-
-  // Efeito de confirmação ao sair do modo de edição
-  useEffect(() => {
-    const handleBeforeUnload = (e: BeforeUnloadEvent) => {
-      if (isEditing) {
-        e.preventDefault()
-        e.returnValue = ""
-      }
+    if (!userProfile) return
+    if (!newSocial.platform.trim() || !newSocial.link.trim()) {
+      toast.error("Plataforma e link são obrigatórios")
+      return
     }
 
-    window.addEventListener("beforeunload", handleBeforeUnload)
-    return () => window.removeEventListener("beforeunload", handleBeforeUnload)
-  }, [isEditing])
+    const newSocialItem: SocialLink = {
+      id: generateId(),
+      platform: newSocial.platform,
+      link: newSocial.link,
+    }
+
+    setUserProfile({
+      ...userProfile,
+      socialLinks: [...userProfile.socialLinks, newSocialItem],
+    })
+
+    setNewSocial({ platform: "", link: "" })
+    toast.success("Link social adicionado com sucesso!")
+  }
+
+  const handleRemoveSocial = (id: string) => {
+    if (!userProfile) return
+
+    setUserProfile({
+      ...userProfile,
+      socialLinks: userProfile.socialLinks.filter((social) => social.id !== id),
+    })
+
+    toast.success("Link social removido com sucesso!")
+  }
 
   // Variantes de animação
   const containerVariants = {
@@ -143,194 +206,262 @@ const ProfilePage: React.FC = () => {
     },
   }
 
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+        <div className="flex flex-col items-center">
+          <div className="w-16 h-16 border-4 border-[var(--hover-primary)] border-t-transparent rounded-full animate-spin mb-4"></div>
+          <p className="text-[var(--text-secondary)]">Carregando perfil...</p>
+        </div>
+      </div>
+    )
+  }
+
+  if (!userProfile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-[var(--bg-primary)]">
+        <div className="bg-[var(--bg-secondary)] p-8 rounded-xl shadow-lg border border-[var(--border-primary)] text-center">
+          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-4">Perfil Não Encontrado</h2>
+          <p className="text-[var(--text-secondary)] mb-6">
+            Não foi possível carregar os dados do perfil. Por favor, tente novamente mais tarde.
+          </p>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-6 py-3 bg-[var(--hover-primary)] text-white rounded-lg hover:bg-opacity-90 transition-all"
+          >
+            Atualizar Página
+          </button>
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="p-6 bg-[var(--bg-primary)] text-[var(--text-primary)] min-h-screen">
-      {/* Botão Editar Perfil */}
-      <div className="flex justify-end mb-6">
+    <div className="min-h-screen bg-[var(--bg-primary)] text-[var(--text-primary)] py-10 px-4 sm:px-6 ">
+      <Toaster position="top-right" />
+
+      {/* Cabeçalho da Página */}
+      <div className="max-w-5xl mx-auto mb-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+        <h1 className="text-3xl font-bold">
+          <span className="bg-gradient-to-r from-[var(--hover-primary)] to-blue-400 bg-clip-text text-transparent">
+            Meu Perfil
+          </span>
+        </h1>
+
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
           onClick={isEditing ? handleSaveChanges : () => setIsEditing(true)}
-          className={`flex items-center space-x-2 border-2 border-[var(--hover-primary)] 
-            text-[var(--hover-primary)] bg-transparent px-5 py-2.5 rounded-full 
-            hover:bg-[var(--hover-primary)] hover:text-white transition-all duration-300
-            shadow-md hover:shadow-lg ${isLoading ? "opacity-70 cursor-not-allowed" : ""}`}
-          disabled={isLoading}
+          className={`flex items-center gap-2 px-6 py-3 rounded-xl transition-all duration-300 ${
+            isEditing
+              ? "bg-[var(--hover-primary)] text-white"
+              : "bg-transparent border-2 border-[var(--hover-primary)] text-[var(--hover-primary)]"
+          } ${isLoading || isSaving ? "opacity-70 cursor-not-allowed" : "hover:shadow-lg"}`}
+          disabled={isLoading || isSaving}
         >
-          {isLoading ? (
-            <div className="w-5 h-5 border-2 border-t-2 border-[var(--hover-primary)] border-t-transparent rounded-full animate-spin mr-2"></div>
+          {isSaving ? (
+            <>
+              <div className="w-5 h-5 border-2 border-t-2 border-white border-t-transparent rounded-full animate-spin"></div>
+              <span>Salvando...</span>
+            </>
           ) : isEditing ? (
-            <FaLockOpen className="text-lg" />
+            <>
+              <FaLockOpen className="text-lg" />
+              <span>Salvar Alterações</span>
+            </>
           ) : (
-            <FaLock className="text-lg" />
+            <>
+              <FaLock className="text-lg" />
+              <span>Editar Perfil</span>
+            </>
           )}
-          <span>{isEditing ? "Salvar Alterações" : "Editar Perfil"}</span>
         </motion.button>
       </div>
 
-      {/* Card Principal */}
-      <motion.div
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-        className="bg-[var(--bg-secondary)] p-8 rounded-2xl shadow-xl max-w-4xl mx-auto border border-[var(--border-primary)]"
-      >
-        {/* Header do Card */}
-        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row items-center gap-6 mb-8">
-          <div
-            className="relative group"
-            onMouseEnter={() => setIsHoveringImage(true)}
-            onMouseLeave={() => setIsHoveringImage(false)}
-          >
-            <div className="w-32 h-32 rounded-full border-4 border-[var(--hover-primary)] flex items-center justify-center overflow-hidden relative">
-              <img
-                src={profileImage || "/placeholder.svg"}
-                alt="Profile"
-                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
-              />
-              {isEditing && (
-                <div
-                  className={`absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity duration-300 ${isHoveringImage ? "opacity-100" : "opacity-0"}`}
-                >
-                  <FaEdit className="text-white text-2xl" />
+      <motion.div variants={containerVariants} initial="hidden" animate="visible" className="max-w-5xl mx-auto">
+        {/* Card do Cabeçalho do Perfil */}
+        <motion.div
+          variants={itemVariants}
+          className="bg-[var(--bg-secondary)] rounded-2xl shadow-lg border border-[var(--border-primary)] overflow-hidden mb-8"
+        >
+          {/* Imagem de Capa */}
+          <div className="h-48 bg-gradient-to-r from-blue-600 to-purple-600 relative">
+            {isEditing && (
+              <button className="absolute bottom-4 right-4 bg-white/20 backdrop-blur-sm text-white p-3 rounded-full hover:bg-white/30 transition-all">
+                <FaEdit />
+              </button>
+            )}
+          </div>
+
+          {/* Informações do Perfil */}
+          <div className="px-6 sm:px-8 pb-8 -mt-16 relative">
+            {/* Imagem do Perfil */}
+            <div
+              className="relative inline-block"
+              onMouseEnter={() => setIsHoveringImage(true)}
+              onMouseLeave={() => setIsHoveringImage(false)}
+            >
+              <div className="w-32 h-32 rounded-full border-4 border-[var(--bg-secondary)] overflow-hidden shadow-lg">
+                <img
+                  src={userProfile.profileImage || "/placeholder.svg?height=128&width=128"}
+                  alt={userProfile.displayName}
+                  className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                />
+                {isEditing && (
+                  <div
+                    className={`absolute inset-0 bg-black/50 flex items-center justify-center transition-opacity duration-300 ${
+                      isHoveringImage ? "opacity-100" : "opacity-0"
+                    }`}
+                  >
+                    <FaEdit className="text-white text-2xl" />
+                  </div>
+                )}
+              </div>
+              {userProfile.isOnline && (
+                <div className="absolute bottom-1 right-1 w-5 h-5 bg-green-500 rounded-full border-2 border-[var(--bg-secondary)]"></div>
+              )}
+              {userProfile.isPremium && (
+                <div className="absolute top-0 right-0 bg-gradient-to-r from-yellow-500 to-amber-500 text-white text-xs font-bold px-2 py-1 rounded-full transform translate-x-1/3 -translate-y-1/3">
+                  PRO
                 </div>
               )}
             </div>
-            <div className="absolute -bottom-2 -right-2 bg-[var(--hover-primary)] text-white rounded-full p-2 shadow-lg">
-              <div className="w-3 h-3 rounded-full bg-green-500"></div>
-            </div>
-          </div>
 
-          <div className="text-center sm:text-left">
-            <h2 className="text-3xl font-bold bg-gradient-to-r from-[var(--hover-primary)] to-blue-400 bg-clip-text text-transparent">
-              Pedro Sousa
-            </h2>
-            <p className="text-sm text-[var(--text-secondary)] mt-1">Pronomes: Ele/Dele</p>
-            <div className="flex items-center justify-center sm:justify-start mt-2 space-x-1">
-              <span className="px-3 py-1 bg-[var(--hover-primary)]/10 text-[var(--hover-primary)] rounded-full text-xs font-medium">
-                Membro desde 2022
-              </span>
-              <span className="px-3 py-1 bg-purple-500/10 text-purple-500 rounded-full text-xs font-medium">
-                Premium
-              </span>
+            {/* Informações do Usuário */}
+            <div className="mt-4 sm:mt-6">
+              <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4">
+                <h2 className="text-2xl sm:text-3xl font-bold">{userProfile.displayName}</h2>
+                <div className="flex items-center gap-2 text-[var(--text-secondary)] text-sm">
+                  <span>@{userProfile.username}</span>
+                  <span className="text-xs">•</span>
+                  <span>{userProfile.pronouns}</span>
+                </div>
+              </div>
+
+              <div className="flex flex-wrap gap-2 mt-3">
+                <div className="flex items-center text-sm text-[var(--text-secondary)]">
+                  <FaCalendarAlt className="mr-1.5 text-[var(--hover-primary)]" />
+                  <span>Membro desde {userProfile.memberSince}</span>
+                </div>
+                <div className="flex items-center text-sm text-[var(--text-secondary)]">
+                  <FaBriefcase className="mr-1.5 text-[var(--hover-primary)]" />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={userProfile.profession}
+                      onChange={(e) => handleFieldChange("profession", e.target.value)}
+                      className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-md px-2 py-1"
+                      placeholder="Sua profissão"
+                    />
+                  ) : (
+                    <span>{userProfile.profession}</span>
+                  )}
+                </div>
+                <div className="flex items-center text-sm text-[var(--text-secondary)]">
+                  <FaMapMarkerAlt className="mr-1.5 text-[var(--hover-primary)]" />
+                  {isEditing ? (
+                    <input
+                      type="text"
+                      value={userProfile.location}
+                      onChange={(e) => handleFieldChange("location", e.target.value)}
+                      className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-md px-2 py-1"
+                      placeholder="Sua localização"
+                    />
+                  ) : (
+                    <span>{userProfile.location}</span>
+                  )}
+                </div>
+                <div className="flex items-center text-sm text-[var(--text-secondary)]">
+                  <FaBirthdayCake className="mr-1.5 text-[var(--hover-primary)]" />
+                  {isEditing ? (
+                    <input
+                      type="number"
+                      value={userProfile.age}
+                      onChange={(e) => handleFieldChange("age", Number.parseInt(e.target.value))}
+                      className="bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-md px-2 py-1 w-16"
+                      placeholder="Idade"
+                    />
+                  ) : (
+                    <span>{userProfile.age} anos</span>
+                  )}
+                </div>
+              </div>
             </div>
           </div>
         </motion.div>
 
-        {/* Informações Editáveis */}
-        <div className="space-y-8">
-          {/* Bio */}
-          <motion.div variants={itemVariants}>
-            <p className="text-[var(--hover-primary)] font-bold text-lg mb-2 flex items-center">
-              <span className="mr-2">Bio</span>
-              <div className="h-px flex-grow bg-gradient-to-r from-[var(--hover-primary)] to-transparent"></div>
-            </p>
-            {isEditing ? (
-              <textarea
-                value={bio}
-                onChange={(e) => setBio(e.target.value)}
-                className="w-full border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 mt-1 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                rows={4}
-                placeholder="Conte um pouco sobre você..."
-              />
-            ) : (
-              <p className="text-[var(--text-secondary)] leading-relaxed">{bio}</p>
-            )}
-          </motion.div>
+        {/* Grid de Conteúdo Principal */}
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          {/* Coluna Esquerda */}
+          <div className="lg:col-span-2 space-y-8">
+            {/* Seção Bio */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-[var(--bg-secondary)] rounded-2xl shadow-lg border border-[var(--border-primary)] p-6 sm:p-8"
+            >
+              <h3 className="text-xl font-bold mb-4 flex items-center">
+                <FaUserAlt className="mr-2 text-[var(--hover-primary)]" />
+                <span>Sobre Mim</span>
+              </h3>
 
-          {/* Outras Informações */}
-          <motion.div variants={itemVariants} className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-            {/* Profissão */}
-            <div className="space-y-2">
-              <p className="text-[var(--hover-primary)] font-bold flex items-center">
-                <span className="mr-2">Profissão</span>
-                <div className="h-px flex-grow bg-gradient-to-r from-[var(--hover-primary)] to-transparent"></div>
-              </p>
               {isEditing ? (
-                <input
-                  type="text"
-                  value={profession}
-                  onChange={(e) => setProfession(e.target.value)}
-                  className="w-full border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                  placeholder="Sua profissão atual"
+                <textarea
+                  value={userProfile.bio}
+                  onChange={(e) => handleFieldChange("bio", e.target.value)}
+                  className="w-full min-h-[150px] bg-[var(--bg-primary)] border border-[var(--border-primary)] rounded-xl p-4 focus:border-[var(--hover-primary)] focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none transition-all"
+                  placeholder="Conte um pouco sobre você..."
                 />
               ) : (
-                <div className="flex items-center">
-                  <div className="w-1 h-6 bg-[var(--hover-primary)] rounded-full mr-2"></div>
-                  <p className="text-[var(--text-secondary)]">{profession}</p>
-                </div>
+                <p className="text-[var(--text-secondary)] leading-relaxed">{userProfile.bio}</p>
               )}
-            </div>
+            </motion.div>
 
-            {/* Localização */}
-            <div className="space-y-2">
-              <p className="text-[var(--hover-primary)] font-bold flex items-center">
-                <span className="mr-2">Mora em</span>
-                <div className="h-px flex-grow bg-gradient-to-r from-[var(--hover-primary)] to-transparent"></div>
-              </p>
-              {isEditing ? (
-                <input
-                  type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
-                  className="w-full border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                  placeholder="Sua localização"
-                />
-              ) : (
-                <div className="flex items-center">
-                  <div className="w-1 h-6 bg-[var(--hover-primary)] rounded-full mr-2"></div>
-                  <p className="text-[var(--text-secondary)]">{location}</p>
-                </div>
-              )}
-            </div>
+            {/* Seção Formação */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-[var(--bg-secondary)] rounded-2xl shadow-lg border border-[var(--border-primary)] p-6 sm:p-8"
+            >
+              <h3 className="text-xl font-bold mb-4 flex items-center">
+                <FaGraduationCap className="mr-2 text-[var(--hover-primary)]" />
+                <span>Formação</span>
+              </h3>
 
-            {/* Idade */}
-            <div className="space-y-2">
-              <p className="text-[var(--hover-primary)] font-bold flex items-center">
-                <span className="mr-2">Idade</span>
-                <div className="h-px flex-grow bg-gradient-to-r from-[var(--hover-primary)] to-transparent"></div>
-              </p>
-              {isEditing ? (
-                <input
-                  type="number"
-                  value={age}
-                  onChange={(e) => setAge(e.target.value)}
-                  className="w-full border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                  placeholder="Sua idade"
-                />
-              ) : (
-                <div className="flex items-center">
-                  <div className="w-1 h-6 bg-[var(--hover-primary)] rounded-full mr-2"></div>
-                  <p className="text-[var(--text-secondary)]">{age} anos</p>
-                </div>
-              )}
-            </div>
-
-            {/* Formações */}
-            <div className="space-y-2 sm:col-span-2">
-              <p className="text-[var(--hover-primary)] font-bold flex items-center">
-                <span className="mr-2">Formações</span>
-                <div className="h-px flex-grow bg-gradient-to-r from-[var(--hover-primary)] to-transparent"></div>
-              </p>
-              <div className="space-y-3">
+              <div className="space-y-4">
                 <AnimatePresence>
-                  {educations.map((edu, index) => (
+                  {userProfile.educations.map((edu) => (
                     <motion.div
-                      key={index}
+                      key={edu.id}
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
-                      className="flex items-center justify-between border border-[var(--border-primary)] rounded-xl p-3 bg-[var(--bg-primary)] group hover:border-[var(--hover-primary)] transition-all duration-300"
+                      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-start justify-between p-4 bg-[var(--bg-primary)] rounded-xl border border-[var(--border-primary)] hover:border-[var(--hover-primary)] transition-all group"
                     >
-                      <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors duration-300">
-                        {edu}
-                      </span>
+                      <div className="flex items-start gap-3">
+                        <div className="mt-1 text-[var(--hover-primary)] text-lg">
+                          <FaGraduationCap />
+                        </div>
+                        <div>
+                          <h4 className="font-medium group-hover:text-[var(--hover-primary)] transition-colors">
+                            {edu.title}
+                          </h4>
+                          {(edu.institution || edu.year) && (
+                            <p className="text-sm text-[var(--text-secondary)]">
+                              {edu.institution}
+                              {edu.institution && edu.year ? " • " : ""}
+                              {edu.year}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+
                       {isEditing && (
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() => handleRemoveEducation(index)}
-                          className="text-red-500 hover:text-red-600 p-1 rounded-full hover:bg-red-500/10 transition-all duration-300"
+                          onClick={() => handleRemoveEducation(edu.id)}
+                          className="text-red-500 hover:text-red-600 p-1.5 rounded-full hover:bg-red-500/10 transition-all"
+                          aria-label="Remover formação"
                         >
                           <FaTrash />
                         </motion.button>
@@ -338,76 +469,103 @@ const ProfilePage: React.FC = () => {
                     </motion.div>
                   ))}
                 </AnimatePresence>
+
                 {isEditing && (
                   <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="flex items-center gap-2"
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="mt-4 p-4 bg-[var(--bg-primary)] rounded-xl border border-dashed border-[var(--border-primary)]"
                   >
-                    <input
-                      type="text"
-                      placeholder="Nova Formação"
-                      value={newEducation}
-                      onChange={(e) => setNewEducation(e.target.value)}
-                      className="flex-1 border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                      onKeyDown={(e) => e.key === "Enter" && handleAddEducation()}
-                    />
-                    <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      onClick={handleAddEducation}
-                      className="text-[var(--hover-primary)] hover:text-white hover:bg-[var(--hover-primary)] p-3 rounded-xl border-2 border-[var(--hover-primary)] transition-all duration-300"
-                    >
-                      <FaPlus />
-                    </motion.button>
+                    <h4 className="font-medium mb-3 text-[var(--text-secondary)]">Adicionar Nova Formação</h4>
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        placeholder="Título ou Certificado *"
+                        value={newEducation.title}
+                        onChange={(e) => setNewEducation({ ...newEducation, title: e.target.value })}
+                        className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 focus:border-[var(--hover-primary)] focus:outline-none"
+                      />
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <input
+                          type="text"
+                          placeholder="Instituição"
+                          value={newEducation.institution}
+                          onChange={(e) => setNewEducation({ ...newEducation, institution: e.target.value })}
+                          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 focus:border-[var(--hover-primary)] focus:outline-none"
+                        />
+                        <input
+                          type="text"
+                          placeholder="Ano"
+                          value={newEducation.year}
+                          onChange={(e) => setNewEducation({ ...newEducation, year: e.target.value })}
+                          className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 focus:border-[var(--hover-primary)] focus:outline-none"
+                        />
+                      </div>
+                      <div className="flex justify-end">
+                        <motion.button
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={handleAddEducation}
+                          className="flex items-center gap-2 px-4 py-2 bg-[var(--hover-primary)] text-white rounded-lg hover:bg-opacity-90 transition-all"
+                        >
+                          <FaPlus size={14} />
+                          <span>Adicionar Formação</span>
+                        </motion.button>
+                      </div>
+                    </div>
                   </motion.div>
                 )}
               </div>
-            </div>
-          </motion.div>
+            </motion.div>
+          </div>
 
-          {/* Redes Sociais */}
-          <motion.div variants={itemVariants}>
-            <p className="text-[var(--hover-primary)] font-bold text-lg mb-3 flex items-center">
-              <span className="mr-2">Meus Sites e Redes Sociais</span>
-              <div className="h-px flex-grow bg-gradient-to-r from-[var(--hover-primary)] to-transparent"></div>
-            </p>
-            <div className="space-y-4">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          {/* Coluna Direita */}
+          <div className="space-y-8">
+            {/* Seção Links Sociais */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-[var(--bg-secondary)] rounded-2xl shadow-lg border border-[var(--border-primary)] p-6 sm:p-8"
+            >
+              <h3 className="text-xl font-bold mb-4 flex items-center">
+                <FaLink className="mr-2 text-[var(--hover-primary)]" />
+                <span>Links Sociais</span>
+              </h3>
+
+              <div className="space-y-3">
                 <AnimatePresence>
-                  {socialLinks.map((social, index) => (
+                  {userProfile.socialLinks.map((social) => (
                     <motion.div
-                      key={index}
+                      key={social.id}
                       initial={{ opacity: 0, y: -10 }}
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, x: -10 }}
-                      className="flex items-center justify-between border border-[var(--border-primary)] rounded-xl p-3 bg-[var(--bg-primary)] group hover:border-[var(--hover-primary)] transition-all duration-300"
+                      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+                      transition={{ duration: 0.2 }}
+                      className="flex items-center justify-between p-3 bg-[var(--bg-primary)] rounded-xl border border-[var(--border-primary)] hover:border-[var(--hover-primary)] transition-all group"
                     >
                       <div className="flex items-center gap-3">
                         <div className="text-[var(--hover-primary)] text-xl">{getSocialIcon(social.platform)}</div>
-                        <span className="text-[var(--text-secondary)] group-hover:text-[var(--text-primary)] transition-colors duration-300">
+                        <span className="font-medium group-hover:text-[var(--hover-primary)] transition-colors">
                           {social.platform}
                         </span>
                       </div>
+
                       <div className="flex items-center gap-2">
                         <a
-                          href={
-                            social.link.startsWith("http://") || social.link.startsWith("https://")
-                              ? social.link
-                              : `https://${social.link}`
-                          }
+                          href={social.link.startsWith("http") ? social.link : `https://${social.link}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-[var(--hover-primary)] hover:underline transition-all duration-300"
+                          className="text-sm text-[var(--hover-primary)] hover:underline"
                         >
-                          Acessar
+                          Visitar
                         </a>
+
                         {isEditing && (
                           <motion.button
                             whileHover={{ scale: 1.1 }}
                             whileTap={{ scale: 0.9 }}
-                            onClick={() => handleRemoveSocial(index)}
-                            className="text-red-500 hover:text-red-600 p-1 rounded-full hover:bg-red-500/10 transition-all duration-300"
+                            onClick={() => handleRemoveSocial(social.id)}
+                            className="text-red-500 hover:text-red-600 p-1.5 rounded-full hover:bg-red-500/10 transition-all"
+                            aria-label="Remover link social"
                           >
                             <FaTrash />
                           </motion.button>
@@ -416,41 +574,73 @@ const ProfilePage: React.FC = () => {
                     </motion.div>
                   ))}
                 </AnimatePresence>
-              </div>
 
-              {isEditing && (
-                <motion.div
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  className="flex flex-col sm:flex-row items-center gap-3"
-                >
-                  <input
-                    type="text"
-                    placeholder="Plataforma (ex: GitHub, LinkedIn)"
-                    value={newSocial.platform}
-                    onChange={(e) => setNewSocial({ ...newSocial, platform: e.target.value })}
-                    className="w-full border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                  />
-                  <input
-                    type="url"
-                    placeholder="Link (ex: github.com/username)"
-                    value={newSocial.link}
-                    onChange={(e) => setNewSocial({ ...newSocial, link: e.target.value })}
-                    className="w-full border-2 border-[var(--border-primary)] focus:border-[var(--hover-primary)] rounded-xl p-3 bg-[var(--bg-primary)] text-[var(--text-primary)] transition-all duration-300 focus:ring-2 focus:ring-[var(--hover-primary)]/20 focus:outline-none"
-                    onKeyDown={(e) => e.key === "Enter" && handleAddSocial()}
-                  />
-                  <motion.button
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={handleAddSocial}
-                    className="text-[var(--hover-primary)] hover:text-white hover:bg-[var(--hover-primary)] p-3 rounded-xl border-2 border-[var(--hover-primary)] transition-all duration-300 sm:self-stretch flex items-center justify-center"
+                {isEditing && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: "auto" }}
+                    className="mt-4 p-4 bg-[var(--bg-primary)] rounded-xl border border-dashed border-[var(--border-primary)]"
                   >
-                    <FaPlus />
-                  </motion.button>
-                </motion.div>
-              )}
-            </div>
-          </motion.div>
+                    <h4 className="font-medium mb-3 text-[var(--text-secondary)]">Adicionar Novo Link Social</h4>
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        placeholder="Plataforma (ex: GitHub, LinkedIn)"
+                        value={newSocial.platform}
+                        onChange={(e) => setNewSocial({ ...newSocial, platform: e.target.value })}
+                        className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 focus:border-[var(--hover-primary)] focus:outline-none"
+                      />
+                      <input
+                        type="text"
+                        placeholder="Link (ex: github.com/username)"
+                        value={newSocial.link}
+                        onChange={(e) => setNewSocial({ ...newSocial, link: e.target.value })}
+                        className="w-full bg-[var(--bg-secondary)] border border-[var(--border-primary)] rounded-lg p-3 focus:border-[var(--hover-primary)] focus:outline-none"
+                      />
+                      <div className="flex justify-end">
+                        <motion.button
+                          whileHover={{ scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          onClick={handleAddSocial}
+                          className="flex items-center gap-2 px-4 py-2 bg-[var(--hover-primary)] text-white rounded-lg hover:bg-opacity-90 transition-all"
+                        >
+                          <FaPlus size={14} />
+                          <span>Adicionar Link</span>
+                        </motion.button>
+                      </div>
+                    </div>
+                  </motion.div>
+                )}
+              </div>
+            </motion.div>
+
+            {/* Card de Estatísticas */}
+            <motion.div
+              variants={itemVariants}
+              className="bg-[var(--bg-secondary)] rounded-2xl shadow-lg border border-[var(--border-primary)] p-6 sm:p-8"
+            >
+              <h3 className="text-xl font-bold mb-4">Estatísticas de Atividade</h3>
+
+              <div className="space-y-4">
+                <div className="flex justify-between items-center">
+                  <span className="text-[var(--text-secondary)]">Postagens</span>
+                  <span className="font-medium">24</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[var(--text-secondary)]">Comentários</span>
+                  <span className="font-medium">142</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[var(--text-secondary)]">Projetos</span>
+                  <span className="font-medium">7</span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="text-[var(--text-secondary)]">Reputação</span>
+                  <span className="font-medium text-[var(--hover-primary)]">1.245</span>
+                </div>
+              </div>
+            </motion.div>
+          </div>
         </div>
       </motion.div>
     </div>

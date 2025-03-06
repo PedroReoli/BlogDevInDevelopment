@@ -75,6 +75,8 @@ const AppRoutes: React.FC = () => (
       />
 
       {/* Aprendizado */}
+
+      {/* mudar para videos recomendados */}
       <Route
         path="aprendizado/tutoriais"
         element={
@@ -82,7 +84,8 @@ const AppRoutes: React.FC = () => (
             <TutorialsPage />
           </PageTransition>
         }
-      />
+    />
+    {/* Manter */}
       <Route
         path="aprendizado/cursos"
         element={
@@ -91,6 +94,7 @@ const AppRoutes: React.FC = () => (
           </PageTransition>
         }
       />
+      {/* Manter */}
       <Route
         path="aprendizado/materiais"
         element={
@@ -109,7 +113,7 @@ const AppRoutes: React.FC = () => (
           </PageTransition>
         }
       />
-      <Route
+      {/* <Route
         path="salvos"
         element={
           <PageTransition>
@@ -124,7 +128,7 @@ const AppRoutes: React.FC = () => (
             <MyPostsPage />
           </PageTransition>
         }
-      />
+      /> */}
 
       {/* Comunidade */}
       <Route
@@ -145,6 +149,7 @@ const AppRoutes: React.FC = () => (
       />
 
       {/* Profissional */}
+      {/* tirar */}
       <Route
         path="vagas"
         element={
@@ -153,6 +158,7 @@ const AppRoutes: React.FC = () => (
           </PageTransition>
         }
       />
+      {/* manter */}
       <Route
         path="networking"
         element={
@@ -161,6 +167,7 @@ const AppRoutes: React.FC = () => (
           </PageTransition>
         }
       />
+      {/* tirar */}
       <Route
         path="eventos"
         element={
@@ -172,6 +179,7 @@ const AppRoutes: React.FC = () => (
     </Route>
 
     {/* Autenticação */}
+    {/* manter */}
     <Route
       path="login"
       element={
