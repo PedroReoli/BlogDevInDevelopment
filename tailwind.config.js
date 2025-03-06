@@ -1,14 +1,8 @@
-const defaultTheme = require("tailwindcss/defaultTheme");
+const defaultTheme = require("tailwindcss/defaultTheme")
+const { fontFamily } = require("tailwindcss/defaultTheme")
 
 module.exports = {
-  // ==========================
-  // Tailwind CSS Configuration
-  // ==========================
-
-  // 1. Ativação do Dark Mode
-  darkMode: "class", // Ativa o modo escuro baseado na classe "dark"
-
-  // 2. Configuração do Content
+  darkMode: ["class"],
   content: [
     "./src/_root/pages/**/*.{ts,tsx}",
     "./src/components/**/*.{ts,tsx}",
@@ -18,27 +12,74 @@ module.exports = {
     "./src/components/Transition/**/*.{ts,tsx}",
     "./src/pages/**/*.{ts,tsx}",
     "./public/index.html",
+    "*.{js,ts,jsx,tsx,mdx}",
   ],
-
-  // 3. Customização do Tema
   theme: {
     container: {
       center: true,
       padding: "1rem",
       screens: {
-        'xs': '480px',
-        'sm': '640px',
-        'md': '768px',
-        'lg': '1024px',
-        'xl': '1280px',
-        '2xl': '1536px',
-        "3xl": "1800px", // Extra para telas grandes
+        xs: "320px",
+        sm: "375px",
+        md: "425px",
+        tablet: "768px",
+        lg: "1024px",
+        xl: "1280px",
+        "2xl": "1440px",
+        "3xl": "1600px",
+        "4xl": "1920px",
+        "5xl": "2560px",
       },
     },
+    screens: {
+      xs: "320px", // Smartphones pequenos
+      sm: "375px", // Smartphones médios
+      md: "425px", // Smartphones grandes
+      tablet: "768px", // Tablets
+      lg: "1024px", // Tablets grandes e laptops pequenos
+      xl: "1280px", // Laptops comuns e telas HD
+      "2xl": "1440px", // Monitores maiores (Full HD)
+      "3xl": "1600px", // Telas widescreen grandes
+      "4xl": "1920px", // Monitores Full HD e TVs
+      "5xl": "2560px", // Telas 2K e 4K
+    },
     extend: {
-      // Paleta de Cores Dinâmica
       colors: {
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        // Paleta de Cores Dinâmica
+        /*primary: {
           DEFAULT: "#3b82f6", // Azul padrão
           light: "#93c5fd",   // Azul claro
           dark: "#2563eb",    // Azul escuro
@@ -67,7 +108,12 @@ module.exports = {
           700: "#5C5C7B",
           800: "#3B3B4F",
           900: "#1B1B1D",
-        },
+        },*/
+      },
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
 
       // Adicionando Fontes
@@ -75,7 +121,8 @@ module.exports = {
         inter: ["Inter", "sans-serif"],
         montserrat: ["Montserrat", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
-        kairos: ["Kairos Sans Extended Medium", "Montserrat", ...defaultTheme.fontFamily.sans],        
+        kairos: ["Kairos Sans Extended Medium", "Montserrat", ...defaultTheme.fontFamily.sans],
+        //...fontFamily,
       },
 
       // Larguras Personalizadas
@@ -149,4 +196,5 @@ module.exports = {
     require("tailwind-scrollbar"), // Barra de rolagem customizada
     require("@tailwindcss/typography"), // Estilo para blogs e textos
   ],
-};
+}
+

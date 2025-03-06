@@ -1,18 +1,18 @@
-import React from "react";
-import { FaGithub } from "react-icons/fa";
+import type React from "react"
+import { FaStar } from "react-icons/fa"
+import { Link } from "react-router-dom"
 
 const AvalieNoGitHub: React.FC = () => {
   return (
-    <a
-      href="https://github.com/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--hover-primary)] transition-all"
-    >
-      <FaGithub className="text-xl" />
-      <span className="text-sm font-semibold">Avalie no GitHub</span>
-    </a>
-  );
-};
+    <div className="flex items-center space-x-1">
+      <Link to="/github" className="flex items-center space-x-1 hover:text-[var(--hover-primary)] transition-all">
+        <FaStar className="text-lg" />
+        <span className="text-sm font-medium">Avalie no GitHub</span>
+      </Link>
+      <span className="text-sm font-medium">47K</span>
+    </div>
+  )
+}
 
-export default AvalieNoGitHub;
+export default AvalieNoGitHub
+

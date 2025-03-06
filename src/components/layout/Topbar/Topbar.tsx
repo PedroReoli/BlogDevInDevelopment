@@ -1,212 +1,146 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import {
-  FaChevronDown,
-  FaBook,
-  FaVideo,
-  FaFileCode,
-  FaBriefcase,
-  FaNetworkWired,
-  FaCalendarAlt,
-  FaUsers,
-  FaComments,
-  FaDiscord,
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
-import ThemeSwitch from "@/components/Shared/ThemeSwitch";
-import NotificationBell from "@/components/Shared/NotificationBell";
-import DropdownMenu from "@/components/Shared/DropdownMenu";
-import AvalieNoGitHub from "@/components/Shared/AvalieNoGithub";
-import LoginOuPerfil from "@/components/Shared/LoginOuPerfil";
+"use client"
+
+import type React from "react"
+import { useState } from "react"
+import { Link } from "react-router-dom"
+import { FaChevronDown, FaBook, FaVideo, FaFileCode, FaUsers, FaComments, FaDiscord } from "react-icons/fa"
+import ThemeSwitch from "@/components/Shared/ThemeSwitch"
+import NotificationBell from "@/components/Shared/NotificationBell"
+import DropdownMenu from "@/components/Shared/DropdownMenu"
+import AvalieNoGitHub from "@/components/Shared/AvalieNoGithub"
+import LoginOuPerfil from "@/components/Shared/LoginOuPerfil"
 
 const Topbar: React.FC = () => {
-  const [dropdown, setDropdown] = useState<string | null>(null);
-  const [isLoggedIn] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [dropdown, setDropdown] = useState(false)
 
-  const toggleDropdown = (menu: string) => {
-    setDropdown((prev) => (prev === menu ? null : menu));
-  };
+  const toggleDropdown = () => {
+    setDropdown((prev) => !prev)
+  }
 
   const closeDropdown = () => {
-    setDropdown(null);
-  };
+    setDropdown(false)
+  }
+// dps transformar isso em um arquivo so e importar
+  const menuItems = {
+    aprendizado: [
+      {
+        title: "Tutoriais",
+        description: "Explore guias e exemplos.",
+        icon: <FaBook />,
+        link: "/aprendizado/tutoriais",
+      },
+      {
+        title: "Cursos",
+        description: "Aprimore-se com cursos.",
+        icon: <FaVideo />,
+        link: "/aprendizado/cursos",
+      },
+      {
+        title: "Materiais",
+        description: "Recursos para aprender.",
+        icon: <FaFileCode />,
+        link: "/aprendizado/materiais",
+      },
+      {
+        title: "Documentação",
+        description: "Guias técnicos detalhados.",
+        icon: <FaBook />,
+        link: "/aprendizado/documentacao",
+      },
+    ],
+    social: [
+      {
+        title: "Usuários",
+        description: "Explore os perfis de usuários.",
+        icon: <FaUsers />,
+        link: "/usuarios",
+      },
+      {
+        title: "Discussões",
+        description: "Participe de debates e tópicos.",
+        icon: <FaComments />,
+        link: "/discussoes",
+      },
+      {
+        title: "Comunidades",
+        description: "Encontre comunidades para trocar ideias.",
+        icon: <FaUsers />,
+        link: "/comunidades",
+      },
+      {
+        title: "Eventos",
+        description: "Participe de eventos e webinars.",
+        icon: <FaUsers />,
+        link: "/eventos",
+      },
+    ],
+  }
 
-  const toggleMobileMenu = () => {
-    setMobileMenuOpen((prev) => !prev);
-  };
-
-  const menuItems = [
-    {
-      name: "Aprendizado",
-      items: [
-        { title: "Tutoriais", description: "Explore guias e exemplos.", icon: <FaBook />, link: "/aprendizado/tutoriais" },
-        { title: "Cursos", description: "Aprimore-se com cursos.", icon: <FaVideo />, link: "/aprendizado/cursos" },
-        { title: "Materiais", description: "Recursos para aprender.", icon: <FaFileCode />, link: "/aprendizado/materiais" },
-      ],
-      extraContent: {
-        title: "Dicas de como estudar com mais eficiência",
-        description: "Aprenda métodos para otimizar seu aprendizado e melhorar sua retenção de conteúdo.",
-        link: "/posts/dicas-estudo-eficiencia",
-      },
-    },
-    {
-      name: "Comunidade",
-      items: [
-        { title: "Usuários", description: "Explore os perfis de usuários.", icon: <FaUsers />, link: "/usuarios" },
-        { title: "Discussões", description: "Participe de debates e tópicos.", icon: <FaComments />, link: "/discussoes" },
-      ],
-      extraContent: {
-        title: "Participe da Comunidade",
-        description: "Conecte-se com outros membros e troque experiências.",
-        link: "/posts/participe-comunidade",
-      },
-    },
-    {
-      name: "Blog",
-      items: [
-        { title: "Post 1", description: "Descrição do post 1.", icon: <FaBook />, link: "/blog/post-1" },
-        { title: "Post 2", description: "Descrição do post 2.", icon: <FaVideo />, link: "/blog/post-2" },
-        { title: "Post 3", description: "Descrição do post 3.", icon: <FaFileCode />, link: "/blog/post-3" },
-      ],
-      extraContent: {
-        title: "Explore nossos artigos",
-        description: "Fique por dentro das últimas novidades e dicas.",
-        link: "/posts/explore-artigos",
-      },
-    },
-    {
-      name: "Projetos",
-      items: [
-        { title: "Projeto 1", description: "Descrição do projeto 1.", icon: <FaBriefcase />, link: "/projetos/projeto-1" },
-        { title: "Projeto 2", description: "Descrição do projeto 2.", icon: <FaNetworkWired />, link: "/projetos/projeto-2" },
-        { title: "Projeto 3", description: "Descrição do projeto 3.", icon: <FaCalendarAlt />, link: "/projetos/projeto-3" },
-      ],
-      extraContent: {
-        title: "Conheça nossos projetos",
-        description: "Veja os trabalhos desenvolvidos pela comunidade.",
-        link: "/posts/conheca-projetos",
-      },
-    },
-  ];
+  const lastProject = {
+    title: "Gerenciamento de ativos pioneiro",
+    description: "Soluções para a economia circular com UNDO",
+    link: "/projetos/undo",
+    imageUrl: "/images/projeto3.jpg",
+  }
 
   return (
     <header className="w-full py-3 px-4 sm:px-6 shadow-md sticky top-0 z-50 transition-all duration-300 bg-[var(--bg-secondary)] text-[var(--text-primary)] border-b border-[var(--border-primary)]">
-      <div className="container mx-auto flex items-center justify-between px-4">
-        {/* Logo e Nome */}
-        <Link to="/" className="flex items-center space-x-3">
-          <img src="/images/logo.svg" alt="Logo" className="h-8 w-8 sm:h-10 sm:w-10" />
-          <span className="text-lg sm:text-xl font-bold text-[var(--hover-primary)] hover:text-blue-400 transition-all">
-            <span className="hidden sm:inline">DevEmDesenvolvimento</span>
-            <span className="sm:hidden">DevEmDev</span>
-          </span>
-        </Link>
-
-        {/* Menu Principal (Desktop) */}
-        <nav className="hidden xl:flex items-center space-x-8 text-sm">
-          {menuItems.map((item) => (
-            <div key={item.name} className="relative">
-              <button
-                onClick={() => toggleDropdown(item.name)}
-                className="flex items-center space-x-2 text-[var(--text-primary)] hover:text-[var(--hover-primary)] transition-all"
-              >
-                <span>{item.name}</span>
-                <span
-                  className={`transform transition-transform ${
-                    dropdown === item.name ? "rotate-180" : "rotate-0"
-                  }`}
-                >
-                  <FaChevronDown />
-                </span>
-              </button>
-              <DropdownMenu
-                isOpen={dropdown === item.name}
-                items={item.items}
-                onClose={closeDropdown}
-                extraContent={item.extraContent}
-              />
-            </div>
-          ))}
-          <Link
-            to="https://discord.gg/teDfu39G7r"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="hover:text-[var(--hover-primary)] transition-all"
-            aria-label="Join our Discord"
-          >
-            <FaDiscord className="text-xl" />
+      <div className="container mx-auto flex items-center justify-between">
+        {/* Left section: Logo and main navigation */}
+        <div className="flex items-center space-x-6">
+          {/* Logo */}
+          <Link to="/" className="flex items-center space-x-2">
+            <img src="/images/logo.svg" alt="Logo" className="h-8 w-8" />
+            <span className="text-lg font-bold text-[var(--hover-primary)] hover:text-blue-400 transition-all">
+              DevEmDesenvolvimento
+            </span>
           </Link>
-        </nav>
 
-        {/* Ações à Direita */}
-        <div className="flex items-center space-x-4 sm:space-x-6">
-          <div className="hidden sm:block">
-            <AvalieNoGitHub />
-          </div>
-          <NotificationBell />
-          <ThemeSwitch />
-          <div className="hidden sm:block">
-            <LoginOuPerfil isLoggedIn={isLoggedIn} profileImage="/images/profile.jpg" />
-          </div>
-          <button
-            onClick={toggleMobileMenu}
-            className="text-2xl xl:hidden focus:outline-none"
-            aria-label="Toggle mobile menu"
-          >
-            {mobileMenuOpen ? <FaTimes /> : <FaBars />}
-          </button>
-        </div>
-      </div>
-
-      {/* Menu Mobile */}
-      {mobileMenuOpen && (
-        <nav className="xl:hidden mt-4 pb-4">
-          {menuItems.map((item) => (
-            <div key={item.name} className="py-2">
+          {/* Main navigation items */}
+          <div className="flex items-center space-x-6">
+            <div className="relative">
               <button
-                onClick={() => toggleDropdown(item.name)}
-                className="flex items-center justify-between w-full text-left px-4 py-2 hover:bg-[var(--bg-hover)] transition-colors"
+                onClick={toggleDropdown}
+                className="flex items-center space-x-1 text-[var(--text-primary)] hover:text-[var(--hover-primary)] transition-all"
               >
-                <span>{item.name}</span>
+                <span>Recursos</span>
                 <FaChevronDown
-                  className={`transform transition-transform ${
-                    dropdown === item.name ? "rotate-180" : "rotate-0"
-                  }`}
+                  className={`transform transition-transform ${dropdown ? "rotate-180" : "rotate-0"} text-xs`}
                 />
               </button>
-              {dropdown === item.name && (
-                <div className="pl-8 mt-2 space-y-2">
-                  {item.items.map((subItem) => (
-                    <Link
-                      key={subItem.title}
-                      to={subItem.link}
-                      className="block px-4 py-2 hover:bg-[var(--bg-hover)] transition-colors"
-                    >
-                      {subItem.title}
-                    </Link>
-                  ))}
-                </div>
+              {dropdown && (
+                <DropdownMenu isOpen={dropdown} items={menuItems} onClose={closeDropdown} projectCard={lastProject} />
               )}
             </div>
-          ))}
-          <Link
-            to="https://discord.gg/teDfu39G7r"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="flex items-center space-x-2 px-4 py-2 hover:bg-[var(--bg-hover)] transition-colors"
-          >
-            <FaDiscord />
-            <span>Discord</span>
-          </Link>
-          <div className="sm:hidden mt-4 px-4">
-            <LoginOuPerfil isLoggedIn={isLoggedIn} profileImage="/images/profile.jpg" />
+            <Link to="/blog" className="hover:text-[var(--hover-primary)] transition-all">
+              Blog
+            </Link>
+            <Link to="/docs" className="hover:text-[var(--hover-primary)] transition-all">
+              Docs
+            </Link>
+            <Link to="/parcerias" className="hover:text-[var(--hover-primary)] transition-all">
+              Parcerias
+            </Link>
           </div>
-        </nav>
-      )}
-    </header>
-  );
-};
+        </div>
 
-export default Topbar;
+        {/* Right section*/}
+        <div className="flex items-center space-x-4">
+          <AvalieNoGitHub />
+
+          <Link to="/discord" className="hover:text-[var(--hover-primary)] transition-all">
+            <FaDiscord className="text-xl" />
+          </Link>
+
+          <NotificationBell />
+          <ThemeSwitch />
+
+          <LoginOuPerfil isLoggedIn={false} profileImage="/images/profile.jpg" />
+        </div>
+      </div>
+    </header>
+  )
+}
+
+export default Topbar
 

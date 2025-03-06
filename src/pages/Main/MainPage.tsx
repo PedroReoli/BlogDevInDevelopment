@@ -1,7 +1,6 @@
 
 import Sessions from '@/components/Transition/Sessions';
 import { useEffect, useState } from 'react';
-import ResponsiveHome from '../ResponsiveLayouts/ResponsiveHome';
 import  Home  from '@/pages/Main/Home';
 import ResponsiveFooter from '../ResponsiveLayouts/ResponsiveFooter';
 import Footer from './Footer';
@@ -24,14 +23,8 @@ const MainPage = () => {
 
   return (
     <div>
-      {/* Header */}
-      {/* Funcao           True             False */}
-      {isSmallScreen ? <ResponsiveHome /> : <Home />}
-      
-     
+      <Home />
       <Sessions />
-
-      {/* Footer */}
       {isSmallScreen ? <ResponsiveFooter /> : <Footer />}
     </div>
   );
