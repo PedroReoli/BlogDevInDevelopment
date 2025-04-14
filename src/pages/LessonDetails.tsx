@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet"
 import { motion } from "framer-motion"
 import { lessonsData } from "@/constants/LessonsData"
 import Loader from "@/components/Shared/Loader"
-import NotFoundPage from "@/pages/not-found/NotFoundPage"
+import NotFoundPage from "@/pages/NotFoundPage"
 import { FiCalendar, FiClock, FiArrowLeft, FiArrowRight, FiShare2, FiPlay } from "react-icons/fi"
 
 const LessonDetails = () => {

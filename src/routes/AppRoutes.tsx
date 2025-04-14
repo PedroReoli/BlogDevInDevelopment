@@ -5,30 +5,23 @@ import PageTransition from "@/components/Transition/PageTransition";
 import RootLayout from "@/_root/RootLayout";
 
 // Páginas principais
-import MainPage from "@/pages/Main/MainPage";
-import NotFoundPage from "@/pages/not-found/NotFoundPage";
-import LoginPage from "@/pages/auth/LoginPage";
-import RegisterPage from "@/pages/auth/RegisterPage";
+import MainPage from "@/pages/MainPage";
+import NotFoundPage from "@/pages/NotFoundPage";
 
 // Blog e Detalhes
-import PostDetails from "@/pages/blog/PostDetails";
-import LessonDetails from "@/pages/lesson/LessonDetails";
-import ProjectDetails from "@/pages/project/ProjectDetails";
+import PostDetails from "@/pages/PostDetails";
+import LessonDetails from "@/pages/LessonDetails";
+import ProjectDetails from "@/pages/ProjectDetails";
 
 // Aprendizado
-import TutorialsPage from "@/pages/learning/TutorialsPage";
-import CoursesPage from "@/pages/learning/CoursesPage";
-import MaterialsPage from "@/pages/learning/MaterialsPage";
+import TutorialsPage from "@/pages/TutorialsPage";
+import CoursesPage from "@/pages/CoursesPage";
+import MaterialsPage from "@/pages/MaterialsPage";
 
-// Perfil e Pessoal
-import ProfilePage from "@/pages/profile/ProfilePage";
 
-// Comunidade
-import UsersPage from "@/pages/community/UsersPage";
-import DiscussionsPage from "@/pages/community/DiscussionsPage";
 
 // Profissional
-import NetworkingPage from "@/pages/professional/NetworkingPage";
+import NetworkingPage from "@/pages/NetworkingPage";
 
 const AppRoutes: React.FC = () => (
   <Routes>
@@ -100,33 +93,6 @@ const AppRoutes: React.FC = () => (
         }
       />
 
-      {/* Perfil */}
-      <Route
-        path="profile"
-        element={
-          <PageTransition>
-            <ProfilePage />
-          </PageTransition>
-        }
-      />
-
-      {/* Comunidade */}
-      <Route
-        path="usuarios"
-        element={
-          <PageTransition>
-            <UsersPage />
-          </PageTransition>
-        }
-      />
-      <Route
-        path="discussoes"
-        element={
-          <PageTransition>
-            <DiscussionsPage />
-          </PageTransition>
-        }
-      />
 
       {/* Profissional */}
       <Route
@@ -139,24 +105,7 @@ const AppRoutes: React.FC = () => (
       />
     </Route> {/* Fechamento correto do RootLayout */}
 
-    {/* Autenticação */}
-    <Route
-      path="login"
-      element={
-        <PageTransition>
-          <LoginPage />
-        </PageTransition>
-      }
-    />
-    <Route
-      path="register"
-      element={
-        <PageTransition>
-          <RegisterPage />
-        </PageTransition>
-      }
-    />
-
+   
     {/* Página 404 */}
     <Route
       path="*"

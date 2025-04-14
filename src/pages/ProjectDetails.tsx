@@ -2,9 +2,9 @@ import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { projectsData } from "@/constants/ProjectData";
-import ProjectNavigation from "@/components/_navigation/ProjectNavigation";
+import ProjectNavigation from "@/components/ui/ProjectNavigation";
 import Loader from "@/components/Shared/Loader"; // Importa o Loader
-import NotFoundPage from "@/pages/not-found/NotFoundPage"; // Importa o NotFoundPage
+import NotFoundPage from "@/pages/NotFoundPage"; // Importa o NotFoundPage
 
 const ProjectDetails = () => {
   const { id } = useParams<{ id: string }>(); // "id" será o slug

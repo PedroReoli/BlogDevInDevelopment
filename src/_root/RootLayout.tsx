@@ -1,6 +1,5 @@
 import { Outlet } from "react-router-dom";
-import Topbar from "@/components/layout/Topbar/Topbar";
-import ResponsiveTopbar from "@/components/layout/Topbar/ResponsiveTopbar";
+import Topbar from "@/components/Shared/Topbar";
 import { useEffect, useState } from "react";
 
 const RootLayout = () => {
@@ -20,7 +19,7 @@ const RootLayout = () => {
     <div className="min-h-screen flex flex-col">
       {/* Sticky Topbar */}
       <div className="sticky top-0 z-50">
-        {isSmallScreen ? <ResponsiveTopbar /> : <Topbar />}
+        {!isSmallScreen && <Topbar />}
       </div>
 
       {/* Conteúdo Principal */}

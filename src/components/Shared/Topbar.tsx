@@ -6,9 +6,9 @@ import { Link } from "react-router-dom"
 import { FaChevronDown, FaBook, FaVideo, FaFileCode, FaUsers, FaComments, FaDiscord } from "react-icons/fa"
 import ThemeSwitch from "@/components/Shared/ThemeSwitch"
 import NotificationBell from "@/components/Shared/NotificationBell"
-import DropdownMenu from "@/components/Shared/DropdownMenu"
-import AvalieNoGitHub from "@/components/Shared/AvalieNoGithub"
-import LoginOuPerfil from "@/components/Shared/LoginOuPerfil"
+import DropdownMenu from "@/components/ui/DropdownMenu"
+import AvalieNoGitHub from "@/components/ui/AvalieNoGithub"
+import LoginOuPerfil from "@/components/ui/LoginOuPerfil"
 
 const Topbar: React.FC = () => {
   const [dropdown, setDropdown] = useState(false)

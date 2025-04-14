@@ -6,7 +6,7 @@ import { Helmet } from "react-helmet"
 import { motion } from "framer-motion"
 import { blogsData } from "@/constants/BlogsData"
 import Loader from "@/components/Shared/Loader"
-import NotFoundPage from "@/pages/not-found/NotFoundPage"
+import NotFoundPage from "@/pages/NotFoundPage"
 import { FiCalendar, FiClock, FiArrowLeft, FiArrowRight, FiShare2 } from "react-icons/fi"
 
 const PostDetails = () => {

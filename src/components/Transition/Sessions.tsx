@@ -3,9 +3,9 @@
 import { useState, useRef, useCallback } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi"
-import BlogGridList from "@/pages/blog/BlogGridList"
-import LessonGridList from "@/pages/lesson/LessonGridList"
-import ProjectGridList from "@/pages/project/ProjectGridList"
+import BlogGridList from "@/pages/BlogGridList"
+import LessonGridList from "@/pages/LessonGridList"
+import ProjectGridList from "@/pages/ProjectGridList"
 import { useSwipeable } from "react-swipeable"
 
 const sections = [
