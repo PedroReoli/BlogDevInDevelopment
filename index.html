@@ -1,14 +1,121 @@
-<!-- public/index.html -->
 <!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title> < Blog /> </title>
-    <link rel="icon" href="/images/logo.svg" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Título principal do site -->
+  <title>DevEmDesenvolvimento | Blog e Cursos de Programação</title>
+  
+  <!-- Meta tags essenciais para SEO -->
+  <meta name="description" content="Blog e plataforma de cursos sobre desenvolvimento web, programação e tecnologia. Aprenda React, TypeScript, JavaScript, CSS e muito mais." />
+  <meta name="keywords" content="desenvolvimento web, programação, react, typescript, javascript, frontend, backend, cursos de programação, blog de tecnologia" />
+  <meta name="author" content="DevEmDesenvolvimento" />
+  <meta name="robots" content="index, follow" />
+  
+  <!-- Canonical URL para evitar conteúdo duplicado -->
+  <link rel="canonical" href="https://devemdesenvolvimento.com.br" />
+  
+  <!-- Favicon e ícones para diferentes dispositivos -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#3b82f6" />
+  <meta name="msapplication-TileColor" content="#3b82f6" />
+  <meta name="theme-color" content="#ffffff" />
+  
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://devemdesenvolvimento.com.br" />
+  <meta property="og:title" content="DevEmDesenvolvimento | Blog e Cursos de Programação" />
+  <meta property="og:description" content="Blog e plataforma de cursos sobre desenvolvimento web, programação e tecnologia. Aprenda React, TypeScript, JavaScript, CSS e muito mais." />
+  <meta property="og:image" content="https://devemdesenvolvimento.com.br/og-image.jpg" />
+  <meta property="og:image:alt" content="DevEmDesenvolvimento - Blog e Cursos de Programação" />
+  <meta property="og:locale" content="pt_BR" />
+  <meta property="og:site_name" content="DevEmDesenvolvimento" />
+  
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:url" content="https://devemdesenvolvimento.com.br" />
+  <meta name="twitter:title" content="DevEmDesenvolvimento | Blog e Cursos de Programação" />
+  <meta name="twitter:description" content="Blog e plataforma de cursos sobre desenvolvimento web, programação e tecnologia. Aprenda React, TypeScript, JavaScript, CSS e muito mais." />
+  <meta name="twitter:image" content="https://devemdesenvolvimento.com.br/twitter-image.jpg" />
+  <meta name="twitter:creator" content="@devemdesenvolvimento" />
+  
+  <!-- Preconexões para melhorar performance -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  
+  <!-- Precarregamento de fontes -->
+  <link rel="preload" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" as="style" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" />
+  
+  <!-- Manifest para PWA -->
+  <link rel="manifest" href="/manifest.json" />
+  
+  <!-- Structured Data / JSON-LD para SEO avançado -->
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "url": "https://devemdesenvolvimento.com.br",
+      "name": "DevEmDesenvolvimento",
+      "description": "Blog e plataforma de cursos sobre desenvolvimento web, programação e tecnologia.",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": "https://devemdesenvolvimento.com.br/busca?q={search_term_string}",
+        "query-input": "required name=search_term_string"
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "url": "https://devemdesenvolvimento.com.br",
+      "logo": "https://devemdesenvolvimento.com.br/logo.png",
+      "name": "DevEmDesenvolvimento",
+      "sameAs": [
+        "https://twitter.com/devemdesenvolvimento",
+        "https://github.com/devemdesenvolvimento",
+        "https://linkedin.com/company/devemdesenvolvimento"
+      ]
+    }
+  </script>
+  
+  <!-- Verificação de propriedade do site para Google Search Console -->
+  <meta name="google-site-verification" content="seu-código-de-verificação" />
+  
+  <!-- Verificação de propriedade do site para Bing Webmaster Tools -->
+  <meta name="msvalidate.01" content="seu-código-de-verificação" />
+  
+  <!-- Verificação de propriedade do site para Yandex Webmaster Tools -->
+  <meta name="yandex-verification" content="seu-código-de-verificação" />
+  
+  <!-- Configurações para compartilhamento no Pinterest -->
+  <meta name="pinterest-rich-pin" content="true" />
+  
+  <!-- Configurações para compartilhamento no WhatsApp -->
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  
+  <!-- Configurações para dispositivos móveis -->
+  <meta name="format-detection" content="telephone=no" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  
+  <!-- Preload de recursos críticos -->
+  <link rel="preload" href="/src/styles/globals.css" as="style" />
+  <link rel="preload" href="/src/main.tsx" as="script" />
+</head>
+<body>
+  <div id="root"></div>
+  <noscript>
+    <div style="padding: 20px; text-align: center; font-family: system-ui, sans-serif;">
+      <h1>JavaScript Necessário</h1>
+      <p>Por favor, habilite o JavaScript para visualizar este site.</p>
+    </div>
+  </noscript>
+  <script type="module" src="/src/main.tsx"></script>
+</body>
 </html>

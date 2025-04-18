@@ -1,0 +1,182 @@
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap");
+@import "./variables.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  font-family: var(--font-sans);
+  color: var(--color-foreground);
+  background-color: var(--color-background);
+  line-height: 1.6;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Container personalizado */
+.container-custom {
+  width: 100%;
+  max-width: 1200px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Estilos para o conteúdo do Notion */
+.notion-content {
+  @apply max-w-none;
+}
+
+.notion-content h1 {
+  @apply text-3xl font-bold mb-6;
+  color: var(--color-foreground);
+}
+
+.notion-content h2 {
+  @apply text-2xl font-bold mb-4 mt-8;
+  color: var(--color-foreground);
+}
+
+.notion-content h3 {
+  @apply text-xl font-bold mb-3 mt-6;
+  color: var(--color-foreground);
+}
+
+.notion-content p {
+  color: var(--color-foreground-muted);
+  @apply mb-4;
+}
+
+.notion-content ul {
+  @apply list-disc pl-6 mb-4;
+}
+
+.notion-content ol {
+  @apply list-decimal pl-6 mb-4;
+}
+
+.notion-content a {
+  color: var(--color-primary);
+  @apply hover:underline;
+}
+
+.notion-content img {
+  @apply max-w-full h-auto my-6 rounded-lg;
+}
+
+.notion-content pre {
+  background-color: var(--color-background-alt);
+  color: var(--color-foreground);
+  @apply p-4 rounded-md overflow-x-auto my-4;
+  font-family: var(--font-mono);
+}
+
+.notion-content code {
+  background-color: var(--color-background-alt);
+  color: var(--color-foreground);
+  @apply px-1 py-0.5 rounded text-sm;
+  font-family: var(--font-mono);
+}
+
+.notion-content pre code {
+  @apply bg-transparent p-0;
+}
+
+.notion-content blockquote {
+  border-left-color: var(--color-border);
+  color: var(--color-foreground-muted);
+  @apply border-l-4 pl-4 italic my-4;
+}
+
+.notion-content table {
+  @apply w-full border-collapse my-6;
+}
+
+.notion-content th,
+.notion-content td {
+  border-color: var(--color-border);
+  @apply border p-2;
+}
+
+.notion-content th {
+  background-color: var(--color-background-alt);
+}
+
+/* Estilos para cards */
+.card {
+  background-color: var(--color-background-card);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow);
+  @apply rounded-lg overflow-hidden transition-all duration-300;
+}
+
+.card:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-4px);
+}
+
+/* Botões */
+.btn {
+  @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-colors;
+}
+
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
+}
+
+.btn-secondary {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-foreground);
+}
+
+.btn-secondary:hover {
+  background-color: var(--color-background-alt);
+  border-color: var(--color-border-hover);
+}
+
+/* Inputs */
+.input {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  color: var(--color-foreground);
+  @apply px-3 py-2 rounded-md w-full transition-colors;
+}
+
+.input:focus {
+  border-color: var(--color-primary);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-primary-light);
+}
+
+.input::placeholder {
+  color: var(--color-foreground-subtle);
+}
