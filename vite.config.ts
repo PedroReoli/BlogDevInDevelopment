@@ -1,13 +1,13 @@
-const path = require('path');
-const { defineConfig } = require('vite');
+import { defineConfig } from "vite"
+import react from "@vitejs/plugin-react"
+import path from "path"
 
-module.exports = defineConfig({
+// https://vitejs.dev/config/
+export default defineConfig({
+  plugins: [react()],
   resolve: {
     alias: {
-      '@': path.resolve(__dirname, './src'),
+      "@": path.resolve(__dirname, "./src"),
     },
   },
-  build: {
-    outDir: 'dist', // Garante a saída no diretório correto
-  },
-});
+})

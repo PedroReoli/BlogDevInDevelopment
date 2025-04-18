@@ -1,0 +1,10 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://devemdesenvolvimento.com.br/sitemap.xml
+
+Disallow: /admin/
+Disallow: /login
+Disallow: /cadastro
+Disallow: /esqueci-senha
+Disallow: /reset-password

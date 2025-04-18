@@ -1,117 +1,90 @@
-
-
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  darkMode: ["class"], // Ativa o modo escuro baseado em classe
-  content: [
-    "./src/_root/pages/**/*.{ts,tsx}",
-    "./src/components/**/*.{ts,tsx}",
-    "./src/components/_navigation/**/*.{ts,tsx}",
-    "./src/components/layout/**/*.{ts,tsx}",
-    "./src/components/Shared/**/*.{ts,tsx}",
-    "./src/components/Transition/**/*.{ts,tsx}",
-    "./src/pages/**/*.{ts,tsx}",
-    "./public/index.html",
-  ],
+  darkMode: ["class"],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", "*.{js,ts,jsx,tsx,mdx}"],
   theme: {
-    container: {
-      center: true,
-      padding: "1rem",
-      screens: {
-        sm: "640px",
-        md: "768px",
-        lg: "1024px",
-        xl: "1280px",
-        "2xl": "1400px",
-      },
-    },
     extend: {
       colors: {
-        "primary-500": "#8C429D",
-        "background-card-color": "#F1EEDD",
-        "primary-600": "#FF5A5A",
-        "secondary-500": "#FFB620",
-        "off-white": "#D0DFFF",
-        red: "#FF5A5A",
-        "dark-1": "#000000",
-        "dark-2": "#FFFFFF",
-        "dark-3": "#101012",
-        "dark-4": "#FFFF",
-        "light-1": "#FFFFFF",
-        "light-2": "#5C5C7B",
-        "light-3": "#7878A3",
-        "light-4": "#5C5C7B",
-        "purple-1": "#8C429D",
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
+        primary: {
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
+          50: "#eff6ff",
+          100: "#dbeafe",
+          200: "#bfdbfe",
+          300: "#93c5fd",
+          400: "#60a5fa",
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+          800: "#1e40af",
+          900: "#1e3a8a",
+          950: "#172554",
+        },
+        secondary: {
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
+        },
+        destructive: {
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
+        },
+        muted: {
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
+        },
+        accent: {
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
+        },
+        popover: {
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
+        },
+        card: {
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
+        },
+        text: {
+          primary: "var(--color-text-primary)",
+          secondary: "var(--color-text-secondary)",
+          tertiary: "var(--color-text-tertiary)",
+        },
+        blue: {
+          500: "#3b82f6",
+          600: "#2563eb",
+          700: "#1d4ed8",
+        },
+        gray: {
+          100: "#f3f4f6",
+          200: "#e5e7eb",
+          300: "#d1d5db",
+          400: "#9ca3af",
+          500: "#6b7280",
+          600: "#4b5563",
+          700: "#374151",
+          800: "#1f2937",
+          900: "#111827",
+        },
       },
-      screens: {
-        xs: "480px",
-      },
-      width: {
-        420: "420px",
-        465: "465px",
+      borderRadius: {
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       fontFamily: {
-        inter: ["Inter", "sans-serif"],
-        montserrat: ['Montserrat', 'sans-serif'],
+        sans: ["Outfit", "sans-serif"],
+        heading: ["Space Grotesk", "sans-serif"],
       },
-      keyframes: {
-        "accordion-down": {
-          from: { height: 0 },
-          to: { height: "var(--radix-accordion-content-height)" },
-        },
-        "accordion-up": {
-          from: { height: "var(--radix-accordion-content-height)" },
-          to: { height: 0 },
-        },
-        "sun-spin": {
-          "0%": { transform: "rotate(0deg)", opacity: "0.8" },
-          "100%": { transform: "rotate(360deg)", opacity: "1" },
-        },
-        "moon-float": {
-          "0%, 100%": { transform: "translateY(0)", opacity: "0.9" },
-          "50%": { transform: "translateY(-8px)", opacity: "1" },
-        },
-        "fade-in": {
-          from: { opacity: 0 },
-          to: { opacity: 1 },
-        },
-        "fade-out": {
-          from: { opacity: 1 },
-          to: { opacity: 0 },
-        },
-        "slide-left": {
-          from: { transform: "translateX(100%)" },
-          to: { transform: "translateX(0)" },
-        },
-        "slide-right": {
-          from: { transform: "translateX(-100%)" },
-          to: { transform: "translateX(0)" },
-        },
-        "zoom-in": {
-          from: { transform: "scale(0.5)", opacity: 0 },
-          to: { transform: "scale(1)", opacity: 1 },
-        },
-        "zoom-out": {
-          from: { transform: "scale(1)", opacity: 1 },
-          to: { transform: "scale(0.5)", opacity: 0 },
-        },
-      },
-      animation: {
-        "accordion-down": "accordion-down 0.2s ease-out",
-        "accordion-up": "accordion-up 0.2s ease-out",
-        "spin-slow": "spin 3s linear infinite",
-        "sun-spin": "sun-spin 2s linear infinite",
-        "moon-float": "moon-float 3s ease-in-out infinite",
-        "fade-in": "fade-in 0.5s ease-in",
-        "fade-out": "fade-out 0.5s ease-out",
-        "slide-left": "slide-left 0.5s ease-in-out",
-        "slide-right": "slide-right 0.5s ease-in-out",
-        "zoom-in": "zoom-in 0.5s ease-in-out",
-        "zoom-out": "zoom-out 0.5s ease-in-out",
-      },
-      backgroundImage: {
-        "background-wallpaper": "url('/assets/wallpaper.svg')",
+      boxShadow: {
+        card: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
+        "card-hover": "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
-};
+  plugins: [require("@tailwindcss/typography"), require("tailwindcss-animate")],
+}

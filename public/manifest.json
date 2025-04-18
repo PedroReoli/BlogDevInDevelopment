@@ -1,0 +1,66 @@
+{
+  "name": "DevEmDesenvolvimento",
+  "short_name": "DevEmDev",
+  "description": "Blog e plataforma de cursos sobre desenvolvimento web, programação e tecnologia",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3b82f6",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Blog",
+      "short_name": "Blog",
+      "description": "Acesse os artigos do blog",
+      "url": "/blog",
+      "icons": [{ "src": "/shortcuts/blog.png", "sizes": "96x96" }]
+    },
+    {
+      "name": "Cursos",
+      "short_name": "Cursos",
+      "description": "Acesse os cursos disponíveis",
+      "url": "/cursos",
+      "icons": [{ "src": "/shortcuts/cursos.png", "sizes": "96x96" }]
+    }
+  ],
+  "screenshots": [
+    {
+      "src": "/screenshots/homepage.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Página inicial do DevEmDesenvolvimento"
+    },
+    {
+      "src": "/screenshots/blog.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Blog do DevEmDesenvolvimento"
+    },
+    {
+      "src": "/screenshots/cursos.png",
+      "sizes": "1280x720",
+      "type": "image/png",
+      "platform": "wide",
+      "label": "Cursos do DevEmDesenvolvimento"
+    }
+  ],
+  "related_applications": [],
+  "prefer_related_applications": false,
+  "categories": ["education", "development", "productivity"]
+}
