@@ -39,7 +39,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
       }
     }
 
-    return "light"
+    return "dark" // Padrão para dark
   })
 
   useEffect(() => {
@@ -50,9 +50,13 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     if (theme === "dark") {
       document.documentElement.classList.add("dark")
       document.documentElement.classList.remove("light")
+      document.documentElement.style.backgroundColor = "#0f172a" // slate-900
+      document.documentElement.style.color = "#f8fafc" // slate-50
     } else {
       document.documentElement.classList.add("light")
       document.documentElement.classList.remove("dark")
+      document.documentElement.style.backgroundColor = "#ffffff"
+      document.documentElement.style.color = "#0f172a" // slate-900
     }
   }, [theme])
 

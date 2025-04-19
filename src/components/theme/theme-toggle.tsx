@@ -24,15 +24,21 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
   return (
     <button
       onClick={toggleTheme}
-      className={`p-2 rounded-full transition-colors duration-200 focus:outline-none ${className} ${
+      className={`p-2 rounded-full transition-all duration-300 focus:outline-none ${className} ${
         theme === "dark"
-          ? "bg-gray-800 hover:bg-gray-700 text-yellow-300"
-          : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+          ? "bg-slate-800 hover:bg-slate-700 text-yellow-300"
+          : "bg-slate-100 hover:bg-slate-200 text-slate-800"
       }`}
       aria-label={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
       title={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
     >
-      {theme === "light" ? <FiMoon size={20} /> : <FiSun size={20} />}
+      <div className="relative w-5 h-5">
+        {theme === "light" ? (
+          <FiMoon size={20} className="absolute inset-0 transition-opacity duration-300 opacity-100" />
+        ) : (
+          <FiSun size={20} className="absolute inset-0 transition-opacity duration-300 opacity-100" />
+        )}
+      </div>
     </button>
   )
 }

@@ -1,6 +1,7 @@
 "use client"
 
 import { useState, useEffect } from "react"
+import { useLocation } from "react-router-dom"
 import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/supabase"
 import AdvancedSearch, { type SearchParams } from "@/components/blog/advanced-search"
@@ -21,9 +22,22 @@ const Blog = () => {
     sortBy: "recent",
   })
 
+  const location = useLocation()
+
   useEffect(() => {
     fetchPosts()
-  }, [])
+
+    // Verificar se há parâmetros de busca na URL
+    const queryParams = new URLSearchParams(location.search)
+    const queryFromUrl = queryParams.get("query")
+
+    if (queryFromUrl) {
+      setSearchParams((prev) => ({
+        ...prev,
+        query: queryFromUrl,
+      }))
+    }
+  }, [location.search])
 
   const fetchPosts = async () => {
     try {
@@ -61,8 +75,11 @@ const Blog = () => {
   return (
     <div className="container py-12">
       <div className="flex items-center gap-3 mb-6">
-        <img src="/images/logo.svg" alt="Logo" className="w-8 h-8" />
-        <h1 className="text-3xl md:text-4xl font-bold">Blog</h1>
+        <div className="relative">
+          <div className="absolute -inset-1 bg-blue-500 rounded-full blur-sm opacity-20"></div>
+          <img src="/images/logo.svg" alt="Logo" className="w-10 h-10 relative z-10" />
+        </div>
+        <h1 className="text-3xl md:text-4xl font-bold gradient-text">Blog</h1>
       </div>
 
       <BlogStats />

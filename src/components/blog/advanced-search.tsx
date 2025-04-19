@@ -5,6 +5,7 @@ import { FiSearch, FiFilter, FiX, FiChevronDown, FiChevronUp } from "react-icons
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { supabase } from "@/lib/supabase"
+import { useLocation } from "react-router-dom"
 
 interface AdvancedSearchProps {
   onSearch: (params: SearchParams) => void
@@ -32,6 +33,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
   )
   const [availableTags, setAvailableTags] = useState<string[]>([])
   const [selectedTag, setSelectedTag] = useState<string>("")
+  const location = useLocation()
 
   // Buscar todas as tags disponíveis
   useEffect(() => {
@@ -54,6 +56,25 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
     fetchTags()
   }, [])
+
+  // Sincronizar com parâmetros de URL
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search)
+    const queryFromUrl = queryParams.get("query")
+
+    if (queryFromUrl && queryFromUrl !== params.query) {
+      setParams((prev) => ({
+        ...prev,
+        query: queryFromUrl,
+      }))
+
+      // Executar a busca automaticamente quando vier da URL
+      onSearch({
+        ...params,
+        query: queryFromUrl,
+      })
+    }
+  }, [location.search, onSearch])
 
   const handleSearch = () => {
     onSearch(params)
@@ -89,30 +110,23 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
   }
 
   return (
-    <div
-      className="bg-white rounded-xl shadow-md p-6 mb-8 transition-all duration-300"
-      style={{ backgroundColor: "var(--color-bg-card)" }}
-    >
+    <div className="bg-white dark:bg-gray-900 rounded-xl shadow-md p-6 mb-8 transition-all duration-300 border border-gray-200 dark:border-gray-800">
       {/* Barra de busca principal */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-grow">
           <input
             type="text"
-            className="form-input pl-10 w-full"
+            className="form-input pl-10 w-full rounded-full"
             placeholder="Buscar posts..."
             value={params.query}
             onChange={(e) => setParams({ ...params, query: e.target.value })}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
-          <FiSearch
-            className="absolute left-3 top-1/2 transform -translate-y-1/2"
-            style={{ color: "var(--color-text-tertiary)" }}
-            size={18}
-          />
+          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" size={18} />
         </div>
         <button
           type="button"
-          className="btn btn-outline flex items-center gap-2"
+          className="btn flex items-center gap-2 bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
           onClick={toggleExpanded}
           aria-expanded={isExpanded}
         >
@@ -120,23 +134,20 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
           <span className="hidden sm:inline">Filtros</span>
           {isExpanded ? <FiChevronUp size={18} /> : <FiChevronDown size={18} />}
         </button>
-        <button type="button" className="btn btn-primary" onClick={handleSearch}>
+        <button type="button" className="btn btn-primary shadow-sm hover:shadow-blue-500/20" onClick={handleSearch}>
           Buscar
         </button>
       </div>
 
       {/* Filtros avançados */}
       {isExpanded && (
-        <div
-          className="mt-6 pt-6 border-t grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-300"
-          style={{ borderColor: "var(--color-border)" }}
-        >
+        <div className="mt-6 pt-6 border-t grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-300 border-gray-200 dark:border-gray-800">
           {/* Filtro por tags */}
           <div>
             <label className="form-label">Tags</label>
             <div className="flex gap-2 mb-2">
               <select
-                className="form-select flex-grow"
+                className="form-select flex-grow rounded-md"
                 value={selectedTag}
                 onChange={(e) => setSelectedTag(e.target.value)}
               >
@@ -147,18 +158,25 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                   </option>
                 ))}
               </select>
-              <button type="button" className="btn btn-outline" onClick={handleAddTag} disabled={!selectedTag}>
+              <button
+                type="button"
+                className="btn bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                onClick={handleAddTag}
+                disabled={!selectedTag}
+              >
                 Adicionar
               </button>
             </div>
             <div className="flex flex-wrap gap-2 mt-3">
               {params.tags.map((tag) => (
-                <div key={tag} className="tag flex items-center gap-1">
+                <div
+                  key={tag}
+                  className="inline-flex items-center py-1 px-2 bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 rounded-full text-xs font-medium"
+                >
                   {tag}
                   <button
                     type="button"
-                    style={{ color: "var(--color-text-tertiary)" }}
-                    className="hover:text-red-500"
+                    className="ml-1 text-blue-500 hover:text-blue-700 dark:hover:text-blue-200"
                     onClick={() => handleRemoveTag(tag)}
                   >
                     <FiX size={14} />
@@ -166,9 +184,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 </div>
               ))}
               {params.tags.length === 0 && (
-                <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
-                  Nenhuma tag selecionada
-                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">Nenhuma tag selecionada</span>
               )}
             </div>
           </div>
@@ -178,9 +194,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
             <label className="form-label">Período</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                  De
-                </label>
+                <label className="text-sm text-gray-600 dark:text-gray-400">De</label>
                 <input
                   type="date"
                   className="form-input"
@@ -189,9 +203,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 />
               </div>
               <div>
-                <label className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
-                  Até
-                </label>
+                <label className="text-sm text-gray-600 dark:text-gray-400">Até</label>
                 <input
                   type="date"
                   className="form-input"
@@ -218,7 +230,11 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
           {/* Botões de ação */}
           <div className="flex items-end justify-end">
-            <button type="button" className="btn btn-outline mr-2" onClick={handleReset}>
+            <button
+              type="button"
+              className="btn bg-gray-100 dark:bg-gray-800 text-gray-700 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700 mr-2"
+              onClick={handleReset}
+            >
               Limpar filtros
             </button>
             <button type="button" className="btn btn-primary" onClick={handleSearch}>
@@ -230,20 +246,16 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
       {/* Resumo dos filtros ativos */}
       {(params.tags.length > 0 || params.dateFrom || params.dateTo) && (
-        <div className="mt-4 pt-4 border-t" style={{ borderColor: "var(--color-border)" }}>
+        <div className="mt-4 pt-4 border-t border-gray-200 dark:border-gray-800">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-medium">Filtros ativos:</span>
 
             {params.tags.length > 0 && (
-              <div
-                className="flex items-center gap-1 rounded-full px-3 py-1"
-                style={{ backgroundColor: "var(--color-bg-alt)" }}
-              >
+              <div className="flex items-center gap-1 rounded-full px-3 py-1 bg-gray-100 dark:bg-gray-800">
                 <span className="text-sm">Tags: {params.tags.join(", ")}</span>
                 <button
                   type="button"
-                  style={{ color: "var(--color-text-tertiary)" }}
-                  className="hover:text-red-500"
+                  className="text-gray-500 dark:text-gray-400 hover:text-red-500"
                   onClick={() => setParams({ ...params, tags: [] })}
                 >
                   <FiX size={14} />
@@ -252,10 +264,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
             )}
 
             {(params.dateFrom || params.dateTo) && (
-              <div
-                className="flex items-center gap-1 rounded-full px-3 py-1"
-                style={{ backgroundColor: "var(--color-bg-alt)" }}
-              >
+              <div className="flex items-center gap-1 rounded-full px-3 py-1 bg-gray-100 dark:bg-gray-800">
                 <span className="text-sm">
                   Período:
                   {params.dateFrom ? ` de ${format(new Date(params.dateFrom), "dd/MM/yyyy", { locale: ptBR })}` : ""}
@@ -263,8 +272,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 </span>
                 <button
                   type="button"
-                  style={{ color: "var(--color-text-tertiary)" }}
-                  className="hover:text-red-500"
+                  className="text-gray-500 dark:text-gray-400 hover:text-red-500"
                   onClick={() => setParams({ ...params, dateFrom: null, dateTo: null })}
                 >
                   <FiX size={14} />
@@ -274,8 +282,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
             <button
               type="button"
-              className="text-sm ml-auto hover:underline"
-              style={{ color: "var(--color-primary)" }}
+              className="text-sm ml-auto text-blue-500 hover:text-blue-700 hover:underline"
               onClick={handleReset}
             >
               Limpar todos

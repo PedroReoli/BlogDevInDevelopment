@@ -42,11 +42,8 @@ const FloatingThemeToggle = () => {
         className={`p-3 rounded-full shadow-lg
                    transition-all duration-300 transform
                    ${isVisible ? "translate-y-0 opacity-100" : "translate-y-16 opacity-0"}
-                   focus:outline-none`}
-        style={{
-          backgroundColor: "var(--color-bg-card)",
-          boxShadow: "var(--shadow-lg)",
-        }}
+                   focus:outline-none
+                   ${theme === "dark" ? "bg-slate-800 text-slate-200" : "bg-white text-slate-800"}`}
         aria-label="Voltar ao topo"
         title="Voltar ao topo"
       >
@@ -57,11 +54,12 @@ const FloatingThemeToggle = () => {
         onClick={toggleTheme}
         className={`p-3 rounded-full shadow-lg
                    transition-all duration-300 transform
-                   focus:outline-none`}
-        style={{
-          backgroundColor: "var(--color-bg-card)",
-          boxShadow: "var(--shadow-lg)",
-        }}
+                   focus:outline-none
+                   ${
+                     theme === "dark"
+                       ? "bg-slate-800 text-yellow-300 hover:bg-slate-700"
+                       : "bg-white text-slate-800 hover:bg-slate-100"
+                   }`}
         aria-label={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
         title={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
       >
