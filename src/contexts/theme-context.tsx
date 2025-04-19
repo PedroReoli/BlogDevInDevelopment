@@ -27,14 +27,16 @@ interface ThemeProviderProps {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setThemeState] = useState<Theme>(() => {
     // Verificar preferência do usuário no localStorage
-    const savedTheme = localStorage.getItem("theme")
-    if (savedTheme === "light" || savedTheme === "dark") {
-      return savedTheme
-    }
+    if (typeof window !== "undefined") {
+      const savedTheme = localStorage.getItem("theme")
+      if (savedTheme === "light" || savedTheme === "dark") {
+        return savedTheme
+      }
 
-    // Verificar preferência do sistema
-    if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-      return "dark"
+      // Verificar preferência do sistema
+      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
+        return "dark"
+      }
     }
 
     return "light"
@@ -46,9 +48,11 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
 
     // Aplicar classe ao elemento HTML
     if (theme === "dark") {
-      document.documentElement.classList.add("dark-theme")
+      document.documentElement.classList.add("dark")
+      document.documentElement.classList.remove("light")
     } else {
-      document.documentElement.classList.remove("dark-theme")
+      document.documentElement.classList.add("light")
+      document.documentElement.classList.remove("dark")
     }
   }, [theme])
 

@@ -24,11 +24,11 @@ const ThemeToggle = ({ className = "" }: ThemeToggleProps) => {
   return (
     <button
       onClick={toggleTheme}
-      className={`p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors duration-200 focus:outline-none ${className}`}
-      style={{
-        backgroundColor: theme === "light" ? "" : "",
-        boxShadow: "0 0 0 2px rgba(59, 130, 246, 0.2)",
-      }}
+      className={`p-2 rounded-full transition-colors duration-200 focus:outline-none ${className} ${
+        theme === "dark"
+          ? "bg-gray-800 hover:bg-gray-700 text-yellow-300"
+          : "bg-gray-100 hover:bg-gray-200 text-gray-800"
+      }`}
       aria-label={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
       title={theme === "light" ? "Ativar modo escuro" : "Ativar modo claro"}
     >

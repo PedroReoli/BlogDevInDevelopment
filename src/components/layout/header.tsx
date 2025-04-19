@@ -42,16 +42,13 @@ const Header = () => {
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        isScrolled ? "bg-white/80 backdrop-blur shadow-sm dark:bg-gray-900/80" : ""
+        isScrolled ? "bg-white/80 backdrop-blur-md shadow-sm dark:bg-gray-900/80" : "bg-transparent"
       }`}
-      style={{ backgroundColor: isScrolled ? "" : "var(--color-bg)" }}
     >
       <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
           <img src="/images/logo.svg" alt="Logo" className="w-8 h-8" />
-          <span className="text-xl font-bold" style={{ color: "var(--color-primary)" }}>
-            DevEmDesenvolvimento
-          </span>
+          <span className="text-xl font-bold text-primary">DevEmDesenvolvimento</span>
         </Link>
 
         <div className="flex items-center gap-4">
@@ -74,7 +71,6 @@ const Header = () => {
               flex flex-col md:flex-row items-start md:items-center
               p-6 md:p-0 gap-6 shadow-lg md:shadow-none
             `}
-            style={{ backgroundColor: "var(--color-bg)" }}
           >
             <button
               className="md:hidden self-end p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800"
@@ -86,24 +82,21 @@ const Header = () => {
 
             <Link
               to="/"
-              className={`transition-colors duration-200 ${isActive("/") ? "font-semibold" : ""}`}
-              style={{ color: isActive("/") ? "var(--color-primary)" : "" }}
+              className={`transition-colors duration-200 ${isActive("/") ? "font-semibold text-primary" : "text-foreground hover:text-primary"}`}
               onClick={closeMenu}
             >
               Home
             </Link>
             <Link
               to="/blog"
-              className={`transition-colors duration-200 ${isActive("/blog") ? "font-semibold" : ""}`}
-              style={{ color: isActive("/blog") ? "var(--color-primary)" : "" }}
+              className={`transition-colors duration-200 ${isActive("/blog") ? "font-semibold text-primary" : "text-foreground hover:text-primary"}`}
               onClick={closeMenu}
             >
               Blog
             </Link>
             <Link
               to="/sobre"
-              className={`transition-colors duration-200 ${isActive("/sobre") ? "font-semibold" : ""}`}
-              style={{ color: isActive("/sobre") ? "var(--color-primary)" : "" }}
+              className={`transition-colors duration-200 ${isActive("/sobre") ? "font-semibold text-primary" : "text-foreground hover:text-primary"}`}
               onClick={closeMenu}
             >
               Sobre
@@ -111,8 +104,7 @@ const Header = () => {
             {user && (
               <Link
                 to="/admin/dashboard"
-                className={`transition-colors duration-200 ${isActive("/admin/dashboard") ? "font-semibold" : ""}`}
-                style={{ color: isActive("/admin/dashboard") ? "var(--color-primary)" : "" }}
+                className={`transition-colors duration-200 ${isActive("/admin/dashboard") ? "font-semibold text-primary" : "text-foreground hover:text-primary"}`}
                 onClick={closeMenu}
               >
                 Dashboard
@@ -121,8 +113,7 @@ const Header = () => {
             {!user && (
               <Link
                 to="/admin"
-                className={`transition-colors duration-200 ${isActive("/admin") ? "font-semibold" : ""}`}
-                style={{ color: isActive("/admin") ? "var(--color-primary)" : "" }}
+                className={`transition-colors duration-200 ${isActive("/admin") ? "font-semibold text-primary" : "text-foreground hover:text-primary"}`}
                 onClick={closeMenu}
               >
                 Admin
