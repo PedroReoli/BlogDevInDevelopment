@@ -1,59 +1,43 @@
 import { Routes, Route } from "react-router-dom"
-import Layout from "./components/layout/Layout"
-import Home from "./pages/Home"
-import Blog from "./pages/Blog"
-import BlogPost from "./pages/BlogPost"
-import Courses from "./pages/Courses"
-import CourseDetail from "./pages/CourseDetail"
-import CourseLesson from "./pages/CourseLesson"
-import About from "./pages/About"
-import AdminLogin from "./pages/AdminLogin"
-import AdminDashboard from "./pages/AdminDashboard"
-import SearchResults from "./pages/SearchResults"
-import NotFound from "./pages/NotFound"
-import Login from "./pages/Login"
-import Register from "./pages/Register"
-import ForgotPassword from "./pages/ForgotPassword"
-import ResetPassword from "./pages/ResetPassword"
-import Profile from "./pages/Profile"
-import RequireAuth from "./components/auth/RequireAuth"
+import { Toaster } from "react-hot-toast"
+import { ThemeProvider } from "@/contexts/theme-context"
+import { AuthProvider } from "@/contexts/auth-context"
 
-function App() {
+import Layout from "@/components/layout/layout"
+import Home from "@/pages/home"
+import Blog from "@/pages/blog"
+import Post from "@/pages/post"
+import About from "@/pages/about"
+import NotFound from "@/pages/not-found"
+import AdminLogin from "@/pages/admin/login"
+import AdminDashboard from "@/pages/admin/dashboard"
+import ProtectedRoute from "@/components/auth/protected-route"
+
+const App = () => {
   return (
-    <Routes>
-      <Route path="/" element={<Layout />}>
-        <Route index element={<Home />} />
-        <Route path="blog" element={<Blog />} />
-        <Route path="blog/:slug" element={<BlogPost />} />
-        <Route path="cursos" element={<Courses />} />
-        <Route path="cursos/:slug" element={<CourseDetail />} />
-        <Route path="cursos/:courseSlug/:lessonSlug" element={<CourseLesson />} />
-        <Route path="sobre" element={<About />} />
-        <Route path="busca" element={<SearchResults />} />
-        <Route path="login" element={<Login />} />
-        <Route path="cadastro" element={<Register />} />
-        <Route path="esqueci-senha" element={<ForgotPassword />} />
-        <Route path="reset-password" element={<ResetPassword />} />
-        <Route
-          path="perfil"
-          element={
-            <RequireAuth>
-              <Profile />
-            </RequireAuth>
-          }
-        />
-        <Route path="admin" element={<AdminLogin />} />
-        <Route
-          path="admin/dashboard"
-          element={
-            <RequireAuth>
-              <AdminDashboard />
-            </RequireAuth>
-          }
-        />
-        <Route path="*" element={<NotFound />} />
-      </Route>
-    </Routes>
+    <ThemeProvider>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="blog" element={<Blog />} />
+            <Route path="blog/:slug" element={<Post />} />
+            <Route path="sobre" element={<About />} />
+            <Route path="admin" element={<AdminLogin />} />
+            <Route
+              path="admin/dashboard"
+              element={
+                <ProtectedRoute>
+                  <AdminDashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<NotFound />} />
+          </Route>
+        </Routes>
+        <Toaster position="top-right" />
+      </AuthProvider>
+    </ThemeProvider>
   )
 }
 

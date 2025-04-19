@@ -1,35 +1,74 @@
 "use client"
 
-import { useState } from "react"
-import { Search } from "lucide-react"
-import BlogList from "../components/blog/BlogList"
+import { useState, useEffect } from "react"
+import { supabase } from "@/lib/supabase"
+import type { Database } from "@/types/supabase"
+import AdvancedSearch, { type SearchParams } from "@/components/blog/advanced-search"
+import SearchResults from "@/components/blog/search-results"
+import TagFilter from "@/components/blog/tag-filter"
+import BlogStats from "@/components/blog/blog-stats"
+
+type Post = Database["public"]["Tables"]["posts"]["Row"]
 
 const Blog = () => {
-  const [searchQuery, setSearchQuery] = useState("")
+  const [posts, setPosts] = useState<Post[]>([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [searchParams, setSearchParams] = useState<SearchParams>({
+    query: "",
+    tags: [],
+    dateFrom: null,
+    dateTo: null,
+    sortBy: "recent",
+  })
+
+  useEffect(() => {
+    fetchPosts()
+  }, [])
+
+  const fetchPosts = async () => {
+    try {
+      setIsLoading(true)
+      const { data, error } = await supabase.from("posts").select("*")
+
+      if (error) throw error
+
+      setPosts(data || [])
+    } catch (error) {
+      console.error("Error fetching posts:", error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+
+  const handleSearch = (params: SearchParams) => {
+    setSearchParams(params)
+  }
+
+  const handleTagSelect = (tag: string) => {
+    if (!searchParams.tags.includes(tag)) {
+      const newTags = [...searchParams.tags, tag]
+      const newParams = { ...searchParams, tags: newTags }
+      setSearchParams(newParams)
+    }
+  }
+
+  const handleTagDeselect = (tag: string) => {
+    const newTags = searchParams.tags.filter((t) => t !== tag)
+    const newParams = { ...searchParams, tags: newTags }
+    setSearchParams(newParams)
+  }
 
   return (
-    <div>
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-4">Blog</h1>
-        <p className="text-gray-600 mb-6">
-          Artigos, tutoriais e dicas sobre desenvolvimento web, programação e tecnologia.
-        </p>
+    <div className="container py-16">
+      <h1 className="text-4xl font-bold mb-8">Blog</h1>
 
-        <div className="relative max-w-md">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Search size={18} className="text-gray-400" />
-          </div>
-          <input
-            type="text"
-            placeholder="Buscar posts..."
-            className="pl-10 pr-4 py-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </div>
+      <BlogStats />
 
-      <BlogList />
+      <TagFilter selectedTags={searchParams.tags} onTagSelect={handleTagSelect} onTagDeselect={handleTagDeselect} />
+
+      <AdvancedSearch onSearch={handleSearch} initialParams={searchParams} />
+
+      <SearchResults posts={posts} searchParams={searchParams} isLoading={isLoading} />
     </div>
   )
 }
