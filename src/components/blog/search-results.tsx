@@ -73,7 +73,7 @@ const SearchResults = ({ posts, searchParams, isLoading }: SearchResultsProps) =
   if (isLoading) {
     return (
       <div className="text-center py-12">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary mb-4"></div>
+        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary-500 mb-4"></div>
         <p>Buscando posts...</p>
       </div>
     )
@@ -81,7 +81,7 @@ const SearchResults = ({ posts, searchParams, isLoading }: SearchResultsProps) =
 
   if (filteredPosts.length === 0) {
     return (
-      <div className="text-center py-12 bg-foreground rounded-lg">
+      <div className="text-center py-12 bg-foreground rounded-xl">
         <FiAlertCircle size={48} className="mx-auto mb-4 text-text-tertiary" />
         <h3 className="text-xl font-bold mb-2">Nenhum post encontrado</h3>
         <p className="text-text-secondary mb-4">Não encontramos posts que correspondam aos seus critérios de busca.</p>

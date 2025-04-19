@@ -68,13 +68,9 @@ const EnsureStorageBucket = ({ bucketName, children }: EnsureStorageBucketProps)
   if (!isReady) {
     return (
       <div className="flex items-center justify-center p-4">
-        <div className="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-        <span className="ml-2">Configurando armazenamento...</span>
-      </div>
-    )
-  }
+        <div className="inline-block animate-spin rounded-
 
-  return <>{children}</>
-}
 
-export default EnsureStorageBucket
+Vamos atualizar o serviço UploadService:
+
+\

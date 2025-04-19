@@ -67,9 +67,9 @@ const RelatedPosts = ({ currentPostId, currentPostTags }: RelatedPostsProps) => 
     return (
       <div className="mt-16">
         <h2 className="text-2xl font-bold mb-6">Posts Relacionados</h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-48 bg-foreground animate-pulse rounded-lg"></div>
+            <div key={i} className="h-48 bg-foreground animate-pulse rounded-xl"></div>
           ))}
         </div>
       </div>
@@ -85,24 +85,24 @@ const RelatedPosts = ({ currentPostId, currentPostTags }: RelatedPostsProps) => 
       <h2 className="text-2xl font-bold mb-6">Posts Relacionados</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {relatedPosts.map((post) => (
-          <Link
-            key={post.id}
-            to={`/blog/${post.slug}`}
-            className="bg-card rounded-lg overflow-hidden shadow-md hover:shadow-lg transition-all duration-300 flex flex-col h-full"
-          >
+          <Link key={post.id} to={`/blog/${post.slug}`} className="card group overflow-hidden hover:translate-y-[-4px]">
             {post.cover_image_url && (
-              <img
-                src={post.cover_image_url || "/placeholder.svg"}
-                alt={post.title}
-                className="w-full h-40 object-cover"
-              />
+              <div className="aspect-video overflow-hidden">
+                <img
+                  src={post.cover_image_url || "/placeholder.svg"}
+                  alt={post.title}
+                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                />
+              </div>
             )}
             <div className="p-4 flex flex-col flex-grow">
-              <h3 className="font-bold mb-2 line-clamp-2">{post.title}</h3>
+              <h3 className="font-bold mb-2 line-clamp-2 group-hover:text-primary-500 transition-colors">
+                {post.title}
+              </h3>
               <p className="text-text-secondary text-sm line-clamp-3 mb-4">{post.excerpt}</p>
-              <div className="mt-auto flex items-center text-primary">
+              <div className="mt-auto flex items-center text-primary-500">
                 <span>Ler post</span>
-                <FiArrowRight className="ml-1" />
+                <FiArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>
             </div>
           </Link>

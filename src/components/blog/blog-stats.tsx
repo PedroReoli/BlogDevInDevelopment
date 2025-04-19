@@ -56,9 +56,9 @@ const BlogStats = () => {
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
         {[1, 2, 3].map((i) => (
-          <div key={i} className="h-24 bg-foreground animate-pulse rounded-lg"></div>
+          <div key={i} className="h-24 bg-foreground animate-pulse rounded-xl"></div>
         ))}
       </div>
     )
@@ -66,9 +66,9 @@ const BlogStats = () => {
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-      <div className="bg-card p-4 rounded-lg shadow-md flex items-center transition-all duration-300">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-          <FiFileText size={24} className="text-primary" />
+      <div className="bg-card p-4 rounded-xl shadow-md flex items-center transition-all duration-300">
+        <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-4">
+          <FiFileText size={24} className="text-primary-600 dark:text-primary-300" />
         </div>
         <div>
           <p className="text-text-tertiary text-sm">Total de Posts</p>
@@ -76,9 +76,9 @@ const BlogStats = () => {
         </div>
       </div>
 
-      <div className="bg-card p-4 rounded-lg shadow-md flex items-center transition-all duration-300">
-        <div className="w-12 h-12 rounded-full bg-secondary/10 flex items-center justify-center mr-4">
-          <FiTag size={24} className="text-secondary" />
+      <div className="bg-card p-4 rounded-xl shadow-md flex items-center transition-all duration-300">
+        <div className="w-12 h-12 rounded-full bg-green-100 dark:bg-green-900 flex items-center justify-center mr-4">
+          <FiTag size={24} className="text-green-600 dark:text-green-400" />
         </div>
         <div>
           <p className="text-text-tertiary text-sm">Tags Únicas</p>
@@ -86,9 +86,9 @@ const BlogStats = () => {
         </div>
       </div>
 
-      <div className="bg-card p-4 rounded-lg shadow-md flex items-center transition-all duration-300">
-        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mr-4">
-          <FiCalendar size={24} className="text-primary" />
+      <div className="bg-card p-4 rounded-xl shadow-md flex items-center transition-all duration-300">
+        <div className="w-12 h-12 rounded-full bg-primary-100 dark:bg-primary-900 flex items-center justify-center mr-4">
+          <FiCalendar size={24} className="text-primary-600 dark:text-primary-300" />
         </div>
         <div>
           <p className="text-text-tertiary text-sm">Última Publicação</p>

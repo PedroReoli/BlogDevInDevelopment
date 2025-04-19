@@ -1,252 +1,336 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "./variables.css";
 
-:root {
-  /* Colors */
-  --color-primary: #3b82f6;
-  --color-primary-dark: #2563eb;
-  --color-primary-light: #60a5fa;
-  --color-secondary: #10b981;
-  --color-secondary-dark: #059669;
-  --color-secondary-light: #34d399;
-
-  --color-background: #ffffff;
-  --color-foreground: #f9fafb;
-  --color-card: #ffffff;
-  --color-border: #e5e7eb;
-
-  --color-text-primary: #111827;
-  --color-text-secondary: #4b5563;
-  --color-text-tertiary: #6b7280;
-  --color-text-inverted: #ffffff;
-
-  --color-success: #10b981;
-  --color-warning: #f59e0b;
-  --color-error: #ef4444;
-  --color-info: #3b82f6;
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.dark-theme {
-  --color-background: #0f172a;
-  --color-foreground: #1e293b;
-  --color-card: #1e293b;
-  --color-border: #334155;
-
-  --color-text-primary: #f8fafc;
-  --color-text-secondary: #e2e8f0;
-  --color-text-tertiary: #cbd5e1;
-
-  --color-primary: #60a5fa;
-  --color-primary-dark: #3b82f6;
-  --color-primary-light: #93c5fd;
-  --color-secondary: #34d399;
-  --color-secondary-dark: #10b981;
-  --color-secondary-light: #6ee7b7;
-
-  --color-success: #34d399;
-  --color-warning: #fbbf24;
-  --color-error: #f87171;
-  --color-info: #60a5fa;
+body {
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.5;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-@layer base {
-  html {
-    @apply scroll-smooth;
-  }
-  
-  body {
-    @apply bg-background text-text-primary font-sans transition-colors duration-300;
-  }
-  
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-heading font-bold text-text-primary;
-  }
-  
-  h1 {
-    @apply text-4xl md:text-5xl;
-  }
-  
-  h2 {
-    @apply text-3xl md:text-4xl;
-  }
-  
-  h3 {
-    @apply text-2xl md:text-3xl;
-  }
-  
-  h4 {
-    @apply text-xl md:text-2xl;
-  }
-  
-  h5 {
-    @apply text-lg md:text-xl;
-  }
-  
-  h6 {
-    @apply text-base md:text-lg;
-  }
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
+    "Helvetica Neue", sans-serif;
+  font-weight: 600;
+  line-height: 1.2;
+  margin-bottom: 1rem;
 }
 
-@layer components {
-  .container {
-    @apply px-4 mx-auto max-w-7xl;
-  }
-  
-  .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-all duration-200;
-  }
-  
-  .btn-primary {
-    @apply bg-primary-500 text-white hover:bg-primary-600 focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 focus:outline-none;
-  }
-  
-  .btn-outline {
-    @apply border border-border bg-transparent hover:bg-foreground focus:ring-2 focus:ring-primary-500 focus:outline-none;
-  }
-  
-  .btn-secondary {
-    @apply bg-secondary text-white hover:bg-secondary-dark focus:ring-2 focus:ring-secondary focus:ring-offset-2 focus:outline-none;
-  }
-  
-  .form-input,
-  .form-textarea,
-  .form-select {
-    @apply w-full px-3 py-2 border border-border rounded-md bg-background focus:outline-none focus:ring-2 focus:ring-primary-500 transition-colors duration-200;
-  }
-  
-  .form-label {
-    @apply block mb-2 font-medium;
-  }
-  
-  .form-group {
-    @apply mb-4;
-  }
-  
-  .card {
-    @apply bg-card rounded-xl shadow-card transition-all duration-300 hover:shadow-card-hover border border-border/40;
-  }
-  
-  .card-content {
-    @apply p-6;
-  }
-  
-  .card-title {
-    @apply text-xl font-bold mb-2;
-  }
-  
-  .card-meta {
-    @apply flex items-center text-sm text-text-tertiary;
-  }
-  
-  .tag {
-    @apply inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-primary-100 text-primary-800 dark:bg-primary-900 dark:text-primary-300;
-  }
-  
-  .prose img {
-    @apply rounded-lg shadow-md;
-  }
-  
-  .prose pre {
-    @apply bg-foreground rounded-lg p-4 overflow-x-auto;
-  }
-  
-  .prose code {
-    @apply bg-foreground px-1.5 py-0.5 rounded text-sm font-mono;
-  }
-  
-  .prose blockquote {
-    @apply border-l-4 border-primary-500 pl-4 italic text-text-secondary;
-  }
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: color 0.2s ease;
 }
 
-/* Editor styles */
-.ql-container {
-  @apply font-sans text-base;
-  height: calc(100% - 42px);
+a:hover {
+  color: var(--color-primary-hover);
 }
 
-.ql-editor {
-  @apply min-h-[350px] prose max-w-none;
+img {
+  max-width: 100%;
+  height: auto;
 }
 
-.ql-toolbar {
-  @apply bg-foreground border-border rounded-t-md;
+/* Container */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-.ql-container {
-  @apply border-border rounded-b-md;
+/* Botões */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: none;
+  font-size: 0.875rem;
 }
 
-.ql-editor.ql-blank::before {
-  @apply text-text-tertiary;
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
 }
 
-.dark-theme .ql-snow .ql-stroke {
-  stroke: var(--color-text-primary);
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
 }
 
-.dark-theme .ql-snow .ql-fill {
-  fill: var(--color-text-primary);
+.btn-outline {
+  background-color: transparent;
+  border: 1px solid var(--color-border);
+  color: var(--color-text);
 }
 
-.dark-theme .ql-snow .ql-picker {
-  color: var(--color-text-primary);
+.btn-outline:hover {
+  background-color: var(--color-bg-alt);
 }
 
-.dark-theme .ql-snow .ql-picker-options {
-  background-color: var(--color-card);
-  border-color: var(--color-border);
+.btn-secondary {
+  background-color: var(--color-secondary);
+  color: white;
 }
 
-.dark-theme .ql-snow .ql-tooltip {
-  background-color: var(--color-card);
-  border-color: var(--color-border);
-  color: var(--color-text-primary);
+.btn-secondary:hover {
+  background-color: var(--color-secondary-hover);
 }
 
-.dark-theme .ql-snow .ql-tooltip input[type="text"] {
-  border-color: var(--color-border);
-  color: var(--color-text-primary);
-  background-color: var(--color-background);
+.btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
-.dark-theme .hljs {
-  background-color: var(--color-foreground);
+/* Formulários */
+.form-group {
+  margin-bottom: 1rem;
 }
 
-/* Notion content styles */
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: border-color 0.2s ease;
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
+}
+
+.form-textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+/* Tags */
+.tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.5rem;
+  background-color: var(--color-bg-alt);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-text-light);
+}
+
+/* Notion content */
 .notion-content {
-  @apply prose max-w-none;
+  margin-top: 2rem;
 }
 
-.notion-content h1,
-.notion-content h2,
-.notion-content h3 {
-  @apply mt-8 mb-4;
+.notion-h1 {
+  font-size: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
 }
 
-.notion-content img {
-  @apply rounded-lg my-4;
+.notion-h2 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.notion-content pre {
-  @apply bg-foreground p-4 rounded-lg my-4 overflow-x-auto;
+.notion-h3 {
+  font-size: 1.25rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
 }
 
-.notion-content code {
-  @apply font-mono bg-foreground px-1.5 py-0.5 rounded text-sm;
+.notion-p {
+  margin-bottom: 1rem;
 }
 
-.notion-content blockquote {
-  @apply border-l-4 border-primary-500 pl-4 italic text-text-secondary my-4;
+.notion-img {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--radius-md);
+  margin: 1.5rem 0;
 }
 
-.notion-content ul,
-.notion-content ol {
-  @apply pl-4 mb-4;
+.notion-pre {
+  background-color: var(--color-bg-alt);
+  padding: 1rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+  margin: 1.5rem 0;
 }
 
-.notion-content li {
-  @apply mb-2;
+.notion-code {
+  font-family: "Fira Code", monospace;
+  font-size: 0.9rem;
+}
+
+.notion-blockquote {
+  border-left: 4px solid var(--color-primary);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  color: var(--color-text-light);
+}
+
+/* Utilitários */
+.text-center {
+  text-align: center;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-center {
+  justify-content: center;
+}
+
+.justify-between {
+  justify-between: space-between;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+.mt-2 {
+  margin-top: 0.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mt-8 {
+  margin-top: 2rem;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.py-2 {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.py-4 {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+}
+
+.py-8 {
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.h-full {
+  height: 100%;
+}
+
+.rounded-md {
+  border-radius: var(--radius-md);
+}
+
+.rounded-full {
+  border-radius: var(--radius-full);
+}
+
+.shadow-sm {
+  box-shadow: var(--shadow-sm);
+}
+
+.shadow-md {
+  box-shadow: var(--shadow-md);
+}
+
+.shadow-lg {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Grid */
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 1024px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
 }

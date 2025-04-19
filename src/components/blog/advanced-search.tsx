@@ -89,9 +89,9 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
   }
 
   return (
-    <div className="bg-card rounded-lg shadow-md p-4 mb-8 transition-all duration-300">
+    <div className="bg-card rounded-xl shadow-md p-6 mb-8 transition-all duration-300">
       {/* Barra de busca principal */}
-      <div className="flex gap-2">
+      <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-grow">
           <input
             type="text"
@@ -120,7 +120,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
       {/* Filtros avançados */}
       {isExpanded && (
-        <div className="mt-4 pt-4 border-t border-color-border grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300">
+        <div className="mt-6 pt-6 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-300">
           {/* Filtro por tags */}
           <div>
             <label className="form-label">Tags</label>
@@ -141,13 +141,13 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 Adicionar
               </button>
             </div>
-            <div className="flex flex-wrap gap-2 mt-2">
+            <div className="flex flex-wrap gap-2 mt-3">
               {params.tags.map((tag) => (
                 <div key={tag} className="tag flex items-center gap-1">
                   {tag}
                   <button
                     type="button"
-                    className="text-text-tertiary hover:text-error"
+                    className="text-text-tertiary hover:text-error-500"
                     onClick={() => handleRemoveTag(tag)}
                   >
                     <FiX size={14} />
@@ -161,7 +161,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
           {/* Filtro por data */}
           <div>
             <label className="form-label">Período</label>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
                 <label className="text-sm text-text-secondary">De</label>
                 <input
@@ -211,7 +211,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
       {/* Resumo dos filtros ativos */}
       {(params.tags.length > 0 || params.dateFrom || params.dateTo) && (
-        <div className="mt-4 pt-4 border-t border-color-border">
+        <div className="mt-4 pt-4 border-t border-border">
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-medium">Filtros ativos:</span>
 
@@ -220,7 +220,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 <span className="text-sm">Tags: {params.tags.join(", ")}</span>
                 <button
                   type="button"
-                  className="text-text-tertiary hover:text-error"
+                  className="text-text-tertiary hover:text-error-500"
                   onClick={() => setParams({ ...params, tags: [] })}
                 >
                   <FiX size={14} />
@@ -237,7 +237,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 </span>
                 <button
                   type="button"
-                  className="text-text-tertiary hover:text-error"
+                  className="text-text-tertiary hover:text-error-500"
                   onClick={() => setParams({ ...params, dateFrom: null, dateTo: null })}
                 >
                   <FiX size={14} />
@@ -245,7 +245,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
               </div>
             )}
 
-            <button type="button" className="text-sm text-primary hover:underline ml-auto" onClick={handleReset}>
+            <button type="button" className="text-sm text-primary-500 hover:underline ml-auto" onClick={handleReset}>
               Limpar todos
             </button>
           </div>

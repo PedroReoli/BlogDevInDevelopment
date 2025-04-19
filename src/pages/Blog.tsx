@@ -59,8 +59,11 @@ const Blog = () => {
   }
 
   return (
-    <div className="container py-16">
-      <h1 className="text-4xl font-bold mb-8">Blog</h1>
+    <div className="container py-12">
+      <div className="flex items-center gap-3 mb-6">
+        <img src="/images/logo.svg" alt="Logo" className="w-8 h-8" />
+        <h1 className="text-3xl md:text-4xl font-bold">Blog</h1>
+      </div>
 
       <BlogStats />
 
