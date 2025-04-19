@@ -42,11 +42,11 @@ const Header = () => {
   return (
     <header
       className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        isScrolled ? "bg-white bg-opacity-80 backdrop-blur-md shadow-sm dark:bg-gray-900 dark:bg-opacity-80" : ""
+        isScrolled ? "bg-white/80 backdrop-blur shadow-sm dark:bg-gray-900/80" : ""
       }`}
       style={{ backgroundColor: isScrolled ? "" : "var(--color-bg)" }}
     >
-      <div className="container py-4 flex items-center justify-between">
+      <div className="container mx-auto px-4 py-4 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
           <img src="/images/logo.svg" alt="Logo" className="w-8 h-8" />
           <span className="text-xl font-bold" style={{ color: "var(--color-primary)" }}>
