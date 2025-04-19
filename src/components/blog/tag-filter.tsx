@@ -9,8 +9,13 @@ interface TagFilterProps {
   onTagDeselect: (tag: string) => void
 }
 
+interface TagWithCount {
+  name: string
+  count: number
+}
+
 const TagFilter = ({ selectedTags, onTagSelect, onTagDeselect }: TagFilterProps) => {
-  const [tags, setTags] = useState<{ name: string; count: number }[]>([])
+  const [tags, setTags] = useState<TagWithCount[]>([])
   const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
@@ -24,7 +29,7 @@ const TagFilter = ({ selectedTags, onTagSelect, onTagDeselect }: TagFilterProps)
         // Contar ocorrências de cada tag
         const tagCounts: Record<string, number> = {}
         data?.forEach((post) => {
-          post.tags.forEach((tag) => {
+          post.tags.forEach((tag: string) => {
             tagCounts[tag] = (tagCounts[tag] || 0) + 1
           })
         })
@@ -58,7 +63,11 @@ const TagFilter = ({ selectedTags, onTagSelect, onTagDeselect }: TagFilterProps)
         <h2 className="text-lg font-semibold mb-3">Tags populares</h2>
         <div className="flex flex-wrap gap-2">
           {[1, 2, 3, 4, 5, 6].map((i) => (
-            <div key={i} className="h-6 w-16 bg-foreground animate-pulse rounded-full"></div>
+            <div
+              key={i}
+              className="h-6 w-16 animate-pulse rounded-full"
+              style={{ backgroundColor: "var(--color-foreground)" }}
+            ></div>
           ))}
         </div>
       </div>
@@ -77,11 +86,11 @@ const TagFilter = ({ selectedTags, onTagSelect, onTagDeselect }: TagFilterProps)
           <button
             key={tag.name}
             onClick={() => handleTagClick(tag.name)}
-            className={`tag cursor-pointer transition-all duration-200 ${
-              selectedTags.includes(tag.name)
-                ? "bg-primary-500 text-white"
-                : "hover:bg-primary-100 hover:text-primary-800 dark:hover:bg-primary-900 dark:hover:text-primary-300"
-            }`}
+            className="tag cursor-pointer transition-all duration-200"
+            style={{
+              backgroundColor: selectedTags.includes(tag.name) ? "var(--color-primary)" : "var(--color-bg-alt)",
+              color: selectedTags.includes(tag.name) ? "white" : "var(--color-text-light)",
+            }}
           >
             {tag.name} <span className="text-xs ml-1 opacity-80">({tag.count})</span>
           </button>

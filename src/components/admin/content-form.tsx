@@ -14,7 +14,7 @@ const ContentForm = () => {
   const [coverImage, setCoverImage] = useState<File | null>(null)
   const [coverImagePreview, setCoverImagePreview] = useState<string | null>(null)
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [htmlContent, setHtmlContent] = useState<string | null>(null)
+  // Removendo a variável não utilizada
   const [contentPath, setContentPath] = useState<string | null>(null)
 
   const handleCoverImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,8 +47,7 @@ const ContentForm = () => {
     setSlug(slugified)
   }
 
-  const handleHtmlProcessed = (html: string, path: string) => {
-    setHtmlContent(html)
+  const handleHtmlProcessed = (_html: string, path: string) => {
     setContentPath(path)
     toast.success("HTML processado com sucesso")
   }
@@ -109,7 +108,6 @@ const ContentForm = () => {
       setTags("")
       setCoverImage(null)
       setCoverImagePreview(null)
-      setHtmlContent(null)
       setContentPath(null)
     } catch (error) {
       toast.error((error as Error).message)
@@ -147,7 +145,9 @@ const ContentForm = () => {
           onChange={(e) => setSlug(e.target.value)}
           required
         />
-        <p className="text-text-tertiary text-sm mt-1">Identificador único para a URL do post</p>
+        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
+          Identificador único para a URL do post
+        </p>
       </div>
 
       <div className="form-group">
@@ -191,18 +191,24 @@ const ContentForm = () => {
             <button
               type="button"
               onClick={removeCoverImage}
-              className="absolute top-2 right-2 p-1 bg-error text-white rounded-full"
+              className="absolute top-2 right-2 p-1 rounded-full"
+              style={{ backgroundColor: "var(--color-error)", color: "white" }}
               aria-label="Remover imagem"
             >
               <FiX size={16} />
             </button>
           </div>
         ) : (
-          <div className="border-2 border-dashed border-border rounded-md p-4 text-center">
+          <div
+            className="border-2 border-dashed rounded-md p-4 text-center"
+            style={{ borderColor: "var(--color-border)" }}
+          >
             <label htmlFor="coverImage" className="cursor-pointer block p-4">
               <FiUpload size={24} className="mx-auto mb-2" />
               <span className="block mb-2">Clique para fazer upload</span>
-              <span className="text-text-tertiary text-sm">PNG, JPG ou WEBP (max. 2MB)</span>
+              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+                PNG, JPG ou WEBP (max. 2MB)
+              </span>
               <input
                 id="coverImage"
                 type="file"

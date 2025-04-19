@@ -1,17 +1,15 @@
 "use client"
 
-import type React from "react"
-
-import { useEffect, useState } from "react"
+import { useEffect, useState, type ReactNode } from "react"
 import { supabase } from "@/lib/supabase"
 import toast from "react-hot-toast"
 
 interface EnsureStorageBucketProps {
   bucketName: string
-  children: React.ReactNode
+  children: ReactNode
 }
 
-const EnsureStorageBucket = ({ bucketName, children }: EnsureStorageBucketProps) => {
+export const EnsureStorageBucket = ({ bucketName, children }: EnsureStorageBucketProps) => {
   const [isReady, setIsReady] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
@@ -58,7 +56,14 @@ const EnsureStorageBucket = ({ bucketName, children }: EnsureStorageBucketProps)
 
   if (error) {
     return (
-      <div className="text-error p-4 border border-error rounded-md bg-error/10">
+      <div
+        className="p-4 border rounded-md"
+        style={{
+          color: "var(--color-error)",
+          borderColor: "var(--color-error)",
+          backgroundColor: "rgba(239, 68, 68, 0.1)",
+        }}
+      >
         <p>Erro ao configurar armazenamento de imagens: {error}</p>
         <p className="text-sm mt-2">Verifique as permissões do Supabase Storage e tente novamente.</p>
       </div>
@@ -68,9 +73,16 @@ const EnsureStorageBucket = ({ bucketName, children }: EnsureStorageBucketProps)
   if (!isReady) {
     return (
       <div className="flex items-center justify-center p-4">
-        <div className="inline-block animate-spin rounded-
+        <div
+          className="inline-block animate-spin rounded-full h-8 w-8 border-b-2"
+          style={{ borderColor: "var(--color-primary)" }}
+        ></div>
+        <span className="ml-2">Configurando armazenamento...</span>
+      </div>
+    )
+  }
 
+  return <>{children}</>
+}
 
-Vamos atualizar o serviço UploadService:
-
-\
+export default EnsureStorageBucket

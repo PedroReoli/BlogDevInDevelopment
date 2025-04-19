@@ -107,15 +107,23 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
 
   return (
     <div
-      className={`editor-container transition-all duration-300 ${
-        isFullscreen ? "fixed inset-0 z-50 bg-background p-4 overflow-auto" : "border border-color-border rounded-md"
-      }`}
+      className="editor-container transition-all duration-300"
+      style={{
+        position: isFullscreen ? "fixed" : "relative",
+        inset: isFullscreen ? "0" : "auto",
+        zIndex: isFullscreen ? "50" : "auto",
+        backgroundColor: isFullscreen ? "var(--color-bg)" : "transparent",
+        padding: isFullscreen ? "1rem" : "0",
+        overflow: isFullscreen ? "auto" : "visible",
+        border: !isFullscreen ? "1px solid var(--color-border)" : "none",
+        borderRadius: !isFullscreen ? "0.375rem" : "0",
+      }}
     >
       <div className="flex justify-end mb-2">
         <button
           type="button"
           onClick={toggleFullscreen}
-          className="p-2 rounded-md hover:bg-foreground transition-colors"
+          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
           aria-label={isFullscreen ? "Sair do modo tela cheia" : "Modo tela cheia"}
           title={isFullscreen ? "Sair do modo tela cheia" : "Modo tela cheia"}
         >
@@ -136,7 +144,8 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
       {/* Modal de upload de imagem */}
       {showImageModal && <ImageUploadModal onClose={() => setShowImageModal(false)} onImageInsert={insertImage} />}
 
-      <style jsx global>{`
+      <style>
+        {`
         .editor-quill {
           height: ${isFullscreen ? "calc(100vh - 120px)" : "400px"};
         }
@@ -191,7 +200,8 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
           background-color: var(--color-foreground);
           border-radius: 0.375rem;
         }
-      `}</style>
+        `}
+      </style>
     </div>
   )
 }

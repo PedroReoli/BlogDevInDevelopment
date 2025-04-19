@@ -60,7 +60,7 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
   }
 
   const handleReset = () => {
-    const resetParams = {
+    const resetParams: SearchParams = {
       query: "",
       tags: [],
       dateFrom: null,
@@ -89,7 +89,10 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
   }
 
   return (
-    <div className="bg-card rounded-xl shadow-md p-6 mb-8 transition-all duration-300">
+    <div
+      className="bg-white rounded-xl shadow-md p-6 mb-8 transition-all duration-300"
+      style={{ backgroundColor: "var(--color-bg-card)" }}
+    >
       {/* Barra de busca principal */}
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-grow">
@@ -101,7 +104,11 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
             onChange={(e) => setParams({ ...params, query: e.target.value })}
             onKeyDown={(e) => e.key === "Enter" && handleSearch()}
           />
-          <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-text-tertiary" size={18} />
+          <FiSearch
+            className="absolute left-3 top-1/2 transform -translate-y-1/2"
+            style={{ color: "var(--color-text-tertiary)" }}
+            size={18}
+          />
         </div>
         <button
           type="button"
@@ -120,7 +127,10 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
       {/* Filtros avançados */}
       {isExpanded && (
-        <div className="mt-6 pt-6 border-t border-border grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-300">
+        <div
+          className="mt-6 pt-6 border-t grid grid-cols-1 md:grid-cols-2 gap-6 transition-all duration-300"
+          style={{ borderColor: "var(--color-border)" }}
+        >
           {/* Filtro por tags */}
           <div>
             <label className="form-label">Tags</label>
@@ -147,14 +157,19 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                   {tag}
                   <button
                     type="button"
-                    className="text-text-tertiary hover:text-error-500"
+                    style={{ color: "var(--color-text-tertiary)" }}
+                    className="hover:text-red-500"
                     onClick={() => handleRemoveTag(tag)}
                   >
                     <FiX size={14} />
                   </button>
                 </div>
               ))}
-              {params.tags.length === 0 && <span className="text-text-tertiary text-sm">Nenhuma tag selecionada</span>}
+              {params.tags.length === 0 && (
+                <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+                  Nenhuma tag selecionada
+                </span>
+              )}
             </div>
           </div>
 
@@ -163,7 +178,9 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
             <label className="form-label">Período</label>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-sm text-text-secondary">De</label>
+                <label className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  De
+                </label>
                 <input
                   type="date"
                   className="form-input"
@@ -172,7 +189,9 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 />
               </div>
               <div>
-                <label className="text-sm text-text-secondary">Até</label>
+                <label className="text-sm" style={{ color: "var(--color-text-secondary)" }}>
+                  Até
+                </label>
                 <input
                   type="date"
                   className="form-input"
@@ -211,16 +230,20 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
 
       {/* Resumo dos filtros ativos */}
       {(params.tags.length > 0 || params.dateFrom || params.dateTo) && (
-        <div className="mt-4 pt-4 border-t border-border">
+        <div className="mt-4 pt-4 border-t" style={{ borderColor: "var(--color-border)" }}>
           <div className="flex flex-wrap items-center gap-2">
             <span className="text-sm font-medium">Filtros ativos:</span>
 
             {params.tags.length > 0 && (
-              <div className="flex items-center gap-1 bg-foreground rounded-full px-3 py-1">
+              <div
+                className="flex items-center gap-1 rounded-full px-3 py-1"
+                style={{ backgroundColor: "var(--color-bg-alt)" }}
+              >
                 <span className="text-sm">Tags: {params.tags.join(", ")}</span>
                 <button
                   type="button"
-                  className="text-text-tertiary hover:text-error-500"
+                  style={{ color: "var(--color-text-tertiary)" }}
+                  className="hover:text-red-500"
                   onClick={() => setParams({ ...params, tags: [] })}
                 >
                   <FiX size={14} />
@@ -229,7 +252,10 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
             )}
 
             {(params.dateFrom || params.dateTo) && (
-              <div className="flex items-center gap-1 bg-foreground rounded-full px-3 py-1">
+              <div
+                className="flex items-center gap-1 rounded-full px-3 py-1"
+                style={{ backgroundColor: "var(--color-bg-alt)" }}
+              >
                 <span className="text-sm">
                   Período:
                   {params.dateFrom ? ` de ${format(new Date(params.dateFrom), "dd/MM/yyyy", { locale: ptBR })}` : ""}
@@ -237,7 +263,8 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
                 </span>
                 <button
                   type="button"
-                  className="text-text-tertiary hover:text-error-500"
+                  style={{ color: "var(--color-text-tertiary)" }}
+                  className="hover:text-red-500"
                   onClick={() => setParams({ ...params, dateFrom: null, dateTo: null })}
                 >
                   <FiX size={14} />
@@ -245,7 +272,12 @@ const AdvancedSearch = ({ onSearch, initialParams }: AdvancedSearchProps) => {
               </div>
             )}
 
-            <button type="button" className="text-sm text-primary-500 hover:underline ml-auto" onClick={handleReset}>
+            <button
+              type="button"
+              className="text-sm ml-auto hover:underline"
+              style={{ color: "var(--color-primary)" }}
+              onClick={handleReset}
+            >
               Limpar todos
             </button>
           </div>

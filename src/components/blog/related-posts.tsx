@@ -34,7 +34,7 @@ const RelatedPosts = ({ currentPostId, currentPostTags }: RelatedPostsProps) => 
         if (data) {
           // Calcular pontuação de relevância com base nas tags compartilhadas
           const scoredPosts = data.map((post) => {
-            const sharedTags = post.tags.filter((tag) => currentPostTags.includes(tag))
+            const sharedTags = post.tags.filter((tag: string) => currentPostTags.includes(tag))
             return {
               ...post,
               relevanceScore: sharedTags.length,
@@ -69,7 +69,11 @@ const RelatedPosts = ({ currentPostId, currentPostTags }: RelatedPostsProps) => 
         <h2 className="text-2xl font-bold mb-6">Posts Relacionados</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           {[1, 2, 3].map((i) => (
-            <div key={i} className="h-48 bg-foreground animate-pulse rounded-xl"></div>
+            <div
+              key={i}
+              className="h-48 animate-pulse rounded-xl"
+              style={{ backgroundColor: "var(--color-foreground)" }}
+            ></div>
           ))}
         </div>
       </div>
@@ -85,7 +89,17 @@ const RelatedPosts = ({ currentPostId, currentPostTags }: RelatedPostsProps) => 
       <h2 className="text-2xl font-bold mb-6">Posts Relacionados</h2>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         {relatedPosts.map((post) => (
-          <Link key={post.id} to={`/blog/${post.slug}`} className="card group overflow-hidden hover:translate-y-[-4px]">
+          <Link
+            key={post.id}
+            to={`/blog/${post.slug}`}
+            className="overflow-hidden hover:translate-y-[-4px] group"
+            style={{
+              backgroundColor: "var(--color-bg-card)",
+              borderRadius: "0.75rem",
+              boxShadow: "var(--shadow-md)",
+              transition: "transform 0.3s ease, box-shadow 0.3s ease",
+            }}
+          >
             {post.cover_image_url && (
               <div className="aspect-video overflow-hidden">
                 <img
@@ -96,11 +110,16 @@ const RelatedPosts = ({ currentPostId, currentPostTags }: RelatedPostsProps) => 
               </div>
             )}
             <div className="p-4 flex flex-col flex-grow">
-              <h3 className="font-bold mb-2 line-clamp-2 group-hover:text-primary-500 transition-colors">
+              <h3
+                className="font-bold mb-2 line-clamp-2 group-hover:text-blue-500 transition-colors"
+                style={{ fontSize: "1.125rem" }}
+              >
                 {post.title}
               </h3>
-              <p className="text-text-secondary text-sm line-clamp-3 mb-4">{post.excerpt}</p>
-              <div className="mt-auto flex items-center text-primary-500">
+              <p className="text-sm line-clamp-3 mb-4" style={{ color: "var(--color-text-secondary)" }}>
+                {post.excerpt}
+              </p>
+              <div className="mt-auto flex items-center" style={{ color: "var(--color-primary)" }}>
                 <span>Ler post</span>
                 <FiArrowRight className="ml-1 group-hover:translate-x-1 transition-transform" />
               </div>

@@ -6,14 +6,16 @@ import { useState, useRef, type FormEvent, type ChangeEvent } from "react"
 import { FiUpload, FiX, FiPlus, FiSave } from "react-icons/fi"
 import { supabase } from "@/lib/supabase"
 import toast from "react-hot-toast"
-import { useNavigate } from "react-router-dom"
+// Removendo o import não utilizado
+// import { useNavigate } from "react-router-dom"
 
 interface PostFormProps {
   onSuccess?: () => void
 }
 
 const PostForm = ({ onSuccess }: PostFormProps) => {
-  const navigate = useNavigate()
+  // Removendo a variável não utilizada
+  // const navigate = useNavigate()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [title, setTitle] = useState("")
   const [slug, setSlug] = useState("")
@@ -178,7 +180,7 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
     <form onSubmit={handleSubmit} className="space-y-6">
       <div className="form-group">
         <label htmlFor="title" className="form-label">
-          Título <span className="text-error">*</span>
+          Título <span style={{ color: "var(--color-error)" }}>*</span>
         </label>
         <input
           id="title"
@@ -193,7 +195,7 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
 
       <div className="form-group">
         <label htmlFor="slug" className="form-label">
-          Slug <span className="text-error">*</span>
+          Slug <span style={{ color: "var(--color-error)" }}>*</span>
         </label>
         <input
           id="slug"
@@ -204,14 +206,14 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
           required
           disabled={isSubmitting}
         />
-        <p className="text-text-tertiary text-sm mt-1">
+        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
           Identificador único para a URL do post (gerado automaticamente a partir do título)
         </p>
       </div>
 
       <div className="form-group">
         <label htmlFor="excerpt" className="form-label">
-          Resumo <span className="text-error">*</span>
+          Resumo <span style={{ color: "var(--color-error)" }}>*</span>
         </label>
         <textarea
           id="excerpt"
@@ -221,12 +223,14 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
           required
           disabled={isSubmitting}
         />
-        <p className="text-text-tertiary text-sm mt-1">Breve descrição do post (máx. 200 caracteres)</p>
+        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
+          Breve descrição do post (máx. 200 caracteres)
+        </p>
       </div>
 
       <div className="form-group">
         <label className="form-label">
-          Tags <span className="text-error">*</span>
+          Tags <span style={{ color: "var(--color-error)" }}>*</span>
         </label>
         <div className="flex gap-2 mb-2">
           <input
@@ -253,7 +257,8 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
               {tag}
               <button
                 type="button"
-                className="text-text-tertiary hover:text-error"
+                style={{ color: "var(--color-text-tertiary)" }}
+                className="hover:text-red-500"
                 onClick={() => removeTag(tag)}
                 disabled={isSubmitting}
               >
@@ -266,7 +271,7 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
 
       <div className="form-group">
         <label className="form-label">
-          Imagem de Capa <span className="text-error">*</span>
+          Imagem de Capa <span style={{ color: "var(--color-error)" }}>*</span>
         </label>
         <input
           ref={coverInputRef}
@@ -285,7 +290,8 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
             />
             <button
               type="button"
-              className="absolute top-2 right-2 bg-error text-white p-1 rounded-full"
+              className="absolute top-2 right-2 p-1 rounded-full"
+              style={{ backgroundColor: "var(--color-error)", color: "white" }}
               onClick={() => {
                 setCoverImage(null)
                 setCoverImagePreview(null)
@@ -298,20 +304,23 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
         ) : (
           <button
             type="button"
-            className="w-full h-48 border-2 border-dashed border-color-border rounded-md flex flex-col items-center justify-center"
+            className="w-full h-48 border-2 border-dashed rounded-md flex flex-col items-center justify-center"
+            style={{ borderColor: "var(--color-border)" }}
             onClick={() => coverInputRef.current?.click()}
             disabled={isSubmitting}
           >
             <FiUpload size={24} className="mb-2" />
             <span>Clique para fazer upload</span>
-            <span className="text-text-tertiary text-sm">JPG, PNG ou GIF (máx. 5MB)</span>
+            <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+              JPG, PNG ou GIF (máx. 5MB)
+            </span>
           </button>
         )}
       </div>
 
       <div className="form-group">
         <label className="form-label">
-          Arquivo HTML do Notion <span className="text-error">*</span>
+          Arquivo HTML do Notion <span style={{ color: "var(--color-error)" }}>*</span>
         </label>
         <input
           ref={htmlInputRef}
@@ -323,27 +332,33 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
         />
         <button
           type="button"
-          className={`w-full p-4 border-2 border-dashed border-color-border rounded-md flex flex-col items-center justify-center ${
-            htmlFile ? "bg-primary/10" : ""
-          }`}
+          className="w-full p-4 border-2 border-dashed rounded-md flex flex-col items-center justify-center"
+          style={{
+            borderColor: "var(--color-border)",
+            backgroundColor: htmlFile ? "rgba(59, 130, 246, 0.1)" : "",
+          }}
           onClick={() => htmlInputRef.current?.click()}
           disabled={isSubmitting}
         >
           {htmlFile ? (
             <>
-              <FiSave size={24} className="mb-2 text-primary" />
+              <FiSave size={24} className="mb-2" style={{ color: "var(--color-primary)" }} />
               <span className="font-medium">{htmlFile.name}</span>
-              <span className="text-text-tertiary text-sm">{(htmlFile.size / 1024 / 1024).toFixed(2)} MB</span>
+              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+                {(htmlFile.size / 1024 / 1024).toFixed(2)} MB
+              </span>
             </>
           ) : (
             <>
               <FiUpload size={24} className="mb-2" />
               <span>Clique para fazer upload do HTML exportado do Notion</span>
-              <span className="text-text-tertiary text-sm">Apenas arquivos HTML (máx. 10MB)</span>
+              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
+                Apenas arquivos HTML (máx. 10MB)
+              </span>
             </>
           )}
         </button>
-        <p className="text-text-tertiary text-sm mt-1">
+        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
           Exporte a página do Notion como HTML e faça upload do arquivo aqui
         </p>
       </div>
