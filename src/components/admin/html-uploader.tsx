@@ -152,20 +152,30 @@ const HtmlUploader = ({ onProcessed }: HtmlUploaderProps) => {
             />
           </div>
           <p className="text-text-tertiary text-sm">Faça upload das imagens referenciadas no HTML</p>
+          <p className="text-text-tertiary text-sm">
+            As imagens devem ter os mesmos nomes dos arquivos referenciados no HTML do Notion para serem substituídas
+            corretamente.
+          </p>
         </div>
 
         {images.length > 0 ? (
-          <div className="space-y-2 max-h-40 overflow-y-auto">
-            {images.map((image, index) => (
-              <div key={index} className="flex items-center gap-2 p-2 bg-foreground rounded-md">
-                <FiImage size={16} />
-                <span className="flex-grow truncate">{image.name}</span>
-                <button type="button" onClick={() => removeImage(index)} className="text-error">
-                  <FiX size={16} />
-                </button>
-              </div>
-            ))}
-          </div>
+          <>
+            <div className="space-y-2 max-h-40 overflow-y-auto">
+              {images.map((image, index) => (
+                <div key={index} className="flex items-center gap-2 p-2 bg-foreground rounded-md">
+                  <FiImage size={16} />
+                  <span className="flex-grow truncate">{image.name}</span>
+                  <button type="button" onClick={() => removeImage(index)} className="text-error">
+                    <FiX size={16} />
+                  </button>
+                </div>
+              ))}
+            </div>
+            <p className="text-green-400 text-xs mt-2">
+              ✓ {images.length} {images.length === 1 ? "imagem adicionada" : "imagens adicionadas"} - Serão vinculadas
+              automaticamente ao HTML
+            </p>
+          </>
         ) : (
           <div className="text-center p-4 text-text-tertiary">Nenhuma imagem adicionada</div>
         )}

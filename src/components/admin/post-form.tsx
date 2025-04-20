@@ -2,85 +2,60 @@
 
 import type React from "react"
 
-import { useState, useRef, type FormEvent, type ChangeEvent } from "react"
-import { FiUpload, FiX, FiPlus, FiSave } from "react-icons/fi"
-import { supabase } from "@/lib/supabase"
+import { useState, useEffect } from "react"
+import { FiUpload, FiTag, FiPlus, FiX, FiSave, FiLoader } from "react-icons/fi"
+import { PostService } from "@/services/post-service"
 import toast from "react-hot-toast"
-// Removendo o import não utilizado
-// import { useNavigate } from "react-router-dom"
+import HtmlUploader from "./html-uploader"
+import EnsureStorageBucket from "@/components/editor/ensure-storage-bucket"
 
 interface PostFormProps {
   onSuccess?: () => void
+  initialData?: any
 }
 
-const PostForm = ({ onSuccess }: PostFormProps) => {
-  // Removendo a variável não utilizada
-  // const navigate = useNavigate()
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [title, setTitle] = useState("")
-  const [slug, setSlug] = useState("")
-  const [excerpt, setExcerpt] = useState("")
-  const [tags, setTags] = useState<string[]>([])
-  const [currentTag, setCurrentTag] = useState("")
+const PostForm = ({ onSuccess, initialData }: PostFormProps) => {
+  const [title, setTitle] = useState(initialData?.title || "")
+  const [slug, setSlug] = useState(initialData?.slug || "")
+  const [excerpt, setExcerpt] = useState(initialData?.excerpt || "")
+  const [tags, setTags] = useState<string[]>(initialData?.tags || [])
+  const [tagInput, setTagInput] = useState("")
   const [coverImage, setCoverImage] = useState<File | null>(null)
-  const [coverImagePreview, setCoverImagePreview] = useState<string | null>(null)
-  const [htmlFile, setHtmlFile] = useState<File | null>(null)
-  const coverInputRef = useRef<HTMLInputElement>(null)
-  const htmlInputRef = useRef<HTMLInputElement>(null)
+  const [coverImageUrl, setCoverImageUrl] = useState(initialData?.cover_image_url || "")
+  const [coverImagePreview, setCoverImagePreview] = useState(initialData?.cover_image_url || "")
+  const [contentPath, setContentPath] = useState(initialData?.content_path || "")
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [isUploading, setIsUploading] = useState(false)
 
   // Gerar slug a partir do título
-  const generateSlug = (title: string) => {
-    return title
-      .toLowerCase()
-      .normalize("NFD")
-      .replace(/[\u0300-\u036f]/g, "")
-      .replace(/[^\w\s]/g, "")
-      .replace(/\s+/g, "-")
-  }
+  useEffect(() => {
+    if (title && !initialData) {
+      const generatedSlug = title
+        .toLowerCase()
+        .replace(/[^\w\s]/gi, "")
+        .replace(/\s+/g, "-")
+      setSlug(generatedSlug)
+    }
+  }, [title, initialData])
 
-  // Atualizar slug quando o título mudar
-  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newTitle = e.target.value
-    setTitle(newTitle)
-    setSlug(generateSlug(newTitle))
-  }
-
-  // Adicionar tag
-  const addTag = () => {
-    if (currentTag.trim() && !tags.includes(currentTag.trim())) {
-      setTags([...tags, currentTag.trim()])
-      setCurrentTag("")
+  const handleAddTag = () => {
+    const trimmedTag = tagInput.trim()
+    if (trimmedTag && !tags.includes(trimmedTag)) {
+      setTags([...tags, trimmedTag])
+      setTagInput("")
     }
   }
 
-  // Remover tag
-  const removeTag = (tagToRemove: string) => {
+  const handleRemoveTag = (tagToRemove: string) => {
     setTags(tags.filter((tag) => tag !== tagToRemove))
   }
 
-  // Lidar com tecla Enter no input de tag
-  const handleTagKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter") {
-      e.preventDefault()
-      addTag()
-    }
-  }
-
-  // Lidar com upload de imagem de capa
-  const handleCoverImageChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      if (file.size > 5 * 1024 * 1024) {
-        toast.error("A imagem deve ter no máximo 5MB")
-        return
-      }
-
-      if (!file.type.startsWith("image/")) {
-        toast.error("O arquivo deve ser uma imagem")
-        return
-      }
-
+  const handleCoverImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      const file = e.target.files[0]
       setCoverImage(file)
+
+      // Criar preview
       const reader = new FileReader()
       reader.onload = () => {
         setCoverImagePreview(reader.result as string)
@@ -89,88 +64,68 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
     }
   }
 
-  // Lidar com upload de arquivo HTML
-  const handleHtmlFileChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0]
-    if (file) {
-      if (file.size > 10 * 1024 * 1024) {
-        toast.error("O arquivo HTML deve ter no máximo 10MB")
-        return
-      }
-
-      if (file.type !== "text/html" && !file.name.endsWith(".html")) {
-        toast.error("O arquivo deve ser HTML")
-        return
-      }
-
-      setHtmlFile(file)
-    }
+  const handleHtmlProcessed = (_html: string, path: string) => {
+    setContentPath(path)
+    toast.success("HTML processado com sucesso!")
   }
 
-  // Enviar formulário
-  const handleSubmit = async (e: FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-
-    if (!title || !slug || !excerpt || tags.length === 0 || !coverImage || !htmlFile) {
-      toast.error("Preencha todos os campos obrigatórios")
-      return
-    }
-
     setIsSubmitting(true)
-    const toastLoading = toast.loading("Salvando post...")
 
     try {
-      // 1. Upload da imagem de capa
-      const coverImageName = `${Date.now()}-${coverImage.name}`
-      const { error: coverUploadError } = await supabase.storage.from("covers").upload(coverImageName, coverImage)
+      // Validar campos obrigatórios
+      if (!title || !slug || !excerpt || tags.length === 0 || !contentPath) {
+        throw new Error("Preencha todos os campos obrigatórios")
+      }
 
-      if (coverUploadError) throw new Error(`Erro ao fazer upload da imagem: ${coverUploadError.message}`)
+      // Upload da imagem de capa, se houver uma nova
+      let finalCoverImageUrl = coverImageUrl
+      if (coverImage) {
+        setIsUploading(true)
+        finalCoverImageUrl = await PostService.uploadImage(coverImage, "covers")
+        setIsUploading(false)
+      }
 
-      // 2. Obter URL pública da imagem de capa
-      const { data: coverImageData } = supabase.storage.from("covers").getPublicUrl(coverImageName)
-      const coverImageUrl = coverImageData.publicUrl
-
-      // 3. Upload do arquivo HTML
-      const htmlFileName = `${slug}.html`
-      const { error: htmlUploadError } = await supabase.storage.from("content").upload(htmlFileName, htmlFile)
-
-      if (htmlUploadError) throw new Error(`Erro ao fazer upload do HTML: ${htmlUploadError.message}`)
-
-      // 4. Obter URL pública do arquivo HTML
-      const { data: htmlData } = supabase.storage.from("content").getPublicUrl(htmlFileName)
-      const contentPath = htmlData.publicUrl
-
-      // 5. Inserir post no banco de dados
-      const { error: insertError } = await supabase.from("posts").insert({
+      // Criar ou atualizar post
+      const postData = {
         title,
         slug,
         excerpt,
         tags,
-        cover_image_url: coverImageUrl,
         content_path: contentPath,
-      })
+        cover_image_url: finalCoverImageUrl,
+        published_at: new Date().toISOString(),
+        is_published: true,
+      }
 
-      if (insertError) throw new Error(`Erro ao salvar post: ${insertError.message}`)
+      if (initialData) {
+        await PostService.updatePost(initialData.id, postData)
+        toast.success("Post atualizado com sucesso!")
+      } else {
+        await PostService.createPost(postData)
+        toast.success("Post criado com sucesso!")
+      }
 
-      // Sucesso
-      toast.dismiss(toastLoading)
-      toast.success("Post criado com sucesso!")
-
-      // Limpar formulário
-      setTitle("")
-      setSlug("")
-      setExcerpt("")
-      setTags([])
-      setCoverImage(null)
-      setCoverImagePreview(null)
-      setHtmlFile(null)
+      // Limpar formulário ou redirecionar
+      if (!initialData) {
+        setTitle("")
+        setSlug("")
+        setExcerpt("")
+        setTags([])
+        setCoverImage(null)
+        setCoverImagePreview("")
+        setCoverImageUrl("")
+        setContentPath("")
+      }
 
       // Callback de sucesso
-      if (onSuccess) onSuccess()
+      if (onSuccess) {
+        onSuccess()
+      }
     } catch (error) {
-      toast.dismiss(toastLoading)
-      toast.error(`Erro: ${(error as Error).message}`)
-      console.error(error)
+      console.error("Error submitting post:", error)
+      toast.error((error as Error).message || "Erro ao salvar post")
     } finally {
       setIsSubmitting(false)
     }
@@ -178,194 +133,174 @@ const PostForm = ({ onSuccess }: PostFormProps) => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
+      {/* Título */}
       <div className="form-group">
-        <label htmlFor="title" className="form-label">
-          Título <span style={{ color: "var(--color-error)" }}>*</span>
+        <label htmlFor="title" className="form-label text-white">
+          Título <span className="text-red-500">*</span>
         </label>
         <input
           id="title"
           type="text"
-          className="form-input"
           value={title}
-          onChange={handleTitleChange}
+          onChange={(e) => setTitle(e.target.value)}
+          className="form-input bg-slate-700 border-slate-600 text-white w-full"
+          placeholder="Título do post"
           required
-          disabled={isSubmitting}
         />
       </div>
 
+      {/* Slug */}
       <div className="form-group">
-        <label htmlFor="slug" className="form-label">
-          Slug <span style={{ color: "var(--color-error)" }}>*</span>
+        <label htmlFor="slug" className="form-label text-white">
+          Slug <span className="text-red-500">*</span>
         </label>
         <input
           id="slug"
           type="text"
-          className="form-input"
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
+          className="form-input bg-slate-700 border-slate-600 text-white w-full"
+          placeholder="identificador-unico-para-a-url"
           required
-          disabled={isSubmitting}
         />
-        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
+        <p className="text-slate-400 text-sm mt-1">
           Identificador único para a URL do post (gerado automaticamente a partir do título)
         </p>
       </div>
 
+      {/* Resumo */}
       <div className="form-group">
-        <label htmlFor="excerpt" className="form-label">
-          Resumo <span style={{ color: "var(--color-error)" }}>*</span>
+        <label htmlFor="excerpt" className="form-label text-white">
+          Resumo <span className="text-red-500">*</span>
         </label>
         <textarea
           id="excerpt"
-          className="form-textarea"
           value={excerpt}
           onChange={(e) => setExcerpt(e.target.value)}
+          className="form-input bg-slate-700 border-slate-600 text-white w-full min-h-[120px]"
+          placeholder="Breve descrição do post (máx. 200 caracteres)"
+          maxLength={200}
+          rows={4}
           required
-          disabled={isSubmitting}
         />
-        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
-          Breve descrição do post (máx. 200 caracteres)
-        </p>
+        <p className="text-slate-400 text-sm mt-1">Breve descrição do post (máx. 200 caracteres)</p>
       </div>
 
+      {/* Tags */}
       <div className="form-group">
-        <label className="form-label">
-          Tags <span style={{ color: "var(--color-error)" }}>*</span>
+        <label className="form-label text-white">
+          Tags <span className="text-red-500">*</span>
         </label>
         <div className="flex gap-2 mb-2">
           <input
             type="text"
-            className="form-input flex-grow"
-            value={currentTag}
-            onChange={(e) => setCurrentTag(e.target.value)}
-            onKeyDown={handleTagKeyDown}
-            placeholder="Adicionar tag..."
-            disabled={isSubmitting}
+            value={tagInput}
+            onChange={(e) => setTagInput(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && (e.preventDefault(), handleAddTag())}
+            className="form-input bg-slate-700 border-slate-600 text-white flex-grow"
+            placeholder="Adicionar tag"
           />
           <button
             type="button"
-            className="btn btn-outline"
-            onClick={addTag}
-            disabled={!currentTag.trim() || isSubmitting}
+            onClick={handleAddTag}
+            className="btn bg-blue-600 hover:bg-blue-700 text-white flex items-center gap-1"
           >
-            <FiPlus />
+            <FiPlus size={18} />
+            <span>Adicionar</span>
           </button>
         </div>
-        <div className="flex flex-wrap gap-2 mt-2">
+
+        <div className="flex flex-wrap gap-2 mt-3">
           {tags.map((tag) => (
-            <div key={tag} className="tag flex items-center gap-1">
+            <div
+              key={tag}
+              className="inline-flex items-center py-1 px-2 bg-blue-900/30 text-blue-300 rounded-full text-sm"
+            >
+              <FiTag size={14} className="mr-1" />
               {tag}
               <button
                 type="button"
-                style={{ color: "var(--color-text-tertiary)" }}
-                className="hover:text-red-500"
-                onClick={() => removeTag(tag)}
-                disabled={isSubmitting}
+                onClick={() => handleRemoveTag(tag)}
+                className="ml-1 text-blue-300 hover:text-blue-100"
               >
                 <FiX size={14} />
               </button>
             </div>
           ))}
+          {tags.length === 0 && <span className="text-slate-400 text-sm">Nenhuma tag adicionada</span>}
         </div>
       </div>
 
+      {/* Imagem de capa */}
       <div className="form-group">
-        <label className="form-label">
-          Imagem de Capa <span style={{ color: "var(--color-error)" }}>*</span>
-        </label>
-        <input
-          ref={coverInputRef}
-          type="file"
-          accept="image/*"
-          onChange={handleCoverImageChange}
-          className="hidden"
-          disabled={isSubmitting}
-        />
-        {coverImagePreview ? (
-          <div className="relative">
-            <img
-              src={coverImagePreview || "/placeholder.svg"}
-              alt="Preview"
-              className="w-full h-48 object-cover rounded-md"
-            />
-            <button
-              type="button"
-              className="absolute top-2 right-2 p-1 rounded-full"
-              style={{ backgroundColor: "var(--color-error)", color: "white" }}
-              onClick={() => {
-                setCoverImage(null)
-                setCoverImagePreview(null)
-              }}
-              disabled={isSubmitting}
-            >
-              <FiX size={16} />
-            </button>
-          </div>
-        ) : (
-          <button
-            type="button"
-            className="w-full h-48 border-2 border-dashed rounded-md flex flex-col items-center justify-center"
-            style={{ borderColor: "var(--color-border)" }}
-            onClick={() => coverInputRef.current?.click()}
-            disabled={isSubmitting}
+        <label className="form-label text-white">Imagem de capa</label>
+        <div className="mt-2">
+          {coverImagePreview ? (
+            <div className="relative mb-4">
+              <img
+                src={coverImagePreview || "/placeholder.svg"}
+                alt="Preview"
+                className="w-full h-48 object-cover rounded-lg"
+              />
+              <button
+                type="button"
+                onClick={() => {
+                  setCoverImage(null)
+                  setCoverImagePreview("")
+                  setCoverImageUrl("")
+                }}
+                className="absolute top-2 right-2 bg-red-600 text-white p-1 rounded-full"
+              >
+                <FiX size={16} />
+              </button>
+            </div>
+          ) : (
+            <div className="border-2 border-dashed border-slate-600 rounded-lg p-8 text-center mb-4">
+              <FiUpload size={32} className="mx-auto mb-2 text-slate-400" />
+              <p className="text-slate-300 mb-2">Clique para fazer upload da imagem de capa</p>
+              <p className="text-slate-400 text-sm">JPG, PNG ou GIF (máx. 5MB)</p>
+            </div>
+          )}
+
+          <input type="file" id="cover-image" accept="image/*" onChange={handleCoverImageChange} className="hidden" />
+          <label
+            htmlFor="cover-image"
+            className="btn bg-slate-700 hover:bg-slate-600 text-white flex items-center gap-2 justify-center cursor-pointer"
           >
-            <FiUpload size={24} className="mb-2" />
-            <span>Clique para fazer upload</span>
-            <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
-              JPG, PNG ou GIF (máx. 5MB)
-            </span>
-          </button>
-        )}
+            <FiUpload size={18} />
+            <span>{coverImagePreview ? "Trocar imagem" : "Selecionar imagem"}</span>
+          </label>
+        </div>
       </div>
 
+      {/* Upload do HTML do Notion */}
       <div className="form-group">
-        <label className="form-label">
-          Arquivo HTML do Notion <span style={{ color: "var(--color-error)" }}>*</span>
+        <label className="form-label text-white">
+          Conteúdo do Notion <span className="text-red-500">*</span>
         </label>
-        <input
-          ref={htmlInputRef}
-          type="file"
-          accept=".html,text/html"
-          onChange={handleHtmlFileChange}
-          className="hidden"
-          disabled={isSubmitting}
-        />
+        <EnsureStorageBucket bucketName="content">
+          <HtmlUploader onProcessed={handleHtmlProcessed} />
+        </EnsureStorageBucket>
+      </div>
+
+      {/* Botão de envio */}
+      <div className="flex justify-end">
         <button
-          type="button"
-          className="w-full p-4 border-2 border-dashed rounded-md flex flex-col items-center justify-center"
-          style={{
-            borderColor: "var(--color-border)",
-            backgroundColor: htmlFile ? "rgba(59, 130, 246, 0.1)" : "",
-          }}
-          onClick={() => htmlInputRef.current?.click()}
-          disabled={isSubmitting}
+          type="submit"
+          className="btn bg-blue-600 hover:bg-blue-700 text-white py-3 px-6 flex items-center gap-2"
+          disabled={isSubmitting || isUploading}
         >
-          {htmlFile ? (
+          {isSubmitting || isUploading ? (
             <>
-              <FiSave size={24} className="mb-2" style={{ color: "var(--color-primary)" }} />
-              <span className="font-medium">{htmlFile.name}</span>
-              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
-                {(htmlFile.size / 1024 / 1024).toFixed(2)} MB
-              </span>
+              <FiLoader size={18} className="animate-spin" />
+              <span>{isUploading ? "Enviando imagem..." : "Salvando..."}</span>
             </>
           ) : (
             <>
-              <FiUpload size={24} className="mb-2" />
-              <span>Clique para fazer upload do HTML exportado do Notion</span>
-              <span className="text-sm" style={{ color: "var(--color-text-tertiary)" }}>
-                Apenas arquivos HTML (máx. 10MB)
-              </span>
+              <FiSave size={18} />
+              <span>{initialData ? "Atualizar post" : "Publicar post"}</span>
             </>
           )}
-        </button>
-        <p className="text-sm mt-1" style={{ color: "var(--color-text-tertiary)" }}>
-          Exporte a página do Notion como HTML e faça upload do arquivo aqui
-        </p>
-      </div>
-
-      <div className="flex justify-end">
-        <button type="submit" className="btn btn-primary" disabled={isSubmitting}>
-          {isSubmitting ? "Salvando..." : "Salvar Post"}
         </button>
       </div>
     </form>
