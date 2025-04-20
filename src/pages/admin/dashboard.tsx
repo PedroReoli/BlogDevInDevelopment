@@ -5,7 +5,7 @@ import { FiLogOut, FiList, FiEdit2, FiGrid, FiSettings, FiUser, FiHome } from "r
 import { useAuth } from "@/contexts/auth-context"
 import { Link } from "react-router-dom"
 import PostForm from "@/components/admin/post-form"
-import WysiwygPostForm from "@/components/admin/wysiwyg-post-form"
+// import WysiwygPostForm from "@/components/admin/wysiwyg-post-form"
 import PostList from "@/components/admin/post-list"
 import toast from "react-hot-toast"
 import SettingsPanel from "@/components/admin/settings-panel"
@@ -62,18 +62,7 @@ const AdminDashboard = () => {
             }`}
             onClick={() => setActiveTab("create-wysiwyg")}
           >
-            <FiEdit2 size={18} />
-            <span className="hidden sm:inline">Editor WYSIWYG</span>
-            <span className="sm:hidden">Editor</span>
-          </button>
-          <button
-            className={`py-3 px-4 rounded-md flex items-center gap-2 transition-colors ${
-              activeTab === "create-notion"
-                ? "bg-blue-600 text-white"
-                : "text-slate-300 hover:bg-slate-700 hover:text-white"
-            }`}
-            onClick={() => setActiveTab("create-notion")}
-          >
+            
             <FiEdit2 size={18} />
             <span className="hidden sm:inline">Upload Notion</span>
             <span className="sm:hidden">Notion</span>
@@ -118,8 +107,8 @@ const AdminDashboard = () => {
             </div>
           ) : (
             <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Criar Novo Post</h2>
-              <WysiwygPostForm onSuccess={() => setActiveTab("list")} />
+              <h2 className="text-2xl font-bold text-white mb-6">Editor WYSIWYG</h2>
+              <PostForm onSuccess={() => setActiveTab("list")} />
             </div>
           )}
         </div>

@@ -5,7 +5,7 @@ import { useParams, useNavigate } from "react-router-dom"
 import { FiArrowLeft, FiLoader, FiAlertCircle } from "react-icons/fi"
 import { PostService } from "@/services/post-service"
 import toast from "react-hot-toast"
-import WysiwygPostForm from "@/components/admin/wysiwyg-post-form"
+// import WysiwygPostForm from "@/components/admin/wysiwyg-post-form"
 import type { Database } from "@/types/supabase"
 
 type Post = Database["public"]["Tables"]["posts"]["Row"]
@@ -90,11 +90,6 @@ const EditPost = () => {
         </div>
       </div>
 
-      <div className="bg-slate-800 rounded-lg shadow-lg overflow-hidden">
-        <div className="p-6">
-          <WysiwygPostForm post={post} isEditing={true} onSuccess={handleSuccess} />
-        </div>
-      </div>
     </div>
   )
 }
