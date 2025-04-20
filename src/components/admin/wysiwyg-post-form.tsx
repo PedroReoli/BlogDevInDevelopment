@@ -314,7 +314,7 @@ const WysiwygPostForm = ({ onSuccess }: WysiwygPostFormProps) => {
             </p>
           </div>
 
-          <div className="form-group">
+          <div className="form-group w-full">
             <label htmlFor="excerpt" className="form-label text-white flex items-center justify-between">
               <span>
                 Resumo <span className="text-red-500">*</span>
@@ -323,7 +323,7 @@ const WysiwygPostForm = ({ onSuccess }: WysiwygPostFormProps) => {
             </label>
             <textarea
               id="excerpt"
-              className={`form-textarea bg-slate-700 border-slate-600 text-white ${formErrors.excerpt ? "border-red-500" : ""}`}
+              className={`form-textarea bg-slate-700 border-slate-600 text-white w-full ${formErrors.excerpt ? "border-red-500" : ""}`}
               value={excerpt}
               onChange={(e) => {
                 setExcerpt(e.target.value)

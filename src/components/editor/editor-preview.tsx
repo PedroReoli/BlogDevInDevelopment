@@ -45,12 +45,13 @@ const EditorPreview = ({ content, title }: EditorPreviewProps) => {
     }
   }, [content])
 
+  // Modificar o estilo para ser mais compacto
   return (
-    <div className="preview-container bg-slate-800 rounded-md p-6 overflow-auto">
-      {title && <h1 className="text-3xl font-bold mb-6 text-white">{title}</h1>}
+    <div className="preview-container bg-slate-800 rounded-md p-4 overflow-auto max-h-[500px]">
+      {title && <h1 className="text-2xl font-bold mb-4 text-white">{title}</h1>}
       <div
         ref={previewRef}
-        className="prose prose-invert prose-lg max-w-none prose-headings:font-heading prose-headings:text-white prose-p:text-slate-300 prose-a:text-blue-400 prose-blockquote:border-blue-500 prose-code:bg-slate-900 prose-code:text-blue-300"
+        className="prose prose-invert prose-sm max-w-none prose-headings:font-heading prose-headings:text-white prose-p:text-slate-300 prose-a:text-blue-400 prose-blockquote:border-blue-500 prose-code:bg-slate-900 prose-code:text-blue-300"
       />
     </div>
   )

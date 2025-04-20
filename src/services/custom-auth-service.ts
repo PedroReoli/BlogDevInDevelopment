@@ -42,14 +42,15 @@ export const CustomAuthService = {
   },
 
   getCurrentUser(): AdminUser | null {
-    // Obter usuário do localStorage
-    const userStr = localStorage.getItem("admin_user")
-    if (!userStr) return null
-
     try {
+      // Obter usuário do localStorage
+      const userStr = localStorage.getItem("admin_user")
+      if (!userStr) return null
+
       return JSON.parse(userStr) as AdminUser
     } catch (error) {
       console.error("Erro ao obter usuário atual:", error)
+      localStorage.removeItem("admin_user") // Limpar dados corrompidos
       return null
     }
   },

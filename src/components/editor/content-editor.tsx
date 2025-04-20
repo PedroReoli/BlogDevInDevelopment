@@ -44,58 +44,58 @@ const ContentEditor = ({ initialValue = "", onChange, title }: ContentEditorProp
 
   return (
     <div className="content-editor bg-slate-900 rounded-lg border border-slate-700 overflow-hidden">
-      <div className="flex border-b border-slate-700 bg-slate-800">
+      <div className="flex border-b border-slate-700 bg-slate-800 py-1 px-2">
         <button
           type="button"
-          className={`py-3 px-4 flex items-center gap-2 border-b-2 transition-colors ${
+          className={`py-1.5 px-3 flex items-center gap-1.5 border-b-2 transition-colors text-sm ${
             activeTab === "edit"
               ? "border-blue-500 text-blue-500"
               : "border-transparent text-slate-400 hover:text-slate-200"
           }`}
           onClick={() => setActiveTab("edit")}
         >
-          <FiEdit size={18} />
+          <FiEdit size={16} />
           <span>Editar</span>
         </button>
         <button
           type="button"
-          className={`py-3 px-4 flex items-center gap-2 border-b-2 transition-colors ${
+          className={`py-1.5 px-3 flex items-center gap-1.5 border-b-2 transition-colors text-sm ${
             activeTab === "preview"
               ? "border-blue-500 text-blue-500"
               : "border-transparent text-slate-400 hover:text-slate-200"
           }`}
           onClick={() => setActiveTab("preview")}
         >
-          <FiEye size={18} />
+          <FiEye size={16} />
           <span>Visualizar</span>
         </button>
 
-        <div className="ml-auto flex items-center px-4">
+        <div className="ml-auto flex items-center px-2">
           {hasChanges && (
             <>
-              <span className="text-amber-400 text-sm mr-3">Alterações não salvas</span>
+              <span className="text-amber-400 text-xs mr-2">Alterações não salvas</span>
               <button
                 type="button"
                 onClick={handleRevert}
-                className="p-2 rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-700 mr-2"
+                className="p-1.5 rounded-md text-slate-400 hover:text-slate-200 hover:bg-slate-700 mr-1"
                 title="Reverter alterações"
               >
-                <FiRotateCcw size={16} />
+                <FiRotateCcw size={14} />
               </button>
               <button
                 type="button"
                 onClick={handleSave}
-                className="p-2 rounded-md text-blue-400 hover:text-blue-300 hover:bg-slate-700"
+                className="p-1.5 rounded-md text-blue-400 hover:text-blue-300 hover:bg-slate-700"
                 title="Salvar temporariamente"
               >
-                <FiSave size={16} />
+                <FiSave size={14} />
               </button>
             </>
           )}
         </div>
       </div>
 
-      <div className="editor-content p-4">
+      <div className="editor-content p-2">
         {activeTab === "edit" ? (
           <EnsureStorageBucket bucketName="editor-images">
             <WysiwygEditor value={content} onChange={handleChange} />

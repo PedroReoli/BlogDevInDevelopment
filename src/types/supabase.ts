@@ -42,17 +42,46 @@ export interface Database {
         Row: {
           id: string
           email: string
+          password: string
           created_at: string
         }
         Insert: {
           id?: string
           email: string
+          password: string
           created_at?: string
         }
         Update: {
           id?: string
           email?: string
+          password?: string
           created_at?: string
+        }
+      }
+      user_settings: {
+        Row: {
+          id: string
+          name: string
+          email: string
+          bio: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          name: string
+          email: string
+          bio?: string | null
+          created_at?: string
+          updated_at?: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          email?: string
+          bio?: string | null
+          created_at?: string
+          updated_at?: string
         }
       }
     }

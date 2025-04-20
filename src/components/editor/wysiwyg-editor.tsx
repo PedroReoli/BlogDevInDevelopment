@@ -121,79 +121,98 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
 
   // Estilos personalizados para o tema escuro
   const darkThemeStyles = `
-    .ql-snow.ql-toolbar, .ql-snow.ql-container {
-      border-color: #334155;
-    }
-    .ql-toolbar.ql-snow {
-      background-color: #1e293b;
-      border-top-left-radius: 0.375rem;
-      border-top-right-radius: 0.375rem;
-    }
-    .ql-container.ql-snow {
-      background-color: #0f172a;
-      border-bottom-left-radius: 0.375rem;
-      border-bottom-right-radius: 0.375rem;
-      color: #f8fafc;
-      font-family: var(--font-family-body);
-    }
-    .ql-editor {
-      min-height: 200px;
-    }
-    .ql-editor.ql-blank::before {
-      color: #94a3b8;
-      font-style: normal;
-    }
-    .ql-snow .ql-stroke {
-      stroke: #94a3b8;
-    }
-    .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
-      fill: #94a3b8;
-    }
-    .ql-snow .ql-picker {
-      color: #94a3b8;
-    }
-    .ql-snow .ql-picker-options {
-      background-color: #1e293b;
-      border-color: #334155;
-    }
-    .ql-snow .ql-tooltip {
-      background-color: #1e293b;
-      border-color: #334155;
-      color: #f8fafc;
-      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-    }
-    .ql-snow .ql-tooltip input[type=text] {
-      background-color: #0f172a;
-      border-color: #334155;
-      color: #f8fafc;
-    }
-    .ql-snow a {
-      color: #60a5fa;
-    }
-    .ql-snow .ql-picker-label::before, .ql-snow .ql-picker.ql-expanded .ql-picker-label::before {
-      color: #94a3b8;
-    }
-    .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
-      color: #f8fafc;
-      font-family: var(--font-family-heading);
-    }
-    .ql-editor pre.ql-syntax {
-      background-color: #0f172a;
-      color: #f8fafc;
-      border: 1px solid #334155;
-      border-radius: 0.375rem;
-    }
-    .ql-editor blockquote {
-      border-left: 4px solid #3b82f6;
-      padding-left: 16px;
-      color: #cbd5e1;
-    }
-    .ql-editor img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 0.375rem;
-    }
-  `
+  .ql-snow.ql-toolbar, .ql-snow.ql-container {
+    border-color: #334155;
+  }
+  .ql-toolbar.ql-snow {
+    background-color: #1e293b;
+    border-top-left-radius: 0.375rem;
+    border-top-right-radius: 0.375rem;
+    padding: 4px;
+  }
+  .ql-container.ql-snow {
+    background-color: #0f172a;
+    border-bottom-left-radius: 0.375rem;
+    border-bottom-right-radius: 0.375rem;
+    color: #f8fafc;
+    font-family: var(--font-family-body);
+  }
+  .ql-editor {
+    min-height: 150px;
+    padding: 8px 12px;
+  }
+  .ql-editor.ql-blank::before {
+    color: #94a3b8;
+    font-style: normal;
+    left: 12px;
+    right: 12px;
+  }
+  .ql-snow .ql-stroke {
+    stroke: #94a3b8;
+  }
+  .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+    fill: #94a3b8;
+  }
+  .ql-snow .ql-picker {
+    color: #94a3b8;
+    font-size: 13px;
+    height: 22px;
+    line-height: 22px;
+  }
+  .ql-snow .ql-picker-options {
+    background-color: #1e293b;
+    border-color: #334155;
+  }
+  .ql-snow .ql-tooltip {
+    background-color: #1e293b;
+    border-color: #334155;
+    color: #f8fafc;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  }
+  .ql-snow .ql-tooltip input[type=text] {
+    background-color: #0f172a;
+    border-color: #334155;
+    color: #f8fafc;
+  }
+  .ql-snow a {
+    color: #60a5fa;
+  }
+  .ql-snow .ql-picker-label::before, .ql-snow .ql-picker.ql-expanded .ql-picker-label::before {
+    color: #94a3b8;
+  }
+  .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+    color: #f8fafc;
+    font-family: var(--font-family-heading);
+    margin-top: 0.5em;
+    margin-bottom: 0.3em;
+  }
+  .ql-editor pre.ql-syntax {
+    background-color: #0f172a;
+    color: #f8fafc;
+    border: 1px solid #334155;
+    border-radius: 0.375rem;
+    padding: 8px;
+  }
+  .ql-editor blockquote {
+    border-left: 4px solid #3b82f6;
+    padding-left: 12px;
+    color: #cbd5e1;
+    margin: 4px 0;
+  }
+  .ql-editor img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 0.375rem;
+  }
+  .ql-toolbar.ql-snow .ql-formats {
+    margin-right: 8px;
+  }
+  .ql-snow.ql-toolbar button {
+    height: 22px;
+    width: 22px;
+    padding: 2px;
+  }
+`
 
   return (
     <div
@@ -208,21 +227,21 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
     >
       <style>{darkThemeStyles}</style>
 
-      <div className="flex justify-end mb-2">
+      <div className="flex justify-end mb-1">
         <button
           type="button"
           onClick={toggleFullscreen}
-          className="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-white transition-colors"
+          className="p-1.5 rounded-md bg-slate-800 hover:bg-slate-700 text-white transition-colors"
           aria-label={isFullscreen ? "Sair do modo tela cheia" : "Modo tela cheia"}
           title={isFullscreen ? "Sair do modo tela cheia" : "Modo tela cheia"}
         >
-          {isFullscreen ? <FiMinimize2 size={18} /> : <FiMaximize2 size={18} />}
+          {isFullscreen ? <FiMinimize2 size={16} /> : <FiMaximize2 size={16} />}
         </button>
       </div>
 
       {isLoading ? (
-        <div className="flex items-center justify-center h-96 bg-slate-800 rounded-md border border-slate-700">
-          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div className="flex items-center justify-center h-48 bg-slate-800 rounded-md border border-slate-700">
+          <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-b-2 border-blue-500"></div>
         </div>
       ) : (
         <ReactQuill
@@ -235,7 +254,7 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
           placeholder={placeholder}
           style={{
             height: isFullscreen ? "calc(100vh - 120px)" : "auto",
-            maxHeight: isFullscreen ? "none" : "600px",
+            maxHeight: isFullscreen ? "none" : "500px",
           }}
         />
       )}

@@ -8,6 +8,7 @@ import PostForm from "@/components/admin/post-form"
 import WysiwygPostForm from "@/components/admin/wysiwyg-post-form"
 import PostList from "@/components/admin/post-list"
 import toast from "react-hot-toast"
+import SettingsPanel from "@/components/admin/settings-panel"
 
 type Tab = "create-wysiwyg" | "create-notion" | "list" | "settings"
 
@@ -100,30 +101,25 @@ const AdminDashboard = () => {
 
         {/* Content */}
         <div className="bg-slate-800 rounded-lg shadow-lg overflow-hidden">
-          {activeTab === "create-wysiwyg" ? (
+          {activeTab === "settings" ? (
             <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Criar Novo Post</h2>
-              <WysiwygPostForm onSuccess={() => setActiveTab("list")} />
-            </div>
-          ) : activeTab === "create-notion" ? (
-            <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Importar do Notion</h2>
-              <PostForm onSuccess={() => setActiveTab("list")} />
+              <h2 className="text-2xl font-bold text-white mb-6">Configurações</h2>
+              <SettingsPanel />
             </div>
           ) : activeTab === "list" ? (
             <div className="p-6">
               <h2 className="text-2xl font-bold text-white mb-6">Gerenciar Posts</h2>
               <PostList />
             </div>
+          ) : activeTab === "create-notion" ? (
+            <div className="p-6">
+              <h2 className="text-2xl font-bold text-white mb-6">Importar do Notion</h2>
+              <PostForm onSuccess={() => setActiveTab("list")} />
+            </div>
           ) : (
             <div className="p-6">
-              <h2 className="text-2xl font-bold text-white mb-6">Configurações</h2>
-              <div className="bg-slate-700 p-6 rounded-lg text-center">
-                <p className="text-slate-300 mb-4">Esta seção está em desenvolvimento.</p>
-                <button className="btn bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-md">
-                  Configurações Futuras
-                </button>
-              </div>
+              <h2 className="text-2xl font-bold text-white mb-6">Criar Novo Post</h2>
+              <WysiwygPostForm onSuccess={() => setActiveTab("list")} />
             </div>
           )}
         </div>
