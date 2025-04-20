@@ -1,17 +1,10 @@
 "use client"
 
-import { useState, useEffect, useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import ReactQuill from "react-quill"
 import "react-quill/dist/quill.snow.css"
-import hljs from "highlight.js"
-import "highlight.js/styles/github.css"
 import { FiMaximize2, FiMinimize2 } from "react-icons/fi"
-import ImageUploadModal from "./image-upload-modal"
-
-// Configurar highlight.js para o Quill
-hljs.configure({
-  languages: ["javascript", "typescript", "html", "css", "python", "java", "php"],
-})
+import { supabase } from "@/lib/supabase"
 
 interface WysiwygEditorProps {
   value: string
@@ -20,50 +13,72 @@ interface WysiwygEditorProps {
 }
 
 const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }: WysiwygEditorProps) => {
-  const [editorValue, setEditorValue] = useState(value)
-  const [isFullscreen, setIsFullscreen] = useState(false)
-  const [showImageModal, setShowImageModal] = useState(false)
   const quillRef = useRef<ReactQuill>(null)
+  const [isFullscreen, setIsFullscreen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
-    setEditorValue(value)
-  }, [value])
+    // Simular um pequeno atraso para garantir que o editor seja inicializado corretamente
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 300)
 
-  const handleChange = (content: string) => {
-    setEditorValue(content)
-    onChange(content)
-  }
+    return () => clearTimeout(timer)
+  }, [])
 
   const toggleFullscreen = () => {
     setIsFullscreen(!isFullscreen)
   }
 
-  // Função para inserir imagem no editor
-  const insertImage = (url: string, alt = "") => {
-    const editor = quillRef.current?.getEditor()
-    if (editor) {
-      // Salvar a posição atual do cursor
-      const range = editor.getSelection(true)
+  // Função para fazer upload de imagens para o Supabase
+  const imageHandler = () => {
+    const input = document.createElement("input")
+    input.setAttribute("type", "file")
+    input.setAttribute("accept", "image/*")
+    input.click()
 
-      // Inserir a imagem na posição do cursor
-      editor.insertEmbed(range.index, "image", url)
+    input.onchange = async () => {
+      if (input.files && input.files[0]) {
+        const file = input.files[0]
+        const editor = quillRef.current?.getEditor()
+        if (!editor) return
 
-      // Se tiver texto alternativo, adicionar o atributo alt
-      if (alt) {
-        editor.formatText(range.index, 1, { alt })
+        try {
+          // Mostrar indicador de carregamento no editor
+          const range = editor.getSelection(true)
+          editor.insertText(range.index, "Carregando imagem...")
+
+          // Gerar nome único para o arquivo
+          const fileExt = file.name.split(".").pop() || "jpg"
+          const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`
+          const filePath = `editor-images/${fileName}`
+
+          // Fazer upload para o Supabase Storage
+          const { error } = await supabase.storage.from("editor-images").upload(filePath, file)
+
+          if (error) {
+            throw error
+          }
+
+          // Obter URL pública da imagem
+          const { data: urlData } = supabase.storage.from("editor-images").getPublicUrl(filePath)
+          const imageUrl = urlData.publicUrl
+
+          // Remover o texto "Carregando imagem..." e inserir a imagem
+          editor.deleteText(range.index, "Carregando imagem...".length)
+          editor.insertEmbed(range.index, "image", imageUrl)
+          editor.setSelection(range.index + 1, 0)
+        } catch (error) {
+          console.error("Erro ao fazer upload da imagem:", error)
+          const range = editor.getSelection(true)
+          editor.deleteText(range.index, "Carregando imagem...".length)
+          editor.insertText(range.index, "Erro ao carregar imagem.")
+        }
       }
-
-      // Mover o cursor para depois da imagem
-      editor.setSelection(range.index + 1, 0)
     }
   }
 
-  // Handler personalizado para o botão de imagem
-  const imageHandler = () => {
-    setShowImageModal(true)
-  }
-
-  // Módulos e formatos do Quill
+  // Configuração dos módulos do Quill
   const modules = {
     toolbar: {
       container: [
@@ -72,8 +87,7 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
         [{ list: "ordered" }, { list: "bullet" }],
         [{ indent: "-1" }, { indent: "+1" }],
         [{ align: [] }],
-        ["link", "image", "video"],
-        ["blockquote", "code-block"],
+        ["link", "image", "code-block", "blockquote"],
         [{ color: [] }, { background: [] }],
         ["clean"],
       ],
@@ -81,11 +95,12 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
         image: imageHandler,
       },
     },
-    syntax: {
-      highlight: (text: string) => hljs.highlightAuto(text).value,
+    clipboard: {
+      matchVisual: false,
     },
   }
 
+  // Formatos suportados
   const formats = [
     "header",
     "bold",
@@ -98,12 +113,87 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
     "align",
     "link",
     "image",
-    "video",
-    "blockquote",
     "code-block",
+    "blockquote",
     "color",
     "background",
   ]
+
+  // Estilos personalizados para o tema escuro
+  const darkThemeStyles = `
+    .ql-snow.ql-toolbar, .ql-snow.ql-container {
+      border-color: #334155;
+    }
+    .ql-toolbar.ql-snow {
+      background-color: #1e293b;
+      border-top-left-radius: 0.375rem;
+      border-top-right-radius: 0.375rem;
+    }
+    .ql-container.ql-snow {
+      background-color: #0f172a;
+      border-bottom-left-radius: 0.375rem;
+      border-bottom-right-radius: 0.375rem;
+      color: #f8fafc;
+      font-family: var(--font-family-body);
+    }
+    .ql-editor {
+      min-height: 200px;
+    }
+    .ql-editor.ql-blank::before {
+      color: #94a3b8;
+      font-style: normal;
+    }
+    .ql-snow .ql-stroke {
+      stroke: #94a3b8;
+    }
+    .ql-snow .ql-fill, .ql-snow .ql-stroke.ql-fill {
+      fill: #94a3b8;
+    }
+    .ql-snow .ql-picker {
+      color: #94a3b8;
+    }
+    .ql-snow .ql-picker-options {
+      background-color: #1e293b;
+      border-color: #334155;
+    }
+    .ql-snow .ql-tooltip {
+      background-color: #1e293b;
+      border-color: #334155;
+      color: #f8fafc;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
+    .ql-snow .ql-tooltip input[type=text] {
+      background-color: #0f172a;
+      border-color: #334155;
+      color: #f8fafc;
+    }
+    .ql-snow a {
+      color: #60a5fa;
+    }
+    .ql-snow .ql-picker-label::before, .ql-snow .ql-picker.ql-expanded .ql-picker-label::before {
+      color: #94a3b8;
+    }
+    .ql-editor h1, .ql-editor h2, .ql-editor h3, .ql-editor h4, .ql-editor h5, .ql-editor h6 {
+      color: #f8fafc;
+      font-family: var(--font-family-heading);
+    }
+    .ql-editor pre.ql-syntax {
+      background-color: #0f172a;
+      color: #f8fafc;
+      border: 1px solid #334155;
+      border-radius: 0.375rem;
+    }
+    .ql-editor blockquote {
+      border-left: 4px solid #3b82f6;
+      padding-left: 16px;
+      color: #cbd5e1;
+    }
+    .ql-editor img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 0.375rem;
+    }
+  `
 
   return (
     <div
@@ -112,96 +202,43 @@ const WysiwygEditor = ({ value, onChange, placeholder = "Comece a escrever..." }
         position: isFullscreen ? "fixed" : "relative",
         inset: isFullscreen ? "0" : "auto",
         zIndex: isFullscreen ? "50" : "auto",
-        backgroundColor: isFullscreen ? "var(--color-bg)" : "transparent",
+        backgroundColor: isFullscreen ? "var(--color-background)" : "transparent",
         padding: isFullscreen ? "1rem" : "0",
-        overflow: isFullscreen ? "auto" : "visible",
-        border: !isFullscreen ? "1px solid var(--color-border)" : "none",
-        borderRadius: !isFullscreen ? "0.375rem" : "0",
       }}
     >
+      <style>{darkThemeStyles}</style>
+
       <div className="flex justify-end mb-2">
         <button
           type="button"
           onClick={toggleFullscreen}
-          className="p-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+          className="p-2 rounded-md bg-slate-800 hover:bg-slate-700 text-white transition-colors"
           aria-label={isFullscreen ? "Sair do modo tela cheia" : "Modo tela cheia"}
           title={isFullscreen ? "Sair do modo tela cheia" : "Modo tela cheia"}
         >
           {isFullscreen ? <FiMinimize2 size={18} /> : <FiMaximize2 size={18} />}
         </button>
       </div>
-      <ReactQuill
-        ref={quillRef}
-        theme="snow"
-        value={editorValue}
-        onChange={handleChange}
-        modules={modules}
-        formats={formats}
-        placeholder={placeholder}
-        className="editor-quill"
-      />
 
-      {/* Modal de upload de imagem */}
-      {showImageModal && <ImageUploadModal onClose={() => setShowImageModal(false)} onImageInsert={insertImage} />}
-
-      <style>
-        {`
-        .editor-quill {
-          height: ${isFullscreen ? "calc(100vh - 120px)" : "400px"};
-        }
-        .ql-container {
-          font-family: var(--font-family-body);
-          font-size: var(--font-size-md);
-          height: calc(100% - 42px);
-          overflow-y: auto;
-        }
-        .ql-editor {
-          min-height: ${isFullscreen ? "calc(100vh - 170px)" : "350px"};
-        }
-        .ql-toolbar {
-          border-top-left-radius: 0.375rem;
-          border-top-right-radius: 0.375rem;
-          background-color: var(--color-foreground);
-          border-color: var(--color-border);
-        }
-        .ql-container {
-          border-bottom-left-radius: 0.375rem;
-          border-bottom-right-radius: 0.375rem;
-          border-color: var(--color-border);
-        }
-        .ql-editor.ql-blank::before {
-          color: var(--color-text-tertiary);
-        }
-        .ql-snow .ql-stroke {
-          stroke: var(--color-text-primary);
-        }
-        .ql-snow .ql-fill {
-          fill: var(--color-text-primary);
-        }
-        .ql-snow .ql-picker {
-          color: var(--color-text-primary);
-        }
-        .ql-snow .ql-picker-options {
-          background-color: var(--color-card);
-          border-color: var(--color-border);
-        }
-        .ql-snow .ql-tooltip {
-          background-color: var(--color-card);
-          border-color: var(--color-border);
-          color: var(--color-text-primary);
-          box-shadow: var(--shadow-md);
-        }
-        .ql-snow .ql-tooltip input[type=text] {
-          border-color: var(--color-border);
-          color: var(--color-text-primary);
-          background-color: var(--color-background);
-        }
-        .hljs {
-          background-color: var(--color-foreground);
-          border-radius: 0.375rem;
-        }
-        `}
-      </style>
+      {isLoading ? (
+        <div className="flex items-center justify-center h-96 bg-slate-800 rounded-md border border-slate-700">
+          <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        </div>
+      ) : (
+        <ReactQuill
+          ref={quillRef}
+          theme="snow"
+          value={value}
+          onChange={onChange}
+          modules={modules}
+          formats={formats}
+          placeholder={placeholder}
+          style={{
+            height: isFullscreen ? "calc(100vh - 120px)" : "auto",
+            maxHeight: isFullscreen ? "none" : "600px",
+          }}
+        />
+      )}
     </div>
   )
 }
