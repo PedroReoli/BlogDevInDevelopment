@@ -2,29 +2,23 @@
 
 import { useState, useEffect, type FormEvent } from "react"
 import { Link, useLocation, useNavigate } from "react-router-dom"
-import { FiSearch, FiMenu, FiX } from "react-icons/fi"
-import { useAuth } from "@/contexts/auth-context"
-import ThemeToggle from "@/components/theme/theme-toggle"
+import { FiMenu, FiX, FiSearch } from "react-icons/fi"
+import { useCustomAuth } from "@/contexts/custom-auth-context"
+import Logo from "@/components/common/logo"
+import { useMobile } from "@/hooks/use-mobile"
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
-  const [isScrolled, setIsScrolled] = useState(false)
   const [searchQuery, setSearchQuery] = useState("")
-  const { user } = useAuth()
+  const { user } = useCustomAuth()
+  const { isMobile } = useMobile()
   const location = useLocation()
   const navigate = useNavigate()
 
-  const toggleMenu = () => {
-    setIsMenuOpen(!isMenuOpen)
-  }
-
-  const closeMenu = () => {
+  // Fechar o menu ao mudar de página
+  useEffect(() => {
     setIsMenuOpen(false)
-  }
-
-  const isActive = (path: string) => {
-    return location.pathname === path
-  }
+  }, [location])
 
   const handleSearch = (e: FormEvent) => {
     e.preventDefault()
@@ -34,168 +28,127 @@ const Header = () => {
     }
   }
 
-  useEffect(() => {
-    const handleScroll = () => {
-      if (window.scrollY > 10) {
-        setIsScrolled(true)
-      } else {
-        setIsScrolled(false)
-      }
-    }
-
-    window.addEventListener("scroll", handleScroll)
-    return () => {
-      window.removeEventListener("scroll", handleScroll)
-    }
-  }, [])
-
   return (
-    <header
-      className={`sticky top-0 z-40 w-full transition-all duration-300 ${
-        isScrolled ? "bg-slate-900 shadow-md" : "bg-slate-900"
-      }`}
-    >
-      <div className="container mx-auto px-4 py-4">
-        <div className="flex items-center justify-between">
-          {/* Logo e nome (esquerda) */}
-          <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
-            <img src="/images/logo.svg" alt="Logo" className="w-8 h-8" />
-            <span className="text-xl font-bold text-blue-400 hidden sm:inline">DevEmDesenvolvimento</span>
-          </Link>
+    <header className="sticky top-0 z-50 bg-[#0f172a] border-b border-gray-800">
+      <div className="container flex items-center justify-between h-16 px-4 md:px-6">
+        {/* Logo */}
+        <Logo />
 
-          {/* Barra de pesquisa (meio) - visível apenas em telas médias e grandes */}
-          <div className="hidden md:block flex-grow max-w-md mx-4">
-            <form onSubmit={handleSearch} className="relative">
+        {/* Search Bar - Visível apenas em desktop */}
+        {!isMobile && (
+          <form onSubmit={handleSearch} className="flex-1 max-w-md mx-4">
+            <div className="relative">
               <input
                 type="text"
                 placeholder="Buscar posts..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full py-2 px-4 pr-10 rounded-full border border-slate-700 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full py-2 px-4 pl-10 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
               <button
                 type="submit"
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-blue-400"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 aria-label="Buscar"
               >
                 <FiSearch size={18} />
               </button>
-            </form>
-          </div>
+            </div>
+          </form>
+        )}
 
-          {/* Navegação e theme toggle (direita) */}
-          <div className="flex items-center gap-4">
-            <ThemeToggle />
-
-            <button
-              className="md:hidden p-2 rounded-full hover:bg-slate-800"
-              onClick={toggleMenu}
-              aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
-            >
-              {isMenuOpen ? <FiX size={24} className="text-white" /> : <FiMenu size={24} className="text-white" />}
-            </button>
-
-            <nav
-              className={`
-                fixed md:static top-0 right-0 h-screen md:h-auto w-full md:w-auto
-                bg-slate-900 md:bg-transparent z-50 md:z-auto
-                transform ${isMenuOpen ? "translate-x-0" : "translate-x-full"} md:translate-x-0
-                transition-transform duration-300 ease-in-out
-                flex flex-col md:flex-row items-start md:items-center
-                p-6 md:p-0 gap-6 shadow-lg md:shadow-none
-              `}
-            >
-              <div className="flex justify-between items-center w-full md:hidden mb-6">
-                <Link to="/" className="flex items-center gap-2" onClick={closeMenu}>
-                  <img src="/images/logo.svg" alt="Logo" className="w-8 h-8" />
-                  <span className="text-xl font-bold text-blue-400">DevEmDesenvolvimento</span>
-                </Link>
-                <button className="p-2 rounded-full hover:bg-slate-800" onClick={closeMenu} aria-label="Fechar menu">
-                  <FiX size={24} className="text-white" />
-                </button>
-              </div>
-
-              {/* Barra de pesquisa para mobile */}
-              <div className="w-full mb-6 md:hidden">
-                <form onSubmit={handleSearch} className="relative">
-                  <input
-                    type="text"
-                    placeholder="Buscar posts..."
-                    value={searchQuery}
-                    onChange={(e) => setSearchQuery(e.target.value)}
-                    className="w-full py-2 px-4 pr-10 rounded-full border border-slate-700 bg-slate-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-                  />
-                  <button
-                    type="submit"
-                    className="absolute right-3 top-1/2 transform -translate-y-1/2 text-slate-400 hover:text-blue-400"
-                    aria-label="Buscar"
-                  >
-                    <FiSearch size={18} />
-                  </button>
-                </form>
-              </div>
-
-              <Link
-                to="/"
-                className={`transition-colors duration-200 px-3 py-2 rounded-md ${
-                  isActive("/")
-                    ? "font-semibold text-blue-400 bg-slate-800"
-                    : "text-white hover:text-blue-400 hover:bg-slate-800"
-                }`}
-                onClick={closeMenu}
+        {/* Navigation */}
+        <div className="flex items-center gap-4">
+          {/* Menu para mobile */}
+          {isMobile ? (
+            <>
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="p-2 rounded-full hover:bg-gray-800 transition-colors md:hidden"
+                aria-label={isMenuOpen ? "Fechar menu" : "Abrir menu"}
               >
-                Home
-              </Link>
-              <Link
-                to="/blog"
-                className={`transition-colors duration-200 px-3 py-2 rounded-md ${
-                  isActive("/blog")
-                    ? "font-semibold text-blue-400 bg-slate-800"
-                    : "text-white hover:text-blue-400 hover:bg-slate-800"
-                }`}
-                onClick={closeMenu}
-              >
-                Blog
-              </Link>
-              <Link
-                to="/sobre"
-                className={`transition-colors duration-200 px-3 py-2 rounded-md ${
-                  isActive("/sobre")
-                    ? "font-semibold text-blue-400 bg-slate-800"
-                    : "text-white hover:text-blue-400 hover:bg-slate-800"
-                }`}
-                onClick={closeMenu}
-              >
-                Sobre
-              </Link>
-              {user && (
-                <Link
-                  to="/admin/dashboard"
-                  className={`transition-colors duration-200 px-3 py-2 rounded-md ${
-                    isActive("/admin/dashboard")
-                      ? "font-semibold text-blue-400 bg-slate-800"
-                      : "text-white hover:text-blue-400 hover:bg-slate-800"
-                  }`}
-                  onClick={closeMenu}
-                >
-                  Dashboard
-                </Link>
+                {isMenuOpen ? <FiX size={24} className="text-white" /> : <FiMenu size={24} className="text-white" />}
+              </button>
+
+              {/* Menu mobile */}
+              {isMenuOpen && (
+                <div className="absolute top-16 left-0 right-0 bg-[#0f172a] border-b border-gray-800 shadow-lg">
+                  <nav className="container py-4">
+                    {/* Search Bar para mobile */}
+                    <form onSubmit={handleSearch} className="mb-4">
+                      <div className="relative">
+                        <input
+                          type="text"
+                          placeholder="Buscar posts..."
+                          value={searchQuery}
+                          onChange={(e) => setSearchQuery(e.target.value)}
+                          className="w-full py-2 px-4 pl-10 rounded-full bg-gray-800 border border-gray-700 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                        />
+                        <button
+                          type="submit"
+                          className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                          aria-label="Buscar"
+                        >
+                          <FiSearch size={18} />
+                        </button>
+                      </div>
+                    </form>
+
+                    <ul className="flex flex-col space-y-4">
+                      <li>
+                        <Link
+                          to="/blog"
+                          className="block px-4 py-2 text-white hover:bg-gray-800 rounded-md transition-colors"
+                        >
+                          Blog
+                        </Link>
+                      </li>
+                      <li>
+                        <Link
+                          to="/sobre"
+                          className="block px-4 py-2 text-white hover:bg-gray-800 rounded-md transition-colors"
+                        >
+                          Sobre
+                        </Link>
+                      </li>
+                      {user && (
+                        <li>
+                          <Link
+                            to="/admin/dashboard"
+                            className="block px-4 py-2 text-white hover:bg-gray-800 rounded-md transition-colors"
+                          >
+                            Dashboard
+                          </Link>
+                        </li>
+                      )}
+                    </ul>
+                  </nav>
+                </div>
               )}
-              {!user && (
-                <Link
-                  to="/admin"
-                  className={`transition-colors duration-200 px-3 py-2 rounded-md ${
-                    isActive("/admin")
-                      ? "font-semibold text-blue-400 bg-slate-800"
-                      : "text-white hover:text-blue-400 hover:bg-slate-800"
-                  }`}
-                  onClick={closeMenu}
-                >
-                  Admin
-                </Link>
-              )}
+            </>
+          ) : (
+            /* Menu para desktop */
+            <nav>
+              <ul className="flex items-center space-x-6">
+                <li>
+                  <Link to="/blog" className="text-white hover:text-blue-400 transition-colors">
+                    Blog
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/sobre" className="text-white hover:text-blue-400 transition-colors">
+                    Sobre
+                  </Link>
+                </li>
+                {user && (
+                  <li>
+                    <Link to="/admin/dashboard" className="text-white hover:text-blue-400 transition-colors">
+                      Dashboard
+                    </Link>
+                  </li>
+                )}
+              </ul>
             </nav>
-          </div>
+          )}
         </div>
       </div>
     </header>

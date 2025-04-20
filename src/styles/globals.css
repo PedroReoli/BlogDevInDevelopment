@@ -1,260 +1,117 @@
 @import "./variables.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@layer base {
-  :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-    --card: 0 0% 100%;
-    --card-foreground: 222.2 84% 4.9%;
-    --popover: 0 0% 100%;
-    --popover-foreground: 222.2 84% 4.9%;
-    --primary: 221.2 83.2% 53.3%;
-    --primary-foreground: 210 40% 98%;
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
-    --ring: 221.2 83.2% 53.3%;
-    --radius: 0.5rem;
-  }
-
-  .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.5% 48%;
-  }
-
-  * {
-    @apply border-border;
-  }
-
-  body {
-    @apply bg-background text-foreground;
-    font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans",
-      "Helvetica Neue", sans-serif;
-    line-height: 1.5;
-    transition: background-color 0.3s ease, color 0.3s ease;
-  }
-
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell,
-      "Open Sans", "Helvetica Neue", sans-serif;
-    @apply font-semibold leading-tight mb-4;
-  }
-
-  a {
-    @apply text-primary transition-colors duration-200;
-  }
-
-  a:hover {
-    @apply text-primary-700;
-  }
-
-  img {
-    @apply max-w-full h-auto;
-  }
+/* Base */
+html,
+body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-base);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+  scroll-behavior: smooth;
 }
 
-@layer components {
-  .container {
-    @apply w-full max-w-7xl mx-auto px-4;
-  }
-
-  .btn {
-    @apply inline-flex items-center justify-center py-2 px-4 rounded-md font-medium cursor-pointer transition-all duration-200 border-none text-sm;
-  }
-
-  .btn-primary {
-    @apply bg-primary text-white;
-  }
-
-  .btn-primary:hover {
-    @apply bg-primary-700;
-  }
-
-  .btn-outline {
-    @apply bg-transparent border border-border text-foreground;
-  }
-
-  .btn-outline:hover {
-    @apply bg-muted;
-  }
-
-  .btn-secondary {
-    @apply bg-secondary text-white;
-  }
-
-  .btn-secondary:hover {
-    @apply bg-secondary/90;
-  }
-
-  .btn:disabled {
-    @apply opacity-60 cursor-not-allowed;
-  }
-
-  .form-group {
-    @apply mb-4;
-  }
-
-  .form-label {
-    @apply block mb-2 font-medium;
-  }
-
-  .form-input,
-  .form-textarea,
-  .form-select {
-    @apply w-full p-2 border border-border rounded-md bg-background text-foreground transition-colors duration-200;
-  }
-
-  .form-input:focus,
-  .form-textarea:focus,
-  .form-select:focus {
-    @apply outline-none border-primary ring-2 ring-primary/20;
-  }
-
-  .form-textarea {
-    @apply min-h-[100px] resize-y;
-  }
-
-  .tag {
-    @apply inline-flex items-center py-1 px-2 bg-muted rounded-full text-xs font-medium text-muted-foreground;
-  }
-
-  .card {
-    @apply bg-card rounded-lg shadow-card overflow-hidden transition-all duration-300;
-  }
-
-  .card:hover {
-    @apply transform -translate-y-1 shadow-card-hover;
-  }
-
-  .card-content {
-    @apply p-6;
-  }
-
-  .card-title {
-    @apply text-xl font-semibold mb-2;
-  }
-
-  .card-meta {
-    @apply text-sm text-text-tertiary;
-  }
+/* Layout */
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1rem;
 }
 
-/* Notion content */
-.notion-content {
-  @apply mt-8;
+/* Componentes */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem 1rem;
+  font-weight: 500;
+  border-radius: var(--border-radius-md);
+  transition: all 0.2s;
 }
 
-.notion-h1 {
-  @apply text-4xl mt-8 mb-4;
+.btn-primary {
+  background-color: var(--color-primary);
+  color: white;
 }
 
-.notion-h2 {
-  @apply text-2xl mt-6 mb-3;
+.btn-primary:hover {
+  background-color: var(--color-primary-hover);
 }
 
-.notion-h3 {
-  @apply text-xl mt-5 mb-2;
+.form-group {
+  margin-bottom: 1rem;
 }
 
-.notion-p {
-  @apply mb-4;
+.form-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: var(--color-text-primary);
 }
 
-.notion-img {
-  @apply max-w-full h-auto rounded-md my-6;
+.form-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-md);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
 }
 
-.notion-pre {
-  @apply bg-muted p-4 rounded-md overflow-x-auto my-6;
+.form-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
 }
 
-.notion-code {
-  @apply font-mono text-sm;
+/* Utilidades */
+.text-primary {
+  color: var(--color-primary);
 }
 
-.notion-blockquote {
-  @apply border-l-4 border-primary pl-4 my-6 text-text-secondary;
+.text-text-primary {
+  color: var(--color-text-primary);
 }
 
-/* Animações */
-@keyframes float {
-  0%,
-  100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-10px);
-  }
+.text-text-secondary {
+  color: var(--color-text-secondary);
 }
 
-@keyframes tilt {
-  0%,
-  100% {
-    transform: rotate(0deg);
-  }
-  25% {
-    transform: rotate(2deg);
-  }
-  75% {
-    transform: rotate(-2deg);
-  }
+.bg-card {
+  background-color: var(--color-card);
 }
 
-.logo-animation {
-  animation: float 6s ease-in-out infinite, tilt 10s ease-in-out infinite;
+.border-border {
+  border-color: var(--color-border);
 }
 
-.animate-pulse {
-  animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+.bg-accent {
+  background-color: var(--color-accent);
 }
 
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
+.bg-background {
+  background-color: var(--color-background);
 }
 
-/* Melhorias para elementos de UI */
-.glass-effect {
-  @apply backdrop-blur-md bg-white/10 dark:bg-black/10 border border-white/20 dark:border-gray-800/50;
+/* Line clamp */
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
-.hover-lift {
-  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }

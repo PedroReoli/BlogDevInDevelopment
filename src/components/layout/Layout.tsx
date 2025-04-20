@@ -1,17 +1,17 @@
+"use client"
+
 import { Outlet } from "react-router-dom"
-import Header from "@/components/layout/header"
-import { Footer } from "@/components/layout/footer"
-import FloatingThemeToggle from "@/components/theme/floating-theme-toggle"
+import Header from "./header"
+import Footer from "./footer"
 
 const Layout = () => {
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen bg-[#0f172a]">
       <Header />
-      <main className="flex-grow">
+      <main className="flex-grow container py-8">
         <Outlet />
       </main>
       <Footer />
-      <FloatingThemeToggle />
     </div>
   )
 }

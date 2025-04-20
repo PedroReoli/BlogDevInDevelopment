@@ -1,17 +1,17 @@
 "use client"
 
-import { createContext, useContext, useState, useEffect, type ReactNode } from "react"
+import { createContext, useContext, type ReactNode } from "react"
 
-type Theme = "light" | "dark"
-
+// Definindo o tipo para o contexto
 interface ThemeContextType {
-  theme: Theme
+  theme: string
   toggleTheme: () => void
-  setTheme: (theme: Theme) => void
 }
 
+// Criando o contexto com um valor padrão
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined)
 
+// Hook personalizado para usar o contexto
 export const useTheme = () => {
   const context = useContext(ThemeContext)
   if (!context) {
@@ -20,68 +20,16 @@ export const useTheme = () => {
   return context
 }
 
-interface ThemeProviderProps {
-  children: ReactNode
-}
+// Componente provedor
+export const ThemeProvider = ({ children }: { children: ReactNode }) => {
+  // Sempre retorna "dark" como tema fixo
+  const theme = "dark"
 
-export const ThemeProvider = ({ children }: ThemeProviderProps) => {
-  const [theme, setThemeState] = useState<Theme>(() => {
-    // Verificar preferência do usuário no localStorage
-    if (typeof window !== "undefined") {
-      const savedTheme = localStorage.getItem("theme")
-      if (savedTheme === "light" || savedTheme === "dark") {
-        return savedTheme
-      }
-
-      // Verificar preferência do sistema
-      if (window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        return "dark"
-      }
-    }
-
-    return "dark" // Padrão para dark
-  })
-
-  useEffect(() => {
-    // Salvar tema no localStorage
-    localStorage.setItem("theme", theme)
-
-    // Aplicar classe ao elemento HTML
-    if (theme === "dark") {
-      document.documentElement.classList.add("dark")
-      document.documentElement.classList.remove("light")
-      document.documentElement.style.backgroundColor = "#0f172a" // slate-900
-      document.documentElement.style.color = "#f8fafc" // slate-50
-    } else {
-      document.documentElement.classList.add("light")
-      document.documentElement.classList.remove("dark")
-      document.documentElement.style.backgroundColor = "#ffffff"
-      document.documentElement.style.color = "#0f172a" // slate-900
-    }
-  }, [theme])
-
-  // Ouvir mudanças na preferência do sistema
-  useEffect(() => {
-    const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)")
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setThemeState(e.matches ? "dark" : "light")
-    }
-
-    mediaQuery.addEventListener("change", handleChange)
-
-    return () => {
-      mediaQuery.removeEventListener("change", handleChange)
-    }
-  }, [])
-
+  // Função vazia para manter compatibilidade
   const toggleTheme = () => {
-    setThemeState((prevTheme) => (prevTheme === "light" ? "dark" : "light"))
+    // Não faz nada, já que o tema é fixo
+    console.log("Theme toggle attempted, but theme is fixed to dark")
   }
 
-  const setTheme = (newTheme: Theme) => {
-    setThemeState(newTheme)
-  }
-
-  return <ThemeContext.Provider value={{ theme, toggleTheme, setTheme }}>{children}</ThemeContext.Provider>
+  return <ThemeContext.Provider value={{ theme, toggleTheme }}>{children}</ThemeContext.Provider>
 }
