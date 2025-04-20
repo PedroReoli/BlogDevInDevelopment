@@ -14,6 +14,7 @@ export interface Database {
           published_at: string
           tags: string[]
           created_at: string
+          is_published: boolean
         }
         Insert: {
           id?: string
@@ -25,6 +26,7 @@ export interface Database {
           published_at?: string
           tags: string[]
           created_at?: string
+          is_published?: boolean
         }
         Update: {
           id?: string
@@ -36,6 +38,7 @@ export interface Database {
           published_at?: string
           tags?: string[]
           created_at?: string
+          is_published?: boolean
         }
       }
       admin_users: {

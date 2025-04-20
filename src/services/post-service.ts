@@ -5,8 +5,14 @@ type Post = Database["public"]["Tables"]["posts"]["Row"]
 type PostInsert = Database["public"]["Tables"]["posts"]["Insert"]
 
 export const PostService = {
-  async getAllPosts(): Promise<Post[]> {
-    const { data, error } = await supabase.from("posts").select("*").order("published_at", { ascending: false })
+  async getAllPosts(publishedOnly = false): Promise<Post[]> {
+    let query = supabase.from("posts").select("*").order("published_at", { ascending: false })
+
+    if (publishedOnly) {
+      query = query.eq("is_published", true)
+    }
+
+    const { data, error } = await query
 
     if (error) {
       throw new Error(`Error fetching posts: ${error.message}`)
@@ -43,6 +49,20 @@ export const PostService = {
     return data
   },
 
+  async getPostById(id: string): Promise<Post> {
+    const { data, error } = await supabase.from("posts").select("*").eq("id", id).single()
+
+    if (error) {
+      throw new Error(`Error fetching post: ${error.message}`)
+    }
+
+    if (!data) {
+      throw new Error("Post not found")
+    }
+
+    return data
+  },
+
   async createPost(post: PostInsert): Promise<Post> {
     const { data, error } = await supabase.from("posts").insert(post).select().single()
 
@@ -52,6 +72,39 @@ export const PostService = {
 
     if (!data) {
       throw new Error("Failed to create post")
+    }
+
+    return data
+  },
+
+  async updatePost(id: string, updates: Partial<Post>): Promise<Post> {
+    const { data, error } = await supabase.from("posts").update(updates).eq("id", id).select().single()
+
+    if (error) {
+      throw new Error(`Error updating post: ${error.message}`)
+    }
+
+    if (!data) {
+      throw new Error("Failed to update post")
+    }
+
+    return data
+  },
+
+  async togglePublishStatus(id: string, isPublished: boolean): Promise<Post> {
+    const { data, error } = await supabase
+      .from("posts")
+      .update({ is_published: isPublished })
+      .eq("id", id)
+      .select()
+      .single()
+
+    if (error) {
+      throw new Error(`Error toggling publish status: ${error.message}`)
+    }
+
+    if (!data) {
+      throw new Error("Failed to toggle publish status")
     }
 
     return data

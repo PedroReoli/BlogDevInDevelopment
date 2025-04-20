@@ -13,6 +13,7 @@ import NotFound from "@/pages/not-found"
 import CustomAdminLogin from "@/pages/admin/custom-login"
 import AdminDashboard from "@/pages/admin/dashboard"
 import CustomProtectedRoute from "@/components/auth/custom-protected-route"
+import EditPost from "@/pages/admin/edit-post"
 
 const App = () => {
   return (
@@ -31,6 +32,14 @@ const App = () => {
                 element={
                   <CustomProtectedRoute>
                     <AdminDashboard />
+                  </CustomProtectedRoute>
+                }
+              />
+              <Route
+                path="admin/edit-post/:id"
+                element={
+                  <CustomProtectedRoute>
+                    <EditPost />
                   </CustomProtectedRoute>
                 }
               />

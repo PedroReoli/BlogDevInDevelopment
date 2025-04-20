@@ -4,13 +4,13 @@ import type React from "react"
 
 import { useState, useEffect } from "react"
 import { useLocation } from "react-router-dom"
-import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/supabase"
 import { FiTrendingUp, FiFilter, FiX, FiSearch } from "react-icons/fi"
 import BlogCard from "@/components/blog/blog-card"
 import FeaturedPost from "@/components/blog/featured-post"
 import CategoryPill from "@/components/blog/category-pill"
 import { motion } from "framer-motion"
+import { PostService } from "@/services/post-service"
 
 type Post = Database["public"]["Tables"]["posts"]["Row"]
 
@@ -58,22 +58,18 @@ const Blog = () => {
   const fetchPosts = async () => {
     try {
       setIsLoading(true)
-      const { data, error } = await supabase.from("posts").select("*").order("published_at", { ascending: false })
+      const data = await PostService.getAllPosts(true) // true para mostrar apenas posts publicados
 
-      if (error) throw error
+      setPosts(data)
+      setFilteredPosts(data)
 
-      if (data) {
-        setPosts(data)
-        setFilteredPosts(data)
+      // Extrair categorias únicas de todos os posts
+      const allTags = data.flatMap((post) => post.tags)
+      const uniqueTags = [...new Set(allTags)].sort()
+      setCategories(uniqueTags)
 
-        // Extrair categorias únicas de todos os posts
-        const allTags = data.flatMap((post) => post.tags)
-        const uniqueTags = [...new Set(allTags)].sort()
-        setCategories(uniqueTags)
-
-        // Selecionar posts em destaque (os 3 mais recentes)
-        setFeaturedPosts(data.slice(0, 3))
-      }
+      // Selecionar posts em destaque (os 3 mais recentes)
+      setFeaturedPosts(data.slice(0, 3))
     } catch (error) {
       console.error("Error fetching posts:", error)
     } finally {

@@ -2,29 +2,66 @@
 
 import type React from "react"
 
-import { useState, useRef, type FormEvent, type ChangeEvent } from "react"
-import { FiUpload, FiX, FiPlus, FiSave, FiAlertCircle, FiCheck, FiLoader } from "react-icons/fi"
+import { useState, useRef, type FormEvent, type ChangeEvent, useEffect } from "react"
+import { FiUpload, FiX, FiPlus, FiSave, FiAlertCircle, FiCheck, FiLoader, FiEye, FiEyeOff } from "react-icons/fi"
 import { supabase } from "@/lib/supabase"
 import toast from "react-hot-toast"
 import ContentEditor from "@/components/editor/content-editor"
+import { PostService } from "@/services/post-service"
+
+interface Post {
+  id?: string
+  title: string
+  slug: string
+  excerpt: string
+  tags: string[]
+  cover_image_url?: string | null
+  content_path?: string
+  published_at?: string
+  is_published?: boolean
+}
 
 interface WysiwygPostFormProps {
   onSuccess?: () => void
+  post?: Post
+  isEditing?: boolean
 }
 
-const WysiwygPostForm = ({ onSuccess }: WysiwygPostFormProps) => {
+const WysiwygPostForm = ({ onSuccess, post, isEditing = false }: WysiwygPostFormProps) => {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const [title, setTitle] = useState("")
-  const [slug, setSlug] = useState("")
-  const [excerpt, setExcerpt] = useState("")
-  const [tags, setTags] = useState<string[]>([])
+  const [title, setTitle] = useState(post?.title || "")
+  const [slug, setSlug] = useState(post?.slug || "")
+  const [excerpt, setExcerpt] = useState(post?.excerpt || "")
+  const [tags, setTags] = useState<string[]>(post?.tags || [])
   const [currentTag, setCurrentTag] = useState("")
   const [coverImage, setCoverImage] = useState<File | null>(null)
-  const [coverImagePreview, setCoverImagePreview] = useState<string | null>(null)
+  const [coverImagePreview, setCoverImagePreview] = useState<string | null>(post?.cover_image_url || null)
   const [content, setContent] = useState("")
   const [formErrors, setFormErrors] = useState<Record<string, string>>({})
   const [formStep, setFormStep] = useState<"details" | "content">("details")
   const coverInputRef = useRef<HTMLInputElement>(null)
+  const [isPublished, setIsPublished] = useState(post?.is_published !== false)
+
+  // Carregar conteúdo HTML do post quando estiver editando
+  useEffect(() => {
+    const fetchContent = async () => {
+      if (isEditing && post?.content_path) {
+        try {
+          const response = await fetch(post.content_path)
+          if (response.ok) {
+            const html = await response.text()
+            setContent(html)
+          } else {
+            console.error("Erro ao carregar conteúdo do post")
+          }
+        } catch (error) {
+          console.error("Erro ao carregar conteúdo do post:", error)
+        }
+      }
+    }
+
+    fetchContent()
+  }, [isEditing, post])
 
   // Gerar slug a partir do título
   const generateSlug = (title: string) => {
@@ -196,59 +233,81 @@ const WysiwygPostForm = ({ onSuccess }: WysiwygPostFormProps) => {
     }
 
     setIsSubmitting(true)
-    const toastLoading = toast.loading("Salvando post...")
+    const toastLoading = toast.loading(isEditing ? "Atualizando post..." : "Salvando post...")
 
     try {
-      // 1. Upload da imagem de capa
-      const coverImageName = `${Date.now()}-${coverImage!.name}`
-      const { error: coverUploadError } = await supabase.storage.from("covers").upload(coverImageName, coverImage!)
+      let coverImageUrl = post?.cover_image_url || null
 
-      if (coverUploadError) throw new Error(`Erro ao fazer upload da imagem: ${coverUploadError.message}`)
+      // 1. Upload da imagem de capa (apenas se uma nova imagem foi selecionada)
+      if (coverImage) {
+        const coverImageName = `${Date.now()}-${coverImage.name}`
+        const { error: coverUploadError } = await supabase.storage.from("covers").upload(coverImageName, coverImage)
 
-      // 2. Obter URL pública da imagem de capa
-      const { data: coverImageData } = supabase.storage.from("covers").getPublicUrl(coverImageName)
-      const coverImageUrl = coverImageData.publicUrl
+        if (coverUploadError) throw new Error(`Erro ao fazer upload da imagem: ${coverUploadError.message}`)
 
-      // 3. Salvar o conteúdo HTML no storage
-      const contentBlob = new Blob([content], { type: "text/html" })
-      const contentFileName = `${slug}-${Date.now()}.html`
+        // 2. Obter URL pública da imagem de capa
+        const { data: coverImageData } = supabase.storage.from("covers").getPublicUrl(coverImageName)
+        coverImageUrl = coverImageData.publicUrl
+      }
 
-      const { error: contentUploadError } = await supabase.storage
-        .from("content")
-        .upload(`html/${contentFileName}`, contentBlob)
+      let contentPath = post?.content_path || ""
 
-      if (contentUploadError) throw new Error(`Erro ao salvar conteúdo: ${contentUploadError.message}`)
+      // 3. Salvar o conteúdo HTML no storage (apenas se o conteúdo foi modificado)
+      if (!isEditing || content !== post?.content_path) {
+        const contentBlob = new Blob([content], { type: "text/html" })
+        const contentFileName = `${slug}-${Date.now()}.html`
 
-      // 4. Obter URL pública do conteúdo
-      const { data: contentData } = supabase.storage.from("content").getPublicUrl(`html/${contentFileName}`)
-      const contentPath = contentData.publicUrl
+        const { error: contentUploadError } = await supabase.storage
+          .from("content")
+          .upload(`html/${contentFileName}`, contentBlob)
 
-      // 5. Inserir post no banco de dados
-      const { error: insertError } = await supabase.from("posts").insert({
-        title,
-        slug,
-        excerpt,
-        tags,
-        cover_image_url: coverImageUrl,
-        content_path: contentPath,
-        published_at: new Date().toISOString(),
-      })
+        if (contentUploadError) throw new Error(`Erro ao salvar conteúdo: ${contentUploadError.message}`)
 
-      if (insertError) throw new Error(`Erro ao salvar post: ${insertError.message}`)
+        // 4. Obter URL pública do conteúdo
+        const { data: contentData } = supabase.storage.from("content").getPublicUrl(`html/${contentFileName}`)
+        contentPath = contentData.publicUrl
+      }
+
+      if (isEditing && post?.id) {
+        // Atualizar post existente
+        await PostService.updatePost(post.id, {
+          title,
+          slug,
+          excerpt,
+          tags,
+          cover_image_url: coverImageUrl,
+          content_path: contentPath,
+          is_published: isPublished,
+        })
+      } else {
+        // 5. Inserir novo post no banco de dados
+        await supabase.from("posts").insert({
+          title,
+          slug,
+          excerpt,
+          tags,
+          cover_image_url: coverImageUrl,
+          content_path: contentPath,
+          published_at: new Date().toISOString(),
+          is_published: isPublished,
+        })
+      }
 
       // Sucesso
       toast.dismiss(toastLoading)
-      toast.success("Post criado com sucesso!")
+      toast.success(isEditing ? "Post atualizado com sucesso!" : "Post criado com sucesso!")
 
-      // Limpar formulário
-      setTitle("")
-      setSlug("")
-      setExcerpt("")
-      setTags([])
-      setCoverImage(null)
-      setCoverImagePreview(null)
-      setContent("")
-      setFormStep("details")
+      // Limpar formulário se não estiver editando
+      if (!isEditing) {
+        setTitle("")
+        setSlug("")
+        setExcerpt("")
+        setTags([])
+        setCoverImage(null)
+        setCoverImagePreview(null)
+        setContent("")
+        setFormStep("details")
+      }
 
       // Callback de sucesso
       if (onSuccess) onSuccess()
@@ -433,6 +492,35 @@ const WysiwygPostForm = ({ onSuccess }: WysiwygPostFormProps) => {
                 <span className="text-slate-500 text-sm mt-1">JPG, PNG ou GIF (máx. 5MB)</span>
               </button>
             )}
+          </div>
+
+          <div className="form-group">
+            <label className="form-label text-white flex items-center justify-between">
+              <span>Status de publicação</span>
+            </label>
+            <div className="flex items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsPublished(true)}
+                className={`py-2 px-4 rounded-md transition-colors ${
+                  isPublished ? "bg-green-600 text-white" : "bg-slate-700 text-slate-300 hover:bg-slate-600"
+                }`}
+              >
+                <FiEye className="inline-block mr-2" size={16} />
+                Publicado
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsPublished(false)}
+                className={`py-2 px-4 rounded-md transition-colors ${
+                  !isPublished ? "bg-amber-600 text-white" : "bg-slate-700 text-slate-300 hover:bg-slate-600"
+                }`}
+              >
+                <FiEyeOff className="inline-block mr-2" size={16} />
+                Oculto
+              </button>
+            </div>
+            <p className="text-slate-400 text-sm mt-1">Posts ocultos não aparecem na lista pública do blog</p>
           </div>
 
           <div className="flex justify-end mt-8">

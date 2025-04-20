@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react"
 import { Link } from "react-router-dom"
 import { FiArrowRight, FiClock } from "react-icons/fi"
-import { supabase } from "@/lib/supabase"
 import type { Database } from "@/types/supabase"
+import { PostService } from "@/services/post-service"
 
 type Post = Database["public"]["Tables"]["posts"]["Row"]
 
@@ -16,13 +16,7 @@ const Home = () => {
     const fetchPosts = async () => {
       try {
         setIsLoading(true)
-        const { data, error } = await supabase
-          .from("posts")
-          .select("*")
-          .order("published_at", { ascending: false })
-          .limit(6)
-
-        if (error) throw error
+        const data = await PostService.getAllPosts(true) // true para mostrar apenas posts publicados
         setPosts(data || [])
       } catch (error) {
         console.error("Error fetching posts:", error)

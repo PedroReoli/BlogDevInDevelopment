@@ -1,13 +1,14 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { FiEdit, FiTrash2, FiEye, FiSearch, FiFilter, FiCalendar, FiTag } from "react-icons/fi"
+import { FiEdit2, FiEye, FiEyeOff, FiTrash2, FiSearch, FiFilter, FiCalendar, FiTag } from "react-icons/fi"
 import { supabase } from "@/lib/supabase"
+import { PostService } from "@/services/post-service"
 import type { Database } from "@/types/supabase"
 import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import toast from "react-hot-toast"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 type Post = Database["public"]["Tables"]["posts"]["Row"]
 
@@ -19,6 +20,8 @@ const PostList = () => {
   const [selectedTag, setSelectedTag] = useState<string | null>(null)
   const [availableTags, setAvailableTags] = useState<string[]>([])
   const [showDeleteConfirm, setShowDeleteConfirm] = useState<string | null>(null)
+  const [showPublishedOnly, setShowPublishedOnly] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchPosts()
@@ -27,9 +30,7 @@ const PostList = () => {
   const fetchPosts = async () => {
     try {
       setIsLoading(true)
-      const { data, error } = await supabase.from("posts").select("*").order("published_at", { ascending: false })
-
-      if (error) throw error
+      const data = await PostService.getAllPosts()
 
       setPosts(data || [])
       setFilteredPosts(data || [])
@@ -64,8 +65,12 @@ const PostList = () => {
       results = results.filter((post) => post.tags.includes(selectedTag))
     }
 
+    if (showPublishedOnly) {
+      results = results.filter((post) => post.is_published)
+    }
+
     setFilteredPosts(results)
-  }, [searchTerm, selectedTag, posts])
+  }, [searchTerm, selectedTag, posts, showPublishedOnly])
 
   const handleDelete = async (id: string) => {
     try {
@@ -84,6 +89,17 @@ const PostList = () => {
 
   const handleTagClick = (tag: string) => {
     setSelectedTag(selectedTag === tag ? null : tag)
+  }
+
+  const togglePublishStatus = async (id: string, currentStatus: boolean) => {
+    try {
+      await PostService.togglePublishStatus(id, !currentStatus)
+      toast.success(currentStatus ? "Post ocultado com sucesso" : "Post publicado com sucesso")
+      fetchPosts()
+    } catch (error) {
+      console.error("Error toggling publish status:", error)
+      toast.error("Erro ao alterar status de publicação")
+    }
   }
 
   if (isLoading) {
@@ -110,14 +126,24 @@ const PostList = () => {
             <FiSearch className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={18} />
           </div>
 
-          <div className="flex-shrink-0">
+          <div className="flex gap-2">
+            <button
+              onClick={() => setShowPublishedOnly(!showPublishedOnly)}
+              className={`py-2 px-4 rounded-md transition-colors ${
+                showPublishedOnly ? "bg-blue-600 text-white" : "bg-slate-800 text-slate-300 hover:bg-slate-600"
+              }`}
+            >
+              {showPublishedOnly ? "Mostrar todos" : "Apenas publicados"}
+            </button>
+
             <button
               onClick={() => {
                 setSearchTerm("")
                 setSelectedTag(null)
+                setShowPublishedOnly(false)
               }}
               className="py-2 px-4 bg-slate-800 hover:bg-slate-600 text-white rounded-md transition-colors"
-              disabled={!searchTerm && !selectedTag}
+              disabled={!searchTerm && !selectedTag && !showPublishedOnly}
             >
               Limpar Filtros
             </button>
@@ -167,7 +193,10 @@ const PostList = () => {
               </thead>
               <tbody className="divide-y divide-slate-700">
                 {filteredPosts.map((post) => (
-                  <tr key={post.id} className="hover:bg-slate-700/50 transition-colors">
+                  <tr
+                    key={post.id}
+                    className={`hover:bg-slate-700/50 transition-colors ${!post.is_published ? "opacity-60" : ""}`}
+                  >
                     <td className="py-4 px-4">
                       <div className="flex items-center gap-3">
                         {post.cover_image_url && (
@@ -178,7 +207,14 @@ const PostList = () => {
                           />
                         )}
                         <div>
-                          <div className="font-medium text-white">{post.title}</div>
+                          <div className="font-medium text-white">
+                            {post.title}
+                            {!post.is_published && (
+                              <span className="ml-2 text-xs bg-amber-600/30 text-amber-300 py-0.5 px-1.5 rounded">
+                                Oculto
+                              </span>
+                            )}
+                          </div>
                           <div className="text-slate-400 text-sm">{post.slug}</div>
                         </div>
                       </div>
@@ -217,9 +253,16 @@ const PostList = () => {
                         <button
                           className="p-2 text-slate-300 hover:text-amber-400 hover:bg-slate-700 rounded-md transition-colors"
                           title="Editar"
-                          onClick={() => toast.error("Funcionalidade em desenvolvimento")}
+                          onClick={() => navigate(`/admin/edit-post/${post.id}`)}
                         >
-                          <FiEdit size={18} />
+                          <FiEdit2 size={18} />
+                        </button>
+                        <button
+                          className="p-2 text-slate-300 hover:text-purple-400 hover:bg-slate-700 rounded-md transition-colors"
+                          title={post.is_published ? "Ocultar post" : "Publicar post"}
+                          onClick={() => togglePublishStatus(post.id, post.is_published)}
+                        >
+                          {post.is_published ? <FiEyeOff size={18} /> : <FiEye size={18} />}
                         </button>
                         <button
                           className="p-2 text-slate-300 hover:text-red-400 hover:bg-slate-700 rounded-md transition-colors"
