@@ -47,7 +47,7 @@ const About = () => {
           <div className="relative mx-auto mb-6">
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-blue-300 rounded-full blur opacity-30"></div>
             <img
-              src="/placeholder.svg?height=128&width=128"
+              src="/images/pedro.jpeg"
               alt="Pedro Reoli"
               className="relative w-32 h-32 rounded-full mx-auto object-cover"
             />
@@ -65,7 +65,7 @@ const About = () => {
               <FiGithub size={20} />
             </a>
             <a
-              href="https://linkedin.com/in/pedro-reoli"
+              href="linkedin.com/in/pedro-lucas-reis-de-oliveira-sousa-a93945171/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
