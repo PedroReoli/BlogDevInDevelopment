@@ -49,22 +49,22 @@ const Home = () => {
       {/* Hero Section */}
       <section className="flex flex-col md:flex-row items-center justify-between gap-8 py-12">
         <div className="flex-1">
-          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white">
+          <h1 className="text-4xl md:text-5xl font-bold mb-6 text-white font-heading tracking-tight">
             <span className="text-blue-500">DevEmDesenvolvimento</span>
           </h1>
-          <p className="text-xl text-gray-300 mb-8">
+          <p className="text-xl text-gray-300 mb-8 font-sans">
             Explorando o universo do desenvolvimento, games e tecnologia com uma abordagem única e pessoal.
           </p>
           <div className="flex flex-wrap gap-4">
             <Link
               to="/blog"
-              className="rounded-full border-2 border-blue-500 bg-blue-500 text-white px-8 py-3 font-medium transition-all duration-300 hover:bg-transparent"
+              className="rounded-full border-2 border-blue-500 bg-blue-500 text-white px-8 py-3 font-medium transition-all duration-300 hover:bg-transparent font-heading"
             >
               Explorar Blog
             </Link>
             <Link
               to="/sobre"
-              className="rounded-full border-2 border-gray-700 bg-gray-700 text-white px-8 py-3 font-medium transition-all duration-300 hover:bg-transparent"
+              className="rounded-full border-2 border-gray-700 bg-gray-700 text-white px-8 py-3 font-medium transition-all duration-300 hover:bg-transparent font-heading"
             >
               Sobre
             </Link>
@@ -78,7 +78,7 @@ const Home = () => {
       {/* Posts Section */}
       <section>
         <div className="mb-8">
-          <h2 className="text-3xl font-bold mb-4">Posts</h2>
+          <h2 className="text-3xl font-bold mb-4 font-heading tracking-tight">Posts</h2>
         </div>
 
         {isLoading ? (
@@ -110,19 +110,21 @@ const Home = () => {
                     />
                     {post.tags && post.tags.length > 0 && (
                       <div className="absolute top-4 right-4">
-                        <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full">{post.tags[0]}</span>
+                        <span className="bg-blue-500 text-white text-xs px-2 py-1 rounded-full font-heading">
+                          {post.tags[0]}
+                        </span>
                       </div>
                     )}
                   </div>
                   <div className="p-6">
-                    <h3 className="text-xl font-bold mb-2 line-clamp-2">{post.title}</h3>
+                    <h3 className="text-xl font-bold mb-2 line-clamp-2 font-heading tracking-tight">{post.title}</h3>
                     <p className="text-gray-400 text-sm mb-4 flex items-center gap-2">
                       <FiClock size={14} className="text-blue-500" />
                       {formatDate(post.published_at)}
                     </p>
-                    <p className="text-gray-300 mb-4 line-clamp-3">{post.excerpt}</p>
+                    <p className="text-gray-300 mb-4 line-clamp-3 font-sans">{post.excerpt}</p>
                     <div className="flex justify-end">
-                      <span className="text-blue-500 font-medium flex items-center gap-1 group">
+                      <span className="text-blue-500 font-medium flex items-center gap-1 group font-heading">
                         Ler mais <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
                       </span>
                     </div>
@@ -133,14 +135,14 @@ const Home = () => {
           </div>
         ) : (
           <div className="text-center py-12 bg-gray-800 rounded-xl">
-            <p className="text-gray-400">Nenhum post encontrado.</p>
+            <p className="text-gray-400 font-sans">Nenhum post encontrado.</p>
           </div>
         )}
 
         <div className="mt-12 text-center">
           <Link
             to="/blog"
-            className="rounded-full border-2 border-blue-500 bg-blue-500 text-white px-8 py-3 font-medium transition-all duration-300 hover:bg-transparent inline-flex items-center gap-2"
+            className="rounded-full border-2 border-blue-500 bg-blue-500 text-white px-8 py-3 font-medium transition-all duration-300 hover:bg-transparent inline-flex items-center gap-2 font-heading"
           >
             Ver todos os posts <FiArrowRight />
           </Link>

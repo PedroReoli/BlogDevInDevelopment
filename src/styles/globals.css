@@ -1,5 +1,5 @@
 @import "./variables.css";
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -8,12 +8,22 @@
 /* Base */
 html,
 body {
-  font-family: var(--font-family);
+  font-family: var(--font-family-body);
   font-size: var(--font-size-base);
   line-height: var(--line-height-base);
   background-color: var(--color-background);
   color: var(--color-text-primary);
   scroll-behavior: smooth;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-family-heading);
+  letter-spacing: -0.025em;
 }
 
 /* Layout */
@@ -33,6 +43,8 @@ body {
   font-weight: 500;
   border-radius: var(--border-radius-md);
   transition: all 0.2s;
+  font-family: var(--font-family-heading);
+  letter-spacing: 0.01em;
 }
 
 .btn-primary {
@@ -62,6 +74,7 @@ body {
   border-radius: var(--border-radius-md);
   background-color: var(--color-background);
   color: var(--color-text-primary);
+  font-family: var(--font-family-body);
 }
 
 .form-input:focus {
