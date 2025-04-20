@@ -20,14 +20,18 @@ const BlogCard = ({ title, slug, excerpt, coverImageUrl, publishedAt, tags }: Bl
   const readingTime = Math.max(1, Math.ceil(excerpt.split(/\s+/).length / 200))
 
   return (
-    <article className="group h-full flex flex-col overflow-hidden rounded-xl bg-slate-800 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1">
+    <article className="group h-full flex flex-col overflow-hidden rounded-xl bg-slate-800 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 border border-slate-700/50">
       {coverImageUrl && (
         <Link to={`/blog/${slug}`} className="block overflow-hidden aspect-video">
-          <img
-            src={coverImageUrl || "/placeholder.svg"}
-            alt={title}
-            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
+          <div className="relative w-full h-full">
+            <img
+              src={coverImageUrl || "/placeholder.svg"}
+              alt={title}
+              className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+            />
+            {/* Overlay gradiente sutil */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-900/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          </div>
         </Link>
       )}
       <div className="p-6 flex-grow flex flex-col">

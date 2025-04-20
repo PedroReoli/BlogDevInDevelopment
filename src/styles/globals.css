@@ -128,3 +128,52 @@ h6 {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+/* Tech Carousel */
+.tech-carousel-container {
+  width: 100%;
+  padding: 20px 0;
+  background-color: rgba(31, 41, 55, 0.5);
+  border-radius: 12px;
+}
+
+.tech-carousel {
+  display: flex;
+  animation: scroll 60s linear infinite;
+  width: max-content;
+}
+
+.tech-icon {
+  flex: 0 0 auto;
+  width: 120px;
+  padding: 10px;
+  margin: 0 10px;
+  text-align: center;
+}
+
+.tech-icon-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.tech-icon-inner:hover {
+  opacity: 1;
+}
+
+@keyframes scroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(-120px * 12 - 20px * 12)); /* Largura total dos primeiros 12 ícones + margens */
+  }
+}
+
+/* Pausar animação no hover */
+.tech-carousel-container:hover .tech-carousel {
+  animation-play-state: paused;
+}

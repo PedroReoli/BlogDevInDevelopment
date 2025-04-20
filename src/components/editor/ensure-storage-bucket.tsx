@@ -32,22 +32,27 @@ export const EnsureStorageBucket = ({ bucketName, children }: EnsureStorageBucke
           })
 
           if (createError) {
-            throw new Error(`Erro ao criar bucket: ${createError.message}`)
-          }
-
-          // Definir política de acesso público para o bucket
-          const { error: policyError } = await supabase.storage.from(bucketName).createSignedUrl("dummy.txt", 60)
-
-          if (policyError && !policyError.message.includes("not found")) {
-            console.warn(`Aviso ao configurar política: ${policyError.message}`)
+            // Se o erro for que o recurso já existe, podemos ignorar
+            if (createError.message.includes("already exists")) {
+              console.log(`Bucket ${bucketName} já existe, continuando...`)
+            } else {
+              throw new Error(`Erro ao criar bucket: ${createError.message}`)
+            }
           }
         }
 
+        // Mesmo se o bucket já existir, podemos continuar
         setIsReady(true)
       } catch (err) {
         console.error("Erro ao configurar bucket de armazenamento:", err)
-        setError((err as Error).message)
-        toast.error("Erro ao configurar armazenamento de imagens")
+        // Não definir o erro se for apenas "already exists"
+        if (!(err as Error).message.includes("already exists")) {
+          setError((err as Error).message)
+          toast.error("Erro ao configurar armazenamento de imagens")
+        } else {
+          // Se o erro for apenas que o bucket já existe, podemos continuar
+          setIsReady(true)
+        }
       }
     }
 

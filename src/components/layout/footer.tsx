@@ -1,7 +1,7 @@
 "use client"
 
 import { Link } from "react-router-dom"
-import { FiGithub, FiTwitter, FiArrowUp, FiMail } from "react-icons/fi"
+import { FiGithub, FiTwitter, FiArrowUp } from "react-icons/fi"
 import { FaDiscord, FaTwitch, FaSteam, FaYoutube, FaCoffee } from "react-icons/fa"
 
 const Footer = () => {
@@ -76,21 +76,12 @@ const Footer = () => {
                   Sobre
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/admin"
-                  className="text-gray-300 hover:text-blue-500 transition-colors flex items-center gap-2"
-                >
-                  <span className="w-1.5 h-1.5 bg-blue-500 rounded-full"></span>
-                  Admin
-                </Link>
-              </li>
             </ul>
           </div>
 
-          {/* Coluna 3 - Discord */}
+          {/* Coluna 3 - Nosso Servidor */}
           <div>
-            <h3 className="text-xl font-bold mb-4 text-white">Conecte-se</h3>
+            <h3 className="text-xl font-bold mb-4 text-white">Nosso Servidor</h3>
             <div className="bg-gray-800 rounded-xl p-6 border border-blue-500/20">
               <div className="flex items-center gap-3 mb-4">
                 <div className="bg-blue-500/20 p-2 rounded-full">
@@ -103,25 +94,15 @@ const Footer = () => {
               </div>
 
               <a
-                href="https://discord.gg/seudiscord"
+                href="https://discord.gg/teDfu39G7r"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="block w-full bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg font-medium text-center transition-colors"
               >
                 <span className="flex items-center justify-center gap-2">
                   <FaDiscord size={16} />
-                  pedrosousa#1234
+                  Entrar no servidor
                 </span>
-              </a>
-            </div>
-
-            <div className="mt-4">
-              <a
-                href="mailto:pedrosousa2160@gmail.com"
-                className="flex items-center gap-2 text-gray-300 hover:text-blue-500 transition-colors"
-              >
-                <FiMail size={16} />
-                pedrosousa2160@gmail.com
               </a>
             </div>
           </div>
@@ -133,7 +114,7 @@ const Footer = () => {
             {[
               { icon: <FaYoutube size={18} />, href: "https://youtube.com" },
               { icon: <FaTwitch size={18} />, href: "https://twitch.tv" },
-              { icon: <FaDiscord size={18} />, href: "https://discord.gg" },
+              { icon: <FaDiscord size={18} />, href: "https://discord.gg/teDfu39G7r" },
               { icon: <FiTwitter size={18} />, href: "https://twitter.com" },
               { icon: <FiGithub size={18} />, href: "https://github.com" },
               { icon: <FaSteam size={18} />, href: "https://steamcommunity.com" },
