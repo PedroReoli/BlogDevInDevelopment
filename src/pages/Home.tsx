@@ -65,7 +65,7 @@ const Home = () => {
           </div>
         </div>
         <div className="flex-1 flex justify-center md:justify-end">
-          <img src="/images/home.svg" alt="Dev Em Desenvolvimento" className="max-w-full h-auto" />
+          <img src="/images/owl.svg" alt="Dev Em Desenvolvimento" className="max-w-full h-auto" />
         </div>
       </section>
 

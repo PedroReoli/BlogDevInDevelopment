@@ -8,6 +8,7 @@ import { format } from "date-fns"
 import { ptBR } from "date-fns/locale"
 import { FiArrowLeft, FiCalendar, FiTag, FiClock, FiShare2, FiMessageSquare } from "react-icons/fi"
 import RelatedPosts from "@/components/blog/related-posts"
+import NotionRenderer from "@/components/blog/notion-renderer" 
 
 type Post = Database["public"]["Tables"]["posts"]["Row"]
 
@@ -181,9 +182,8 @@ const Post = () => {
           </div>
         </div>
 
-        <div className="prose prose-lg max-w-none dark:prose-invert prose-headings:font-heading prose-headings:font-bold prose-a:text-primary-500 prose-img:rounded-xl prose-img:shadow-md notion-content">
-          <div dangerouslySetInnerHTML={{ __html: content }} />
-        </div>
+        {/* Usamos o NotionRenderer atualizado com o conteúdo HTML */}
+        <NotionRenderer html={content} className="mb-8" />
 
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-wrap gap-2 items-center">

@@ -1,0 +1,562 @@
+/* Estilos específicos para elementos do Notion */
+
+/* Animações */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.motion-safe\:animate-fadeIn {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+/* Ajustes para o layout de colunas do Notion */
+.notion-content .column-list {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 1.5rem 0;
+  gap: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .notion-content .column-list {
+    flex-direction: column;
+  }
+}
+
+.notion-content .column {
+  flex: 1;
+  min-width: 250px;
+}
+
+/* Ajustes para imagens */
+.notion-content figure {
+  margin: 2rem 0;
+}
+
+.notion-content figure img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  box-shadow: var(--shadow-md);
+  transition: transform 0.3s ease;
+}
+
+.notion-content figure img:hover {
+  transform: scale(1.02);
+}
+
+/* Ajustes para blockquotes */
+.notion-content blockquote {
+  margin: 1.5rem 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 4px solid var(--color-primary);
+  background-color: var(--color-accent);
+  border-radius: 0.5rem;
+  color: var(--color-text-secondary);
+  font-style: italic;
+  position: relative;
+}
+
+.notion-content blockquote::before {
+  content: '"';
+  position: absolute;
+  top: -0.5rem;
+  left: 0.5rem;
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  opacity: 0.2;
+  font-family: Georgia, serif;
+}
+
+/* Ajustes para listas */
+.notion-content ul.bulleted-list,
+.notion-content ol.numbered-list {
+  padding-left: 1.5rem;
+  margin: 1rem 0;
+  list-style-position: outside;
+}
+
+.notion-content ul.bulleted-list li,
+.notion-content ol.numbered-list li {
+  margin-bottom: 0.75rem;
+  padding-left: 0.5rem;
+}
+
+/* Ajustes para checkboxes */
+.notion-content .checkbox {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-right: 0.5rem;
+  vertical-align: middle;
+}
+
+.notion-content .checkbox-on {
+  background-color: var(--color-primary);
+  border-radius: 2px;
+}
+
+.notion-content .checkbox-off {
+  border: 1px solid var(--color-border);
+  border-radius: 2px;
+}
+
+/* Ajustes para to-do lists */
+.notion-content ul.to-do-list {
+  list-style-type: none;
+  padding-left: 0.25rem;
+}
+
+.notion-content ul.to-do-list > li {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 0.75rem;
+}
+
+.notion-content .to-do-children-checked {
+  text-decoration: line-through;
+  opacity: 0.5;
+}
+
+/* Ajustes para toggle lists */
+.notion-content ul.toggle {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.notion-content .toggle > li {
+  margin-bottom: 0.5rem;
+}
+
+.notion-content .toggle > li > details {
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-card);
+}
+
+.notion-content .toggle > li > details > summary {
+  cursor: pointer;
+  padding: 0.5rem;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+}
+
+.notion-content .toggle > li > details > summary::before {
+  content: '▶';
+  display: inline-block;
+  margin-right: 0.5rem;
+  font-size: 0.75rem;
+  transition: transform 0.2s;
+}
+
+.notion-content .toggle > li > details[open] > summary::before {
+  transform: rotate(90deg);
+}
+
+/* Ajustes para tabelas */
+.notion-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  border-radius: 0.5rem;
+  overflow: hidden;
+}
+
+.notion-content th,
+.notion-content td {
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--color-border);
+}
+
+.notion-content th {
+  background-color: var(--color-accent);
+  font-weight: 500;
+  text-align: left;
+}
+
+.notion-content tr:nth-child(even) {
+  background-color: var(--color-accent);
+}
+
+/* Ajustes para código */
+.notion-content code {
+  font-family: var(--font-family-mono, monospace);
+  background-color: var(--color-accent);
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.25rem;
+  font-size: 0.9em;
+  color: var(--color-primary);
+}
+
+.notion-content pre {
+  background-color: var(--color-card);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border: 1px solid var(--color-border);
+}
+
+.notion-content pre code {
+  background-color: transparent;
+  padding: 0;
+  border-radius: 0;
+  color: var(--color-text-primary);
+  display: block;
+  line-height: 1.6;
+}
+
+/* Ajustes para cores de destaque do Notion */
+.notion-content .highlight-blue {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.notion-content .highlight-red {
+  color: var(--color-error);
+  font-weight: 500;
+}
+
+.notion-content .highlight-green {
+  color: var(--color-success);
+  font-weight: 500;
+}
+
+.notion-content .highlight-yellow {
+  color: var(--color-warning);
+  font-weight: 500;
+}
+
+.notion-content .highlight-gray {
+  color: var(--color-text-secondary);
+}
+
+/* Ajustes para fundos coloridos */
+.notion-content .highlight-blue_background {
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .highlight-red_background {
+  background-color: rgba(239, 68, 68, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .highlight-green_background {
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .highlight-yellow_background {
+  background-color: rgba(245, 158, 11, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .highlight-gray_background {
+  background-color: rgba(107, 114, 128, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+/* Ajustes para links */
+.notion-content a {
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: all 0.2s;
+  font-weight: 500;
+  border-bottom: 1px solid transparent;
+}
+
+.notion-content a:hover {
+  border-bottom-color: var(--color-primary);
+}
+
+/* Ajustes para divisores */
+.notion-content hr {
+  border: 0;
+  height: 1px;
+  background-color: var(--color-border);
+  margin: 2.5rem 0;
+  opacity: 0.5;
+}
+
+/* Ajustes para títulos */
+.notion-content h1,
+.notion-content h2,
+.notion-content h3,
+.notion-content h4,
+.notion-content h5,
+.notion-content h6 {
+  font-family: var(--font-family-heading);
+  letter-spacing: -0.025em;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  margin-top: 2em;
+  margin-bottom: 0.75em;
+  line-height: 1.2;
+}
+
+.notion-content h1 {
+  font-size: 2.25rem;
+  margin-top: 2.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+}
+
+.notion-content h2 {
+  font-size: 1.75rem;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.notion-content h2::before {
+  content: '';
+  display: block;
+  width: 0.25rem;
+  height: 1.5rem;
+  background-color: var(--color-primary);
+  border-radius: 0.125rem;
+}
+
+.notion-content h3 {
+  font-size: 1.5rem;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+  color: var(--color-primary);
+}
+
+/* Ajustes para parágrafos */
+.notion-content p {
+  margin-bottom: 1.25rem;
+  line-height: 1.7;
+}
+
+/* Ajustes para imagens de página inteira */
+.notion-content .page-cover-image {
+  width: 100%;
+  max-height: 30vh;
+  object-fit: cover;
+  margin-bottom: 2rem;
+  border-radius: 0.5rem;
+}
+
+/* Ajustes para ícones de página */
+.notion-content .page-header-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+/* Ajustes para classes sans, serif, mono */
+.notion-content .sans {
+  font-family: var(--font-family-body);
+}
+
+.notion-content .serif {
+  font-family: Georgia, serif;
+}
+
+.notion-content .mono {
+  font-family: monospace;
+}
+
+/* Ajustes para callouts */
+.notion-content .callout {
+  background-color: var(--color-accent);
+  border-radius: 0.5rem;
+  padding: 1rem 1.25rem;
+  margin: 1.5rem 0;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  border-left: 4px solid var(--color-primary);
+}
+
+/* Ajustes para bookmarks */
+.notion-content .bookmark {
+  border: 1px solid var(--color-border);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  margin: 1.5rem 0;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.notion-content .bookmark:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.notion-content .bookmark-title {
+  font-weight: 500;
+  color: var(--color-text-primary);
+}
+
+.notion-content .bookmark-description {
+  color: var(--color-text-secondary);
+  font-size: 0.875rem;
+}
+
+.notion-content .bookmark-href {
+  color: var(--color-primary);
+  font-size: 0.75rem;
+}
+
+/* Ajustes para o corpo da página */
+.notion-content .page-body {
+  max-width: 100%;
+}
+
+/* Ajustes para o título da página */
+.notion-content .page-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  color: var(--color-text-primary);
+  line-height: 1.2;
+}
+
+/* Ajustes para a descrição da página */
+.notion-content .page-description {
+  color: var(--color-text-secondary);
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+}
+
+/* Ajustes para strong e em */
+.notion-content strong {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+.notion-content em {
+  font-style: italic;
+  color: var(--color-text-primary);
+}
+
+/* Ajustes para artigos */
+.notion-content article {
+  background-color: var(--color-card);
+  border-radius: 0.75rem;
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+/* Ajustes para cabeçalhos */
+.notion-content header {
+  padding: 1.5rem;
+  border-bottom: 1px solid var(--color-border);
+}
+
+/* Melhorias para acessibilidade */
+.notion-content a:focus,
+.notion-content button:focus,
+.notion-content [tabindex]:focus {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Ajustes para dispositivos móveis */
+@media (max-width: 640px) {
+  .notion-content h1 {
+    font-size: 1.75rem;
+  }
+  
+  .notion-content h2 {
+    font-size: 1.5rem;
+  }
+  
+  .notion-content h3 {
+    font-size: 1.25rem;
+  }
+  
+  .notion-content p,
+  .notion-content li {
+    font-size: 1rem;
+  }
+  
+  .notion-content blockquote {
+    padding: 1rem;
+  }
+}
+
+/* Ajustes para imagens específicas */
+.notion-content .image {
+  text-align: center;
+  margin: 2rem 0;
+}
+
+/* Ajustes para classes de bloco de cor */
+.notion-content .block-color-blue {
+  color: var(--color-primary);
+}
+
+.notion-content .block-color-red {
+  color: var(--color-error);
+}
+
+.notion-content .block-color-green {
+  color: var(--color-success);
+}
+
+.notion-content .block-color-yellow {
+  color: var(--color-warning);
+}
+
+.notion-content .block-color-gray {
+  color: var(--color-text-secondary);
+}
+
+/* Ajustes para fundos de bloco de cor */
+.notion-content .block-color-blue_background {
+  background-color: rgba(59, 130, 246, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .block-color-red_background {
+  background-color: rgba(239, 68, 68, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .block-color-green_background {
+  background-color: rgba(16, 185, 129, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .block-color-yellow_background {
+  background-color: rgba(245, 158, 11, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+.notion-content .block-color-gray_background {
+  background-color: rgba(107, 114, 128, 0.1);
+  padding: 0.1rem 0.2rem;
+  border-radius: 0.25rem;
+}
+
+/* Ajustes para IDs específicos do Notion */
+.notion-content [id^="1deb5818-"] {
+  scroll-margin-top: 2rem;
+}

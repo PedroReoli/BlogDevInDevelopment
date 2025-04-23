@@ -65,7 +65,7 @@ const About = () => {
               <FiGithub size={20} />
             </a>
             <a
-              href="linkedin.com/in/pedro-lucas-reis-de-oliveira-sousa-a93945171/"
+              href="https://www.linkedin.com/in/pedro-lucas-reis-de-oliveira-sousa-a93945171/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="LinkedIn"
@@ -74,7 +74,7 @@ const About = () => {
               <FiLinkedin size={20} />
             </a>
             <a
-              href="https://twitter.com/pedro_reoli"
+              href="https://twitter.com/opedroreoli"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Twitter"
