@@ -34,12 +34,37 @@ interface NotionRendererProps {
 
 const NotionRenderer = ({ html, className = "" }: NotionRendererProps) => {
   const containerRef = useRef<HTMLDivElement>(null)
+  const tocRef = useRef<HTMLDivElement>(null)
   const [imageViewerOpen, setImageViewerOpen] = useState(false)
   const [currentImage, setCurrentImage] = useState<string | null>(null)
   const [tableOfContents, setTableOfContents] = useState<Array<{ id: string; text: string; level: number }>>([])
   const [showToc, setShowToc] = useState(false)
+  const [tocVisible, setTocVisible] = useState(false)
   const observerRef = useRef<IntersectionObserver | null>(null)
   const [activeHeading, setActiveHeading] = useState<string | null>(null)
+
+  // Fechar TOC quando clicar fora dele
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        tocRef.current &&
+        !tocRef.current.contains(event.target as Node) &&
+        !event.target?.toString().includes("toc-toggle")
+      ) {
+        setTocVisible(false)
+      }
+    }
+
+    document.addEventListener("mousedown", handleClickOutside)
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside)
+    }
+  }, [])
+
+  // Fechar TOC quando clicar em um link dentro dele
+  const handleTocLinkClick = () => {
+    setTocVisible(false)
+  }
 
   useEffect(() => {
     if (!containerRef.current) return
@@ -583,21 +608,114 @@ const NotionRenderer = ({ html, className = "" }: NotionRendererProps) => {
     }
   }, [])
 
+  // Função para alternar a visibilidade do TOC
+  const toggleToc = () => {
+    setTocVisible(!tocVisible)
+  }
+
   return (
     <div className="relative">
+      {/* Botão de hambúrguer para tabela de conteúdos */}
+      {showToc && tableOfContents.length > 0 && (
+        <button
+          onClick={toggleToc}
+          className="fixed z-40 top-24 right-4 p-2 bg-card rounded-full shadow-md border border-border hover:bg-accent transition-colors duration-200 toc-toggle"
+          aria-label={tocVisible ? "Fechar índice" : "Abrir índice"}
+          aria-expanded={tocVisible}
+          aria-controls="table-of-contents"
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="20"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={`transition-transform duration-300 ${tocVisible ? "text-primary-500" : "text-text-secondary"}`}
+          >
+            <path d="M4 6h16"></path>
+            <path d="M4 12h16"></path>
+            <path d="M4 18h12"></path>
+          </svg>
+        </button>
+      )}
+
       {/* Tabela de conteúdos */}
       {showToc && tableOfContents.length > 0 && (
-        <div className="hidden lg:block sticky top-24 float-right ml-8 mb-8 w-64 bg-card p-4 rounded-lg border border-border shadow-sm max-h-[calc(100vh-120px)] overflow-y-auto">
-          <h4 className="font-medium mb-3">Neste artigo</h4>
-          <nav>
-            <ul className="space-y-2 text-sm">
+        <div
+          ref={tocRef}
+          id="table-of-contents"
+          className={`fixed z-30 top-36 right-4 w-72 bg-card rounded-lg border border-border shadow-lg transition-all duration-300 transform ${
+            tocVisible ? "translate-x-0 opacity-100" : "translate-x-[120%] opacity-0"
+          } max-h-[calc(100vh-160px)] overflow-y-auto`}
+        >
+          <div className="p-4 border-b border-border bg-accent/30 rounded-t-lg">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="text-primary-500"
+                >
+                  <path d="M4 6h16"></path>
+                  <path d="M4 12h16"></path>
+                  <path d="M4 18h12"></path>
+                </svg>
+                <h4 className="font-medium text-text-primary">Neste artigo</h4>
+              </div>
+              <button
+                onClick={toggleToc}
+                className="p-1 hover:bg-foreground rounded-full transition-colors"
+                aria-label="Fechar índice"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <nav className="p-3">
+            <ul className="space-y-1">
               {tableOfContents.map((item) => (
-                <li key={item.id} style={{ paddingLeft: `${(item.level - 1) * 12}px` }}>
+                <li
+                  key={item.id}
+                  style={{ paddingLeft: `${(item.level - 1) * 12}px` }}
+                  className={`transition-all duration-200 ${activeHeading === item.id ? "bg-accent/50 rounded" : ""}`}
+                >
                   <a
                     href={`#${item.id}`}
-                    className={`block py-1 hover:text-primary transition-colors ${activeHeading === item.id ? "text-primary font-medium" : "text-text-secondary"}`}
+                    className={`block py-1.5 px-2 text-sm rounded hover:bg-accent transition-colors relative ${
+                      activeHeading === item.id
+                        ? "text-primary-500 font-medium"
+                        : "text-text-secondary hover:text-text-primary"
+                    }`}
+                    onClick={handleTocLinkClick}
                   >
-                    {item.text}
+                    {activeHeading === item.id && (
+                      <span className="absolute left-0 top-0 bottom-0 w-0.5 bg-primary-500 rounded-full"></span>
+                    )}
+                    <span className="truncate block">{item.text}</span>
                   </a>
                 </li>
               ))}
